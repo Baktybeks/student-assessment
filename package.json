@@ -1,0 +1,44 @@
+{
+  "name": "student-assessment",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:test": "node scripts/testConnection.js",
+    "db:setup": "node scripts/setupCollections.js setup",
+    "db:reset": "node scripts/setupCollections.js reset",
+    "db:reset-setup": "node scripts/setupCollections.js reset-setup"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.3",
+    "@tailwindcss/postcss": "^4.1.6",
+    "@tanstack/react-query": "^5.76.0",
+    "@tanstack/react-query-devtools": "^5.76.0",
+    "@types/react-datepicker": "^7.0.0",
+    "appwrite": "^17.0.2",
+    "axios": "^1.9.0",
+    "chart.js": "^4.4.9",
+    "dotenv": "^16.5.0",
+    "lucide-react": "^0.511.0",
+    "next": "15.3.2",
+    "node-appwrite": "^13.0.0",
+    "react": "^19.0.0",
+    "react-chartjs-2": "^5.3.0",
+    "react-datepicker": "^8.3.0",
+    "react-dom": "^19.0.0",
+    "react-toastify": "^11.0.5",
+    "zustand": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.6",
+    "typescript": "^5"
+  }
+}

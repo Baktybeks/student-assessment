@@ -489,12 +489,8 @@ const enrichTestsWithDetails = async (
   tests: Test[]
 ): Promise<TestWithDetails[]> => {
   try {
-    // Получаем все направления и кураторов
-    const [directions, curators] = await Promise.all([
-      instituteApi.getAllDirections(),
-      // Здесь нужно будет импортировать userApi для получения кураторов
-      // userApi.getUsersByRole(UserRole.CURATOR)
-    ]);
+    // Получаем только направления, так как сервис кураторов пока не готов
+    const directions = await instituteApi.getAllDirections();
 
     return tests.map((test) => {
       const direction = directions.find((d) => d.$id === test.directionId);

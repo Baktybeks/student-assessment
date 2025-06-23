@@ -80,77 +80,68 @@ export default function AdminDashboard() {
 
   const menuItems = [
     {
-      title: "Институты",
+      title: "ИНСТИТУТЫ",
       description: "Управление институтами и направлениями",
       href: "/admin/institutes",
       icon: Building,
-      color: "bg-blue-500 hover:bg-blue-600",
       count: instituteStats?.totalInstitutes || 0,
       subtext: `${instituteStats?.totalDirections || 0} направлений`,
     },
     {
-      title: "Кураторы",
+      title: "КУРАТОРЫ",
       description: "Управление кураторами и их назначениями",
       href: "/admin/curators",
       icon: Users,
-      color: "bg-purple-500 hover:bg-purple-600",
       count: userStats.activeCurators,
       subtext: `из ${userStats.curators} всего`,
     },
     {
-      title: "Абитуриенты",
+      title: "АБИТУРИЕНТЫ",
       description: "Управление абитуриентами",
       href: "/admin/applicants",
       icon: GraduationCap,
-      color: "bg-green-500 hover:bg-green-600",
       count: userStats.activeApplicants,
       subtext: `из ${userStats.applicants} всего`,
     },
     {
-      title: "Активация пользователей",
+      title: "АКТИВАЦИЯ ПОЛЬЗОВАТЕЛЕЙ",
       description: "Активация новых пользователей",
       href: "/admin/activation",
       icon: UserCheck,
-      color: "bg-orange-500 hover:bg-orange-600",
       count: userStats.pending,
       subtext: "ожидают активации",
     },
     {
-      title: "Назначения кураторов",
+      title: "НАЗНАЧЕНИЯ КУРАТОРОВ",
       description: "Привязка кураторов к институтам",
       href: "/admin/curator-assignments",
       icon: UserPlus,
-      color: "bg-teal-500 hover:bg-teal-600",
     },
     {
-      title: "Тесты",
+      title: "ТЕСТЫ",
       description: "Просмотр всех тестов в системе",
       href: "/admin/tests",
       icon: TestTube,
-      color: "bg-indigo-500 hover:bg-indigo-600",
       count: testStats.published,
       subtext: `из ${testStats.total} всего`,
     },
     {
-      title: "Статистика",
+      title: "СТАТИСТИКА",
       description: "Общая статистика системы",
       href: "/admin/reports/statistics",
       icon: BarChart3,
-      color: "bg-cyan-500 hover:bg-cyan-600",
     },
     {
-      title: "Отчеты",
+      title: "ОТЧЕТЫ",
       description: "Детальные отчеты и экспорт",
       href: "/admin/reports",
       icon: FileText,
-      color: "bg-pink-500 hover:bg-pink-600",
     },
     {
-      title: "Настройки",
+      title: "НАСТРОЙКИ",
       description: "Системные настройки",
       href: "/admin/settings",
       icon: Settings,
-      color: "bg-gray-500 hover:bg-gray-600",
     },
   ];
 
@@ -176,8 +167,8 @@ export default function AdminDashboard() {
         time: user.$createdAt,
         icon: user.role === UserRole.CURATOR ? Users : GraduationCap,
         color: user.isActive
-          ? "text-green-600 bg-green-100"
-          : "text-yellow-600 bg-yellow-100",
+          ? "text-green-400 bg-green-800"
+          : "text-yellow-400 bg-yellow-800",
       });
     });
 
@@ -197,8 +188,8 @@ export default function AdminDashboard() {
         time: test.$createdAt,
         icon: TestTube,
         color: test.isPublished
-          ? "text-green-600 bg-green-100"
-          : "text-blue-600 bg-blue-100",
+          ? "text-green-400 bg-green-800"
+          : "text-blue-400 bg-blue-800",
       });
     });
 
@@ -223,640 +214,652 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Панель администратора
-        </h1>
-        <p className="text-gray-600">
-          Управление системой тестирования абитуриентов
-        </p>
-      </div>
-
-      {/* Основные метрики */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Users className="h-8 w-8 text-blue-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                Всего пользователей
-              </p>
-              <p className="text-2xl font-bold text-gray-900">
-                {userStats.total}
-              </p>
-              <p className="text-xs text-gray-500">
-                {userStats.pending} ожидают активации
-              </p>
-            </div>
-          </div>
+    <div className="min-h-screen bg-slate-900 text-white">
+      <div className="p-6 max-w-7xl mx-auto">
+        <div className="mb-8 border-b border-slate-700 pb-6">
+          <h1 className="text-3xl font-bold text-white mb-2 font-mono uppercase tracking-wide">
+            ПАНЕЛЬ АДМИНИСТРАТОРА
+          </h1>
+          <p className="text-slate-300 font-mono">
+            СИСТЕМА ТЕСТИРОВАНИЯ АБИТУРИЕНТОВ
+          </p>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Building className="h-8 w-8 text-purple-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Институты</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {instituteStats?.activeInstitutes || 0}
-              </p>
-              <p className="text-xs text-gray-500">
-                {instituteStats?.activeDirections || 0} направлений
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <TestTube className="h-8 w-8 text-green-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                Активные тесты
-              </p>
-              <p className="text-2xl font-bold text-gray-900">
-                {testStats.published}
-              </p>
-              <p className="text-xs text-gray-500">
-                {testStats.drafts} черновиков
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <UserCheck className="h-8 w-8 text-orange-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                Требуют активации
-              </p>
-              <p className="text-2xl font-bold text-gray-900">
-                {userStats.pending}
-              </p>
-              <p className="text-xs text-gray-500">новых пользователей</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Быстрые действия */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {menuItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`${item.color} text-white p-6 rounded-lg shadow-md transition-all duration-200 transform hover:scale-105 hover:shadow-lg relative overflow-hidden`}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <item.icon className="h-8 w-8" />
-              <div className="text-right">
-                {item.count !== undefined && (
-                  <div className="text-2xl font-bold">{item.count}</div>
-                )}
-                <div className="text-xs opacity-75">Администратор</div>
+        {/* Основные метрики */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Users className="h-8 w-8 text-blue-400" />
               </div>
-            </div>
-
-            <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-            <p className="text-sm opacity-90 leading-relaxed">
-              {item.description}
-            </p>
-            {item.subtext && (
-              <p className="text-xs opacity-75 mt-2">{item.subtext}</p>
-            )}
-
-            {/* Индикатор активности */}
-            {item.count !== undefined && item.count > 0 && (
-              <div className="absolute top-2 right-2">
-                <div className="w-3 h-3 bg-white bg-opacity-30 rounded-full animate-pulse"></div>
-              </div>
-            )}
-          </Link>
-        ))}
-      </div>
-
-      {/* Нижняя секция */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        {/* Требуют внимания */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <AlertTriangle className="h-6 w-6 text-orange-500" />
-            Требуют внимания
-          </h2>
-
-          <div className="space-y-4">
-            {userStats.pending > 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <div className="flex items-center">
-                  <UserCheck className="h-5 w-5 text-yellow-600 mr-3" />
-                  <div>
-                    <h3 className="text-sm font-medium text-yellow-800">
-                      Пользователи ожидают активации
-                    </h3>
-                    <p className="text-sm text-yellow-700">
-                      {userStats.pending} новых пользователей требуют активации
-                    </p>
-                  </div>
-                  <Link
-                    href="/admin/activation"
-                    className="ml-auto text-sm text-yellow-600 hover:text-yellow-800 font-medium"
-                  >
-                    Активировать →
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {userStats.blocked > 0 && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <div className="flex items-center">
-                  <AlertTriangle className="h-5 w-5 text-red-600 mr-3" />
-                  <div>
-                    <h3 className="text-sm font-medium text-red-800">
-                      Заблокированные пользователи
-                    </h3>
-                    <p className="text-sm text-red-700">
-                      {userStats.blocked} пользователей заблокированы
-                    </p>
-                  </div>
-                  <Link
-                    href="/admin/users?filter=blocked"
-                    className="ml-auto text-sm text-red-600 hover:text-red-800 font-medium"
-                  >
-                    Просмотреть →
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {(instituteStats?.totalInstitutes || 0) === 0 && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <div className="flex items-center">
-                  <Building className="h-5 w-5 text-blue-600 mr-3" />
-                  <div>
-                    <h3 className="text-sm font-medium text-blue-800">
-                      Институты не созданы
-                    </h3>
-                    <p className="text-sm text-blue-700">
-                      Создайте институты и направления для работы системы
-                    </p>
-                  </div>
-                  <Link
-                    href="/admin/institutes"
-                    className="ml-auto text-sm text-blue-600 hover:text-blue-800 font-medium"
-                  >
-                    Создать →
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {userStats.curators === 0 && (
-              <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                <div className="flex items-center">
-                  <Users className="h-5 w-5 text-purple-600 mr-3" />
-                  <div>
-                    <h3 className="text-sm font-medium text-purple-800">
-                      Кураторы не созданы
-                    </h3>
-                    <p className="text-sm text-purple-700">
-                      Создайте кураторов для управления тестами
-                    </p>
-                  </div>
-                  <Link
-                    href="/admin/curators"
-                    className="ml-auto text-sm text-purple-600 hover:text-purple-800 font-medium"
-                  >
-                    Создать →
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {userStats.pending === 0 &&
-              userStats.blocked === 0 &&
-              (instituteStats?.totalInstitutes || 0) > 0 &&
-              userStats.curators > 0 && (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <div className="flex items-center">
-                    <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
-                    <div>
-                      <h3 className="text-sm font-medium text-green-800">
-                        Все в порядке
-                      </h3>
-                      <p className="text-sm text-green-700">
-                        Нет задач, требующих немедленного внимания
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-          </div>
-        </div>
-
-        {/* Последние действия */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <Activity className="h-6 w-6 text-blue-500" />
-            Последние действия
-          </h2>
-
-          <div className="bg-white rounded-lg shadow border">
-            {recentActions.length > 0 ? (
-              <>
-                <div className="divide-y divide-gray-200">
-                  {recentActions.map((action, index) => (
-                    <div key={index} className="p-4">
-                      <div className="flex items-center space-x-3">
-                        <div
-                          className={`flex-shrink-0 p-2 rounded-full ${action.color}`}
-                        >
-                          <action.icon className="h-4 w-4" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900">
-                            {action.title}
-                          </p>
-                          <p className="text-sm text-gray-500 truncate">
-                            {action.description}
-                          </p>
-                        </div>
-                        <div className="flex-shrink-0 text-xs text-gray-400">
-                          {formatTimeAgo(action.time)}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="px-4 py-3 bg-gray-50 text-center">
-                  <Link
-                    href="/admin/activity-log"
-                    className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
-                  >
-                    Посмотреть все действия →
-                  </Link>
-                </div>
-              </>
-            ) : (
-              <div className="p-8 text-center">
-                <Clock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 text-lg">Нет последних действий</p>
-                <p className="text-gray-400 text-sm">
-                  Начните создавать институты и пользователей
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  ВСЕГО ПОЛЬЗОВАТЕЛЕЙ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {userStats.total}
+                </p>
+                <p className="text-xs text-slate-400 font-mono">
+                  {userStats.pending} ожидают активации
                 </p>
               </div>
-            )}
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Статистика по ролям */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-          <Target className="h-6 w-6 text-indigo-500" />
-          Статистика пользователей
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow border">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Users className="h-5 w-5 text-purple-500" />
-              Кураторы
-            </h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Всего:</span>
-                <span className="font-medium">{userStats.curators}</span>
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Building className="h-8 w-8 text-blue-400" />
               </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Активных:</span>
-                <span className="font-medium text-green-600">
-                  {userStats.activeCurators}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Неактивных:</span>
-                <span className="font-medium text-orange-600">
-                  {userStats.curators - userStats.activeCurators}
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div
-                  className="bg-purple-500 h-2 rounded-full transition-all duration-300"
-                  style={{
-                    width: `${
-                      userStats.curators > 0
-                        ? (userStats.activeCurators / userStats.curators) * 100
-                        : 0
-                    }%`,
-                  }}
-                ></div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  ИНСТИТУТЫ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {instituteStats?.activeInstitutes || 0}
+                </p>
+                <p className="text-xs text-slate-400 font-mono">
+                  {instituteStats?.activeDirections || 0} направлений
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow border">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <GraduationCap className="h-5 w-5 text-green-500" />
-              Абитуриенты
-            </h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Всего:</span>
-                <span className="font-medium">{userStats.applicants}</span>
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <TestTube className="h-8 w-8 text-blue-400" />
               </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Активных:</span>
-                <span className="font-medium text-green-600">
-                  {userStats.activeApplicants}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Неактивных:</span>
-                <span className="font-medium text-orange-600">
-                  {userStats.applicants - userStats.activeApplicants}
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div
-                  className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                  style={{
-                    width: `${
-                      userStats.applicants > 0
-                        ? (userStats.activeApplicants / userStats.applicants) *
-                          100
-                        : 0
-                    }%`,
-                  }}
-                ></div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow border">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <TestTube className="h-5 w-5 text-indigo-500" />
-              Тесты
-            </h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Всего:</span>
-                <span className="font-medium">{testStats.total}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Опубликованных:</span>
-                <span className="font-medium text-green-600">
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  АКТИВНЫЕ ТЕСТЫ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
                   {testStats.published}
-                </span>
+                </p>
+                <p className="text-xs text-slate-400 font-mono">
+                  {testStats.drafts} черновиков
+                </p>
               </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Черновиков:</span>
-                <span className="font-medium text-blue-600">
-                  {testStats.drafts}
-                </span>
+            </div>
+          </div>
+
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <UserCheck className="h-8 w-8 text-orange-400" />
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div
-                  className="bg-indigo-500 h-2 rounded-full transition-all duration-300"
-                  style={{
-                    width: `${
-                      testStats.total > 0
-                        ? (testStats.published / testStats.total) * 100
-                        : 0
-                    }%`,
-                  }}
-                ></div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  ТРЕБУЮТ АКТИВАЦИИ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {userStats.pending}
+                </p>
+                <p className="text-xs text-slate-400 font-mono">
+                  новых пользователей
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Системная информация */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-          <Database className="h-6 w-6 text-gray-500" />
-          Системная информация
-        </h2>
+        {/* Быстрые действия */}
+        <div className="mb-8">
+          <h2 className="text-xl font-mono font-bold text-white mb-4 uppercase tracking-wide border-b border-slate-700 pb-2">
+            МОДУЛИ СИСТЕМЫ
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {menuItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="bg-slate-800 border-2 border-slate-600 text-white p-6 block"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <item.icon className="h-8 w-8 text-blue-400" />
+                  <div className="text-right">
+                    {item.count !== undefined && (
+                      <div className="text-2xl font-mono font-bold text-white">
+                        {item.count}
+                      </div>
+                    )}
+                    <div className="text-xs text-slate-400 font-mono uppercase">
+                      АДМИНИСТРАТОР
+                    </div>
+                  </div>
+                </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white p-4 rounded-lg shadow border">
-            <div className="flex items-center gap-3">
-              <Shield className="h-8 w-8 text-blue-500" />
-              <div>
-                <p className="text-sm text-gray-600">Безопасность</p>
-                <p className="font-medium text-gray-900">Защищено</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow border">
-            <div className="flex items-center gap-3">
-              <Globe className="h-8 w-8 text-green-500" />
-              <div>
-                <p className="text-sm text-gray-600">Статус системы</p>
-                <p className="font-medium text-green-600">Онлайн</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow border">
-            <div className="flex items-center gap-3">
-              <Zap className="h-8 w-8 text-yellow-500" />
-              <div>
-                <p className="text-sm text-gray-600">Производительность</p>
-                <p className="font-medium text-gray-900">Отличная</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow border">
-            <div className="flex items-center gap-3">
-              <Database className="h-8 w-8 text-purple-500" />
-              <div>
-                <p className="text-sm text-gray-600">База данных</p>
-                <p className="font-medium text-gray-900">Активна</p>
-              </div>
-            </div>
+                <h3 className="text-lg font-mono font-bold mb-2 text-white">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-slate-300 font-mono leading-relaxed">
+                  {item.description}
+                </p>
+                {item.subtext && (
+                  <p className="text-xs text-slate-400 font-mono mt-2">
+                    {item.subtext}
+                  </p>
+                )}
+              </Link>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* Рекомендации */}
-      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-indigo-900 mb-4 flex items-center gap-2">
-          <TrendingUp className="h-5 w-5" />
-          Рекомендации по развитию системы
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-3">
-            <h4 className="font-medium text-indigo-800">
-              Приоритетные задачи:
-            </h4>
-            <ul className="text-sm text-indigo-700 space-y-1">
-              {(instituteStats?.totalInstitutes || 0) === 0 && (
-                <li>• Создать институты и направления подготовки</li>
-              )}
-              {userStats.curators === 0 && (
-                <li>• Создать кураторов для управления тестами</li>
-              )}
+        {/* Нижняя секция */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Требуют внимания */}
+          <div>
+            <h2 className="text-xl font-mono font-bold text-white mb-4 uppercase tracking-wide border-b border-slate-700 pb-2 flex items-center gap-2">
+              <AlertTriangle className="h-6 w-6 text-orange-400" />
+              ТРЕБУЮТ ВНИМАНИЯ
+            </h2>
+
+            <div className="space-y-4">
               {userStats.pending > 0 && (
-                <li>
-                  • Активировать {userStats.pending} ожидающих пользователей
-                </li>
+                <div className="bg-yellow-900 border-2 border-yellow-600 p-4">
+                  <div className="flex items-center">
+                    <UserCheck className="h-5 w-5 text-yellow-400 mr-3" />
+                    <div>
+                      <h3 className="text-sm font-mono font-bold text-yellow-200 uppercase">
+                        ПОЛЬЗОВАТЕЛИ ОЖИДАЮТ АКТИВАЦИИ
+                      </h3>
+                      <p className="text-sm text-yellow-300 font-mono">
+                        {userStats.pending} новых пользователей требуют активации
+                      </p>
+                    </div>
+                    <Link
+                      href="/admin/activation"
+                      className="ml-auto text-sm text-yellow-200 font-mono font-bold border border-yellow-500 px-3 py-1 uppercase"
+                    >
+                      АКТИВИРОВАТЬ
+                    </Link>
+                  </div>
+                </div>
               )}
+
               {userStats.blocked > 0 && (
-                <li>
-                  • Проверить {userStats.blocked} заблокированных пользователей
-                </li>
+                <div className="bg-red-900 border-2 border-red-600 p-4">
+                  <div className="flex items-center">
+                    <AlertTriangle className="h-5 w-5 text-red-400 mr-3" />
+                    <div>
+                      <h3 className="text-sm font-mono font-bold text-red-200 uppercase">
+                        ЗАБЛОКИРОВАННЫЕ ПОЛЬЗОВАТЕЛИ
+                      </h3>
+                      <p className="text-sm text-red-300 font-mono">
+                        {userStats.blocked} пользователей заблокированы
+                      </p>
+                    </div>
+                    <Link
+                      href="/admin/users?filter=blocked"
+                      className="ml-auto text-sm text-red-200 font-mono font-bold border border-red-500 px-3 py-1 uppercase"
+                    >
+                      ПРОСМОТРЕТЬ
+                    </Link>
+                  </div>
+                </div>
               )}
-              {testStats.total === 0 && (
-                <li>• Создать первые тесты для абитуриентов</li>
+
+              {(instituteStats?.totalInstitutes || 0) === 0 && (
+                <div className="bg-blue-900 border-2 border-blue-600 p-4">
+                  <div className="flex items-center">
+                    <Building className="h-5 w-5 text-blue-400 mr-3" />
+                    <div>
+                      <h3 className="text-sm font-mono font-bold text-blue-200 uppercase">
+                        ИНСТИТУТЫ НЕ СОЗДАНЫ
+                      </h3>
+                      <p className="text-sm text-blue-300 font-mono">
+                        Создайте институты и направления для работы системы
+                      </p>
+                    </div>
+                    <Link
+                      href="/admin/institutes"
+                      className="ml-auto text-sm text-blue-200 font-mono font-bold border border-blue-500 px-3 py-1 uppercase"
+                    >
+                      СОЗДАТЬ
+                    </Link>
+                  </div>
+                </div>
               )}
+
+              {userStats.curators === 0 && (
+                <div className="bg-purple-900 border-2 border-purple-600 p-4">
+                  <div className="flex items-center">
+                    <Users className="h-5 w-5 text-purple-400 mr-3" />
+                    <div>
+                      <h3 className="text-sm font-mono font-bold text-purple-200 uppercase">
+                        КУРАТОРЫ НЕ СОЗДАНЫ
+                      </h3>
+                      <p className="text-sm text-purple-300 font-mono">
+                        Создайте кураторов для управления тестами
+                      </p>
+                    </div>
+                    <Link
+                      href="/admin/curators"
+                      className="ml-auto text-sm text-purple-200 font-mono font-bold border border-purple-500 px-3 py-1 uppercase"
+                    >
+                      СОЗДАТЬ
+                    </Link>
+                  </div>
+                </div>
+              )}
+
               {userStats.pending === 0 &&
                 userStats.blocked === 0 &&
                 (instituteStats?.totalInstitutes || 0) > 0 &&
-                userStats.curators > 0 &&
-                testStats.total > 0 && (
-                  <li>• Все основные задачи выполнены! ✅</li>
+                userStats.curators > 0 && (
+                  <div className="bg-green-900 border-2 border-green-600 p-4">
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-400 mr-3" />
+                      <div>
+                        <h3 className="text-sm font-mono font-bold text-green-200 uppercase">
+                          ВСЕ В ПОРЯДКЕ
+                        </h3>
+                        <p className="text-sm text-green-300 font-mono">
+                          Нет задач, требующих немедленного внимания
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 )}
-            </ul>
+            </div>
           </div>
-          <div className="space-y-3">
-            <h4 className="font-medium text-indigo-800">
-              Оптимизация процессов:
-            </h4>
-            <ul className="text-sm text-indigo-700 space-y-1">
-              <li>• Регулярно проверять новых пользователей</li>
-              <li>• Мониторить качество создаваемых тестов</li>
-              <li>• Анализировать статистику прохождений</li>
-              <li>• Следить за активностью кураторов</li>
-              <li>• Создавать резервные копии данных</li>
-              <li>• Обновлять направления подготовки</li>
-              <li>• Просматривать отчеты и аналитику</li>
-              <li>• Оптимизировать настройки системы</li>
-            </ul>
-          </div>
-        </div>
 
-        {/* Быстрые ссылки для рекомендаций */}
-        <div className="mt-6 pt-4 border-t border-indigo-200">
-          <h4 className="font-medium text-indigo-800 mb-3">
-            Быстрые действия:
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {userStats.pending > 0 && (
-              <Link
-                href="/admin/activation"
-                className="px-3 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full hover:bg-yellow-200 transition-colors"
-              >
-                Активировать пользователей ({userStats.pending})
-              </Link>
-            )}
-            {(instituteStats?.totalInstitutes || 0) === 0 && (
-              <Link
-                href="/admin/institutes"
-                className="px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200 transition-colors"
-              >
-                Создать институт
-              </Link>
-            )}
-            {userStats.curators === 0 && (
-              <Link
-                href="/admin/curators"
-                className="px-3 py-1 text-xs bg-purple-100 text-purple-800 rounded-full hover:bg-purple-200 transition-colors"
-              >
-                Добавить кураторов
-              </Link>
-            )}
-            <Link
-              href="/admin/reports/statistics"
-              className="px-3 py-1 text-xs bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition-colors"
-            >
-              Просмотреть статистику
-            </Link>
-            <Link
-              href="/admin/settings"
-              className="px-3 py-1 text-xs bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors"
-            >
-              Настройки системы
-            </Link>
+          {/* Последние действия */}
+          <div>
+            <h2 className="text-xl font-mono font-bold text-white mb-4 uppercase tracking-wide border-b border-slate-700 pb-2 flex items-center gap-2">
+              <Activity className="h-6 w-6 text-blue-400" />
+              ПОСЛЕДНИЕ ДЕЙСТВИЯ
+            </h2>
+
+            <div className="bg-slate-800 border-2 border-slate-600">
+              {recentActions.length > 0 ? (
+                <>
+                  <div className="divide-y divide-slate-700">
+                    {recentActions.map((action, index) => (
+                      <div key={index} className="p-4">
+                        <div className="flex items-center space-x-3">
+                          <div className={`flex-shrink-0 p-2 ${action.color}`}>
+                            <action.icon className="h-4 w-4" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-mono font-bold text-white">
+                              {action.title}
+                            </p>
+                            <p className="text-sm text-slate-300 font-mono truncate">
+                              {action.description}
+                            </p>
+                          </div>
+                          <div className="flex-shrink-0 text-xs text-slate-400 font-mono">
+                            {formatTimeAgo(action.time)}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="px-4 py-3 bg-slate-700 text-center border-t border-slate-600">
+                    <Link
+                      href="/admin/activity-log"
+                      className="text-sm text-blue-400 font-mono font-bold uppercase"
+                    >
+                      ПОСМОТРЕТЬ ВСЕ ДЕЙСТВИЯ
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <div className="p-8 text-center">
+                  <Clock className="h-12 w-12 text-slate-500 mx-auto mb-4" />
+                  <p className="text-slate-400 text-lg font-mono font-bold uppercase">
+                    НЕТ ПОСЛЕДНИХ ДЕЙСТВИЙ
+                  </p>
+                  <p className="text-slate-500 text-sm font-mono">
+                    Начните создавать институты и пользователей
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Информационные блоки в футере */}
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-blue-900 mb-3 flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Функции администратора
-          </h3>
-          <ul className="space-y-2 text-blue-800 text-sm">
-            <li>• Полное управление пользователями и их ролями</li>
-            <li>• Создание и управление структурой институтов</li>
-            <li>• Назначение кураторов на направления</li>
-            <li>• Мониторинг всех тестов в системе</li>
-            <li>• Генерация отчетов и экспорт данных</li>
-            <li>• Управление системными настройками</li>
-            <li>• Контроль безопасности и доступов</li>
-            <li>• Резервное копирование и восстановление</li>
-          </ul>
-        </div>
+        {/* Статистика по ролям */}
+        <div className="mb-8">
+          <h2 className="text-xl font-mono font-bold text-white mb-4 uppercase tracking-wide border-b border-slate-700 pb-2 flex items-center gap-2">
+            <Target className="h-6 w-6 text-blue-400" />
+            СТАТИСТИКА ПОЛЬЗОВАТЕЛЕЙ
+          </h2>
 
-        <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-green-900 mb-3 flex items-center gap-2">
-            <CheckCircle className="h-5 w-5" />
-            Порядок настройки системы
-          </h3>
-          <ol className="space-y-2 text-green-800 text-sm">
-            <li>1. Создайте институты и направления подготовки</li>
-            <li>2. Добавьте кураторов и назначьте их на институты</li>
-            <li>3. Активируйте зарегистрированных пользователей</li>
-            <li>4. Настройте систему тестирования</li>
-            <li>5. Проверьте работу всех компонентов</li>
-            <li>6. Обучите кураторов работе с системой</li>
-            <li>7. Запустите тестирование абитуриентов</li>
-            <li>8. Регулярно мониторьте и анализируйте данные</li>
-          </ol>
-        </div>
-      </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-slate-800 border-2 border-slate-600 p-6">
+              <h3 className="text-lg font-mono font-bold text-white mb-4 flex items-center gap-2 uppercase">
+                <Users className="h-5 w-5 text-purple-400" />
+                КУРАТОРЫ
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span className="text-sm text-slate-300 font-mono">ВСЕГО:</span>
+                  <span className="font-mono font-bold text-white">{userStats.curators}</span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span className="text-sm text-slate-300 font-mono">АКТИВНЫХ:</span>
+                  <span className="font-mono font-bold text-green-400">
+                    {userStats.activeCurators}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span className="text-sm text-slate-300 font-mono">НЕАКТИВНЫХ:</span>
+                  <span className="font-mono font-bold text-orange-400">
+                    {userStats.curators - userStats.activeCurators}
+                  </span>
+                </div>
+                <div className="w-full bg-slate-700 h-2 border border-slate-600">
+                  <div
+                    className="bg-purple-500 h-full"
+                    style={{
+                      width: `${
+                        userStats.curators > 0
+                          ? (userStats.activeCurators / userStats.curators) * 100
+                          : 0
+                      }%`,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
 
-      {/* Уведомления о критических задачах */}
-      {(userStats.pending > 5 ||
-        userStats.blocked > 0 ||
-        (instituteStats?.totalInstitutes || 0) === 0) && (
-        <div className="mt-6">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <div className="flex items-center">
-              <AlertTriangle className="h-5 w-5 text-red-600 mr-3" />
-              <div>
-                <h3 className="text-sm font-medium text-red-800">
-                  Требуется немедленное внимание
-                </h3>
-                <p className="text-sm text-red-700">
-                  {userStats.pending > 5 &&
-                    `${userStats.pending} пользователей ожидают активации более недели. `}
-                  {userStats.blocked > 0 &&
-                    `${userStats.blocked} пользователей заблокированы. `}
-                  {(instituteStats?.totalInstitutes || 0) === 0 &&
-                    "Система не может работать без институтов и направлений."}
-                </p>
+            <div className="bg-slate-800 border-2 border-slate-600 p-6">
+              <h3 className="text-lg font-mono font-bold text-white mb-4 flex items-center gap-2 uppercase">
+                <GraduationCap className="h-5 w-5 text-green-400" />
+                АБИТУРИЕНТЫ
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span className="text-sm text-slate-300 font-mono">ВСЕГО:</span>
+                  <span className="font-mono font-bold text-white">{userStats.applicants}</span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span className="text-sm text-slate-300 font-mono">АКТИВНЫХ:</span>
+                  <span className="font-mono font-bold text-green-400">
+                    {userStats.activeApplicants}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span className="text-sm text-slate-300 font-mono">НЕАКТИВНЫХ:</span>
+                  <span className="font-mono font-bold text-orange-400">
+                    {userStats.applicants - userStats.activeApplicants}
+                  </span>
+                </div>
+                <div className="w-full bg-slate-700 h-2 border border-slate-600">
+                  <div
+                    className="bg-green-500 h-full"
+                    style={{
+                      width: `${
+                        userStats.applicants > 0
+                          ? (userStats.activeApplicants / userStats.applicants) *
+                            100
+                          : 0
+                      }%`,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800 border-2 border-slate-600 p-6">
+              <h3 className="text-lg font-mono font-bold text-white mb-4 flex items-center gap-2 uppercase">
+                <TestTube className="h-5 w-5 text-blue-400" />
+                ТЕСТЫ
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span className="text-sm text-slate-300 font-mono">ВСЕГО:</span>
+                  <span className="font-mono font-bold text-white">{testStats.total}</span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span className="text-sm text-slate-300 font-mono">ОПУБЛИКОВАННЫХ:</span>
+                  <span className="font-mono font-bold text-green-400">
+                    {testStats.published}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span className="text-sm text-slate-300 font-mono">ЧЕРНОВИКОВ:</span>
+                  <span className="font-mono font-bold text-blue-400">
+                    {testStats.drafts}
+                  </span>
+                </div>
+                <div className="w-full bg-slate-700 h-2 border border-slate-600">
+                  <div
+                    className="bg-blue-500 h-full"
+                    style={{
+                      width: `${
+                        testStats.total > 0
+                          ? (testStats.published / testStats.total) * 100
+                          : 0
+                      }%`,
+                    }}
+                  ></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      )}
+
+        {/* Системная информация */}
+        <div className="mb-8">
+          <h2 className="text-xl font-mono font-bold text-white mb-4 uppercase tracking-wide border-b border-slate-700 pb-2 flex items-center gap-2">
+            <Database className="h-6 w-6 text-blue-400" />
+            СИСТЕМНАЯ ИНФОРМАЦИЯ
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-slate-800 border-2 border-slate-600 p-4">
+              <div className="flex items-center gap-3">
+                <Shield className="h-8 w-8 text-blue-400" />
+                <div>
+                  <p className="text-sm text-slate-300 font-mono uppercase">БЕЗОПАСНОСТЬ</p>
+                  <p className="font-mono font-bold text-white">ЗАЩИЩЕНО</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800 border-2 border-slate-600 p-4">
+              <div className="flex items-center gap-3">
+                <Globe className="h-8 w-8 text-green-400" />
+                <div>
+                  <p className="text-sm text-slate-300 font-mono uppercase">СТАТУС СИСТЕМЫ</p>
+                  <p className="font-mono font-bold text-green-400">ОНЛАЙН</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800 border-2 border-slate-600 p-4">
+              <div className="flex items-center gap-3">
+                <Zap className="h-8 w-8 text-yellow-400" />
+                <div>
+                  <p className="text-sm text-slate-300 font-mono uppercase">ПРОИЗВОДИТЕЛЬНОСТЬ</p>
+                  <p className="font-mono font-bold text-white">ОТЛИЧНАЯ</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800 border-2 border-slate-600 p-4">
+              <div className="flex items-center gap-3">
+                <Database className="h-8 w-8 text-purple-400" />
+                <div>
+                  <p className="text-sm text-slate-300 font-mono uppercase">БАЗА ДАННЫХ</p>
+                  <p className="font-mono font-bold text-white">АКТИВНА</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Рекомендации */}
+        <div className="bg-slate-800 border-2 border-slate-600 p-6 mb-8">
+          <h3 className="text-lg font-mono font-bold text-white mb-4 flex items-center gap-2 uppercase">
+            <TrendingUp className="h-5 w-5 text-blue-400" />
+            РЕКОМЕНДАЦИИ ПО РАЗВИТИЮ СИСТЕМЫ
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="font-mono font-bold text-white uppercase border-b border-slate-600 pb-2">
+                ПРИОРИТЕТНЫЕ ЗАДАЧИ:
+              </h4>
+              <ul className="text-sm text-slate-300 font-mono space-y-1">
+                {(instituteStats?.totalInstitutes || 0) === 0 && (
+                  <li>• СОЗДАТЬ ИНСТИТУТЫ И НАПРАВЛЕНИЯ ПОДГОТОВКИ</li>
+                )}
+                {userStats.curators === 0 && (
+                  <li>• СОЗДАТЬ КУРАТОРОВ ДЛЯ УПРАВЛЕНИЯ ТЕСТАМИ</li>
+                )}
+                {userStats.pending > 0 && (
+                  <li>
+                    • АКТИВИРОВАТЬ {userStats.pending} ОЖИДАЮЩИХ ПОЛЬЗОВАТЕЛЕЙ
+                  </li>
+                )}
+                {userStats.blocked > 0 && (
+                  <li>
+                    • ПРОВЕРИТЬ {userStats.blocked} ЗАБЛОКИРОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ
+                  </li>
+                )}
+                {testStats.total === 0 && (
+                  <li>• СОЗДАТЬ ПЕРВЫЕ ТЕСТЫ ДЛЯ АБИТУРИЕНТОВ</li>
+                )}
+                {userStats.pending === 0 &&
+                  userStats.blocked === 0 &&
+                  (instituteStats?.totalInstitutes || 0) > 0 &&
+                  userStats.curators > 0 &&
+                  testStats.total > 0 && (
+                    <li>• ВСЕ ОСНОВНЫЕ ЗАДАЧИ ВЫПОЛНЕНЫ</li>
+                  )}
+              </ul>
+            </div>
+            <div className="space-y-3">
+              <h4 className="font-mono font-bold text-white uppercase border-b border-slate-600 pb-2">
+                ОПТИМИЗАЦИЯ ПРОЦЕССОВ:
+              </h4>
+              <ul className="text-sm text-slate-300 font-mono space-y-1">
+                <li>• РЕГУЛЯРНО ПРОВЕРЯТЬ НОВЫХ ПОЛЬЗОВАТЕЛЕЙ</li>
+                <li>• МОНИТОРИТЬ КАЧЕСТВО СОЗДАВАЕМЫХ ТЕСТОВ</li>
+                <li>• АНАЛИЗИРОВАТЬ СТАТИСТИКУ ПРОХОЖДЕНИЙ</li>
+                <li>• СЛЕДИТЬ ЗА АКТИВНОСТЬЮ КУРАТОРОВ</li>
+                <li>• СОЗДАВАТЬ РЕЗЕРВНЫЕ КОПИИ ДАННЫХ</li>
+                <li>• ОБНОВЛЯТЬ НАПРАВЛЕНИЯ ПОДГОТОВКИ</li>
+                <li>• ПРОСМАТРИВАТЬ ОТЧЕТЫ И АНАЛИТИКУ</li>
+                <li>• ОПТИМИЗИРОВАТЬ НАСТРОЙКИ СИСТЕМЫ</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Быстрые ссылки для рекомендаций */}
+          <div className="mt-6 pt-4 border-t border-slate-600">
+            <h4 className="font-mono font-bold text-white mb-3 uppercase">
+              БЫСТРЫЕ ДЕЙСТВИЯ:
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {userStats.pending > 0 && (
+                <Link
+                  href="/admin/activation"
+                  className="px-3 py-1 text-xs bg-yellow-800 text-yellow-200 border border-yellow-600 font-mono font-bold uppercase"
+                >
+                  АКТИВИРОВАТЬ ПОЛЬЗОВАТЕЛЕЙ ({userStats.pending})
+                </Link>
+              )}
+              {(instituteStats?.totalInstitutes || 0) === 0 && (
+                <Link
+                  href="/admin/institutes"
+                  className="px-3 py-1 text-xs bg-blue-800 text-blue-200 border border-blue-600 font-mono font-bold uppercase"
+                >
+                  СОЗДАТЬ ИНСТИТУТ
+                </Link>
+              )}
+              {userStats.curators === 0 && (
+                <Link
+                  href="/admin/curators"
+                  className="px-3 py-1 text-xs bg-purple-800 text-purple-200 border border-purple-600 font-mono font-bold uppercase"
+                >
+                  ДОБАВИТЬ КУРАТОРОВ
+                </Link>
+              )}
+              <Link
+                href="/admin/reports/statistics"
+                className="px-3 py-1 text-xs bg-green-800 text-green-200 border border-green-600 font-mono font-bold uppercase"
+              >
+                ПРОСМОТРЕТЬ СТАТИСТИКУ
+              </Link>
+              <Link
+                href="/admin/settings"
+                className="px-3 py-1 text-xs bg-gray-800 text-gray-200 border border-gray-600 font-mono font-bold uppercase"
+              >
+                НАСТРОЙКИ СИСТЕМЫ
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Информационные блоки в футере */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <h3 className="text-lg font-mono font-bold text-white mb-3 flex items-center gap-2 uppercase">
+              <Shield className="h-5 w-5 text-blue-400" />
+              ФУНКЦИИ АДМИНИСТРАТОРА
+            </h3>
+            <ul className="space-y-2 text-slate-300 text-sm font-mono">
+              <li>• ПОЛНОЕ УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ И ИХ РОЛЯМИ</li>
+              <li>• СОЗДАНИЕ И УПРАВЛЕНИЕ СТРУКТУРОЙ ИНСТИТУТОВ</li>
+              <li>• НАЗНАЧЕНИЕ КУРАТОРОВ НА НАПРАВЛЕНИЯ</li>
+              <li>• МОНИТОРИНГ ВСЕХ ТЕСТОВ В СИСТЕМЕ</li>
+              <li>• ГЕНЕРАЦИЯ ОТЧЕТОВ И ЭКСПОРТ ДАННЫХ</li>
+              <li>• УПРАВЛЕНИЕ СИСТЕМНЫМИ НАСТРОЙКАМИ</li>
+              <li>• КОНТРОЛЬ БЕЗОПАСНОСТИ И ДОСТУПОВ</li>
+              <li>• РЕЗЕРВНОЕ КОПИРОВАНИЕ И ВОССТАНОВЛЕНИЕ</li>
+            </ul>
+          </div>
+
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <h3 className="text-lg font-mono font-bold text-white mb-3 flex items-center gap-2 uppercase">
+              <CheckCircle className="h-5 w-5 text-green-400" />
+              ПОРЯДОК НАСТРОЙКИ СИСТЕМЫ
+            </h3>
+            <ol className="space-y-2 text-slate-300 text-sm font-mono">
+              <li>1. СОЗДАЙТЕ ИНСТИТУТЫ И НАПРАВЛЕНИЯ ПОДГОТОВКИ</li>
+              <li>2. ДОБАВЬТЕ КУРАТОРОВ И НАЗНАЧЬТЕ ИХ НА ИНСТИТУТЫ</li>
+              <li>3. АКТИВИРУЙТЕ ЗАРЕГИСТРИРОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ</li>
+              <li>4. НАСТРОЙТЕ СИСТЕМУ ТЕСТИРОВАНИЯ</li>
+              <li>5. ПРОВЕРЬТЕ РАБОТУ ВСЕХ КОМПОНЕНТОВ</li>
+              <li>6. ОБУЧИТЕ КУРАТОРОВ РАБОТЕ С СИСТЕМОЙ</li>
+              <li>7. ЗАПУСТИТЕ ТЕСТИРОВАНИЕ АБИТУРИЕНТОВ</li>
+              <li>8. РЕГУЛЯРНО МОНИТОРЬТЕ И АНАЛИЗИРУЙТЕ ДАННЫЕ</li>
+            </ol>
+          </div>
+        </div>
+
+        {/* Уведомления о критических задачах */}
+        {(userStats.pending > 5 ||
+          userStats.blocked > 0 ||
+          (instituteStats?.totalInstitutes || 0) === 0) && (
+          <div className="mt-6">
+            <div className="bg-red-900 border-2 border-red-600 p-4">
+              <div className="flex items-center">
+                <AlertTriangle className="h-5 w-5 text-red-400 mr-3" />
+                <div>
+                  <h3 className="text-sm font-mono font-bold text-red-200 uppercase">
+                    ТРЕБУЕТСЯ НЕМЕДЛЕННОЕ ВНИМАНИЕ
+                  </h3>
+                  <p className="text-sm text-red-300 font-mono">
+                    {userStats.pending > 5 &&
+                      `${userStats.pending} ПОЛЬЗОВАТЕЛЕЙ ОЖИДАЮТ АКТИВАЦИИ БОЛЕЕ НЕДЕЛИ. `}
+                    {userStats.blocked > 0 &&
+                      `${userStats.blocked} ПОЛЬЗОВАТЕЛЕЙ ЗАБЛОКИРОВАНЫ. `}
+                    {(instituteStats?.totalInstitutes || 0) === 0 &&
+                      "СИСТЕМА НЕ МОЖЕТ РАБОТАТЬ БЕЗ ИНСТИТУТОВ И НАПРАВЛЕНИЙ."}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

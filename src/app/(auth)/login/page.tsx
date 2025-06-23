@@ -140,36 +140,36 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-2xl shadow-xl border border-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900">
+      <div className="w-full max-w-md p-8 space-y-8 bg-slate-800 border-2 border-slate-600">
         <div className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-indigo-600 rounded-full">
+            <div className="p-3 bg-blue-700 border-2 border-blue-500">
               <TestTube className="h-8 w-8 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-extrabold text-gray-900">
-            Вход в систему
+          <h1 className="text-3xl font-mono font-bold text-white uppercase tracking-wide">
+            ВХОД В СИСТЕМУ
           </h1>
-          <p className="mt-2 text-sm text-gray-600">
-            Войдите в свой аккаунт для доступа к платформе тестирования
+          <p className="mt-2 text-sm text-slate-300 font-mono">
+            ВОЙДИТЕ В СВОЙ АККАУНТ ДЛЯ ДОСТУПА К ПЛАТФОРМЕ ТЕСТИРОВАНИЯ
           </p>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {(error || errorMessage) && (
             <div
-              className={`p-4 border rounded-lg ${
+              className={`p-4 border-2 ${
                 (errorMessage || error)?.includes("не активирован") ||
                 (errorMessage || error)?.includes("not activated")
-                  ? "text-amber-700 bg-amber-50 border-amber-200"
+                  ? "text-yellow-200 bg-yellow-900 border-yellow-600"
                   : (errorMessage || error)?.includes("заблокирован") ||
                     (errorMessage || error)?.includes("blocked")
-                  ? "text-red-700 bg-red-50 border-red-200"
+                  ? "text-red-200 bg-red-900 border-red-600"
                   : (errorMessage || error)?.includes("не найден") ||
                     (errorMessage || error)?.includes("not found")
-                  ? "text-blue-700 bg-blue-50 border-blue-200"
-                  : "text-red-700 bg-red-50 border-red-200"
+                  ? "text-blue-200 bg-blue-900 border-blue-600"
+                  : "text-red-200 bg-red-900 border-red-600"
               }`}
             >
               <div className="flex items-center gap-2">
@@ -185,7 +185,7 @@ function LoginForm() {
                 ) : (
                   <AlertTriangle className="h-4 w-4 flex-shrink-0" />
                 )}
-                <span className="text-sm">{errorMessage || error}</span>
+                <span className="text-sm font-mono">{errorMessage || error}</span>
               </div>
             </div>
           )}
@@ -193,9 +193,9 @@ function LoginForm() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-mono font-bold text-white mb-2 uppercase tracking-wide"
             >
-              Email адрес
+              EMAIL АДРЕС
             </label>
             <input
               id="email"
@@ -203,17 +203,17 @@ function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-              placeholder="введите ваш email"
+              className="w-full px-3 py-3 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:outline-none focus:border-blue-400"
+              placeholder="ВВЕДИТЕ ВАШ EMAIL"
             />
           </div>
 
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-mono font-bold text-white mb-2 uppercase tracking-wide"
             >
-              Пароль
+              ПАРОЛЬ
             </label>
             <div className="relative">
               <input
@@ -222,13 +222,13 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-3 py-3 pr-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                placeholder="введите ваш пароль"
+                className="w-full px-3 py-3 pr-10 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:outline-none focus:border-blue-400"
+                placeholder="ВВЕДИТЕ ВАШ ПАРОЛЬ"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400"
               >
                 {showPassword ? (
                   <EyeOff className="h-5 w-5" />
@@ -243,57 +243,57 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed transition-all duration-200"
+              className="w-full flex justify-center items-center gap-2 py-3 px-4 border-2 border-blue-600 text-sm font-mono font-bold text-white bg-blue-700 disabled:bg-blue-800 disabled:border-blue-700 disabled:cursor-not-allowed uppercase tracking-wide"
             >
               {loading ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  Вход...
+                  <div className="border-2 border-white border-t-transparent w-4 h-4"></div>
+                  ВХОД...
                 </>
               ) : (
                 <>
                   <LogIn className="h-4 w-4" />
-                  Войти
+                  ВОЙТИ
                 </>
               )}
             </button>
           </div>
 
           <div className="text-center space-y-3">
-            <p className="text-sm">
-              Нет аккаунта?{" "}
+            <p className="text-sm font-mono text-slate-300">
+              НЕТ АККАУНТА?{" "}
               <Link
                 href="/register"
-                className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+                className="font-mono font-bold text-blue-400 border-b border-blue-400"
               >
-                Зарегистрироваться
+                ЗАРЕГИСТРИРОВАТЬСЯ
               </Link>
             </p>
-            <p className="text-xs text-gray-500">
-              Если ваш аккаунт не активирован, обратитесь к администратору или
-              куратору системы
+            <p className="text-xs text-slate-400 font-mono">
+              ЕСЛИ ВАШ АККАУНТ НЕ АКТИВИРОВАН, ОБРАТИТЕСЬ К АДМИНИСТРАТОРУ ИЛИ
+              КУРАТОРУ СИСТЕМЫ
             </p>
           </div>
         </form>
 
         {/* Информационный блок о системе */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
+        <div className="mt-8 pt-6 border-t-2 border-slate-600">
           <div className="text-center">
-            <h3 className="text-sm font-medium text-gray-900 mb-3">
-              Система тестирования абитуриентов
+            <h3 className="text-sm font-mono font-bold text-white mb-3 uppercase tracking-wide">
+              СИСТЕМА ТЕСТИРОВАНИЯ АБИТУРИЕНТОВ
             </h3>
-            <div className="grid grid-cols-3 gap-4 text-xs text-gray-600">
-              <div className="flex flex-col items-center">
-                <GraduationCap className="h-6 w-6 text-indigo-600 mb-1" />
-                <span>Для абитуриентов</span>
+            <div className="grid grid-cols-3 gap-4 text-xs text-slate-300 font-mono">
+              <div className="flex flex-col items-center border border-slate-600 p-3">
+                <GraduationCap className="h-6 w-6 text-blue-400 mb-1" />
+                <span className="uppercase">АБИТУРИЕНТЫ</span>
               </div>
-              <div className="flex flex-col items-center">
-                <TestTube className="h-6 w-6 text-indigo-600 mb-1" />
-                <span>Тестирование</span>
+              <div className="flex flex-col items-center border border-slate-600 p-3">
+                <TestTube className="h-6 w-6 text-blue-400 mb-1" />
+                <span className="uppercase">ТЕСТИРОВАНИЕ</span>
               </div>
-              <div className="flex flex-col items-center">
-                <CheckCircle className="h-6 w-6 text-indigo-600 mb-1" />
-                <span>Результаты</span>
+              <div className="flex flex-col items-center border border-slate-600 p-3">
+                <CheckCircle className="h-6 w-6 text-blue-400 mb-1" />
+                <span className="uppercase">РЕЗУЛЬТАТЫ</span>
               </div>
             </div>
           </div>
@@ -306,21 +306,23 @@ function LoginForm() {
 // Fallback компонент для загрузки
 function LoginPageFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-2xl shadow-xl border border-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900">
+      <div className="w-full max-w-md p-8 space-y-8 bg-slate-800 border-2 border-slate-600">
         <div className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-indigo-600 rounded-full">
+            <div className="p-3 bg-blue-700 border-2 border-blue-500">
               <TestTube className="h-8 w-8 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-extrabold text-gray-900">
-            Вход в систему
+          <h1 className="text-3xl font-mono font-bold text-white uppercase tracking-wide">
+            ВХОД В СИСТЕМУ
           </h1>
-          <p className="mt-2 text-sm text-gray-600">Загрузка...</p>
+          <p className="mt-2 text-sm text-slate-300 font-mono uppercase">
+            ЗАГРУЗКА...
+          </p>
         </div>
         <div className="flex justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+          <div className="border-2 border-blue-400 border-t-transparent w-8 h-8"></div>
         </div>
       </div>
     </div>

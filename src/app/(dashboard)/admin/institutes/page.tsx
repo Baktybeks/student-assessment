@@ -219,445 +219,463 @@ export default function InstitutesPage() {
 
   if (isLoading) {
     return (
-      <div className="p-6 max-w-7xl mx-auto">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-          <span className="ml-3 text-gray-600">Загрузка институтов...</span>
+      <div className="min-h-screen bg-slate-900 text-white">
+        <div className="p-6 max-w-7xl mx-auto">
+          <div className="flex justify-center items-center h-64">
+            <div className="border-2 border-blue-400 border-t-transparent w-8 h-8"></div>
+            <span className="ml-3 font-mono text-slate-300 uppercase">ЗАГРУЗКА ИНСТИТУТОВ...</span>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* Заголовок */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <Building className="h-8 w-8 text-blue-500" />
-              <h1 className="text-3xl font-bold text-gray-900">
-                Управление институтами
-              </h1>
-            </div>
-            <p className="text-gray-600">
-              Создание и управление институтами в системе тестирования
-            </p>
-          </div>
-
-          <button
-            onClick={() => setShowCreateForm(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <Plus className="h-4 w-4" />
-            Создать институт
-          </button>
-        </div>
-      </div>
-
-      {/* Статистика */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Building className="h-8 w-8 text-blue-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                Всего институтов
-              </p>
-              <p className="text-2xl font-bold text-gray-900">
-                {instituteStats.total}
+    <div className="min-h-screen bg-slate-900 text-white">
+      <div className="p-6 max-w-7xl mx-auto">
+        {/* Заголовок */}
+        <div className="mb-8 border-b border-slate-700 pb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <Building className="h-8 w-8 text-blue-400" />
+                <h1 className="text-3xl font-mono font-bold text-white uppercase tracking-wide">
+                  УПРАВЛЕНИЕ ИНСТИТУТАМИ
+                </h1>
+              </div>
+              <p className="text-slate-300 font-mono">
+                СОЗДАНИЕ И УПРАВЛЕНИЕ ИНСТИТУТАМИ В СИСТЕМЕ ТЕСТИРОВАНИЯ
               </p>
             </div>
-          </div>
-        </div>
 
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <CheckCircle className="h-8 w-8 text-green-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Активные</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {instituteStats.active}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <GraduationCap className="h-8 w-8 text-purple-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                Всего направлений
-              </p>
-              <p className="text-2xl font-bold text-gray-900">
-                {allDirections.length}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Фильтры и поиск */}
-      <div className="bg-white rounded-lg shadow border p-6 mb-6">
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="flex flex-col md:flex-row gap-4 items-center">
-            {/* Поиск */}
-            <div className="relative">
-              <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Поиск по названию или коду..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-            {/* Фильтр по статусу */}
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            <button
+              onClick={() => setShowCreateForm(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white border-2 border-blue-500 font-mono font-bold uppercase"
             >
-              <option value="ALL">Все статусы</option>
-              <option value="ACTIVE">Активные</option>
-              <option value="INACTIVE">Неактивные</option>
-            </select>
+              <Plus className="h-4 w-4" />
+              СОЗДАТЬ ИНСТИТУТ
+            </button>
           </div>
-
-          <button
-            onClick={() => refetch()}
-            className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-          >
-            <RefreshCw className="h-4 w-4" />
-            Обновить
-          </button>
         </div>
-      </div>
 
-      {/* Список институтов */}
-      <div className="bg-white rounded-lg shadow border">
-        {filteredInstitutes.length === 0 ? (
-          <div className="text-center py-12">
-            <Building className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              {institutes.length === 0
-                ? "Нет институтов"
-                : "Институты не найдены"}
-            </h3>
-            <p className="text-gray-500 mb-4">
-              {institutes.length === 0
-                ? "Создайте первый институт для начала работы"
-                : "Попробуйте изменить параметры поиска"}
-            </p>
-            {institutes.length === 0 && (
-              <button
-                onClick={() => setShowCreateForm(true)}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                <Plus className="h-4 w-4" />
-                Создать институт
-              </button>
-            )}
+        {/* Статистика */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Building className="h-8 w-8 text-blue-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  ВСЕГО ИНСТИТУТОВ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {instituteStats.total}
+                </p>
+              </div>
+            </div>
           </div>
-        ) : (
-          <div className="overflow-hidden">
-            {/* Заголовок таблицы */}
-            <div className="bg-gray-50 px-6 py-3 border-b border-gray-200">
-              <div className="grid grid-cols-12 gap-4 items-center text-sm font-medium text-gray-900">
-                <div className="col-span-4">Институт</div>
-                <div className="col-span-2">Код</div>
-                <div className="col-span-2">Направления</div>
-                <div className="col-span-2">Статус</div>
-                <div className="col-span-2">Действия</div>
+
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <CheckCircle className="h-8 w-8 text-green-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  АКТИВНЫЕ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {instituteStats.active}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <GraduationCap className="h-8 w-8 text-purple-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  ВСЕГО НАПРАВЛЕНИЙ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {allDirections.length}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Фильтры и поиск */}
+        <div className="bg-slate-800 border-2 border-slate-600 p-6 mb-6">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex flex-col md:flex-row gap-4 items-center">
+              {/* Поиск */}
+              <div className="relative">
+                <label className="block text-sm font-mono font-bold text-slate-300 uppercase mb-1">
+                  ПОИСК
+                </label>
+                <div className="relative">
+                  <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="ПОИСК ПО НАЗВАНИЮ ИЛИ КОДУ..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 pr-4 py-2 w-80 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Фильтр по статусу */}
+              <div>
+                <label className="block text-sm font-mono font-bold text-slate-300 uppercase mb-1">
+                  СТАТУС
+                </label>
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value as any)}
+                  className="px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:border-blue-500"
+                >
+                  <option value="ALL">ВСЕ СТАТУСЫ</option>
+                  <option value="ACTIVE">АКТИВНЫЕ</option>
+                  <option value="INACTIVE">НЕАКТИВНЫЕ</option>
+                </select>
               </div>
             </div>
 
-            {/* Список институтов */}
-            <div className="divide-y divide-gray-200">
-              {filteredInstitutes.map((institute) => {
-                const directionsCount = getInstituteDirectionsCount(
-                  institute.$id
-                );
+            <button
+              onClick={() => refetch()}
+              className="flex items-center gap-2 px-3 py-2 text-slate-300 border border-slate-600 font-mono font-bold uppercase"
+            >
+              <RefreshCw className="h-4 w-4" />
+              ОБНОВИТЬ
+            </button>
+          </div>
+        </div>
 
-                return (
-                  <div
-                    key={institute.$id}
-                    className="px-6 py-4 hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="grid grid-cols-12 gap-4 items-center">
-                      {/* Название и описание */}
-                      <div className="col-span-4">
-                        <div>
-                          <h3 className="text-sm font-medium text-gray-900 mb-1">
-                            {institute.name}
-                          </h3>
-                          {institute.description && (
-                            <p className="text-xs text-gray-500 line-clamp-2">
-                              {institute.description}
-                            </p>
-                          )}
-                          <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
-                            <Calendar className="h-3 w-3" />
-                            <span>
-                              Создан {formatDate(institute.$createdAt)}
+        {/* Список институтов */}
+        <div className="bg-slate-800 border-2 border-slate-600">
+          {filteredInstitutes.length === 0 ? (
+            <div className="text-center py-12">
+              <Building className="h-16 w-16 text-slate-500 mx-auto mb-4" />
+              <h3 className="text-lg font-mono font-bold text-white mb-2 uppercase">
+                {institutes.length === 0
+                  ? "НЕТ ИНСТИТУТОВ"
+                  : "ИНСТИТУТЫ НЕ НАЙДЕНЫ"}
+              </h3>
+              <p className="text-slate-400 font-mono mb-4">
+                {institutes.length === 0
+                  ? "Создайте первый институт для начала работы"
+                  : "Попробуйте изменить параметры поиска"}
+              </p>
+              {institutes.length === 0 && (
+                <button
+                  onClick={() => setShowCreateForm(true)}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-700 text-white border-2 border-blue-500 font-mono font-bold uppercase"
+                >
+                  <Plus className="h-4 w-4" />
+                  СОЗДАТЬ ИНСТИТУТ
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="overflow-hidden">
+              {/* Заголовок таблицы */}
+              <div className="bg-slate-700 px-6 py-3 border-b-2 border-slate-600">
+                <div className="grid grid-cols-12 gap-4 items-center text-sm font-mono font-bold text-white uppercase">
+                  <div className="col-span-4">ИНСТИТУТ</div>
+                  <div className="col-span-2">КОД</div>
+                  <div className="col-span-2">НАПРАВЛЕНИЯ</div>
+                  <div className="col-span-2">СТАТУС</div>
+                  <div className="col-span-2">ДЕЙСТВИЯ</div>
+                </div>
+              </div>
+
+              {/* Список институтов */}
+              <div className="divide-y-2 divide-slate-600">
+                {filteredInstitutes.map((institute) => {
+                  const directionsCount = getInstituteDirectionsCount(
+                    institute.$id
+                  );
+
+                  return (
+                    <div
+                      key={institute.$id}
+                      className="px-6 py-4 bg-slate-800"
+                    >
+                      <div className="grid grid-cols-12 gap-4 items-center">
+                        {/* Название и описание */}
+                        <div className="col-span-4">
+                          <div>
+                            <h3 className="text-sm font-mono font-bold text-white mb-1">
+                              {institute.name}
+                            </h3>
+                            {institute.description && (
+                              <p className="text-xs text-slate-400 font-mono line-clamp-2">
+                                {institute.description}
+                              </p>
+                            )}
+                            <div className="flex items-center gap-2 mt-2 text-xs text-slate-500 font-mono">
+                              <Calendar className="h-3 w-3" />
+                              <span>
+                                СОЗДАН {formatDate(institute.$createdAt)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Код */}
+                        <div className="col-span-2">
+                          <div className="flex items-center gap-1">
+                            <Code className="h-3 w-3 text-slate-400" />
+                            <span className="text-sm font-mono font-bold text-white border border-slate-600 px-2 py-1">
+                              {institute.code}
                             </span>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Код */}
-                      <div className="col-span-2">
-                        <div className="flex items-center gap-1">
-                          <Code className="h-3 w-3 text-gray-400" />
-                          <span className="text-sm font-mono text-gray-900">
-                            {institute.code}
-                          </span>
+                        {/* Направления */}
+                        <div className="col-span-2">
+                          <div className="flex items-center gap-1">
+                            <GraduationCap className="h-3 w-3 text-purple-400" />
+                            <span className="text-sm font-mono font-bold text-white">
+                              {directionsCount}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-400 font-mono uppercase">
+                            НАПРАВЛЕНИЙ
+                          </p>
                         </div>
-                      </div>
 
-                      {/* Направления */}
-                      <div className="col-span-2">
-                        <div className="flex items-center gap-1">
-                          <GraduationCap className="h-3 w-3 text-purple-500" />
-                          <span className="text-sm text-gray-900">
-                            {directionsCount}
-                          </span>
+                        {/* Статус */}
+                        <div className="col-span-2">
+                          {institute.isActive ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-bold bg-green-800 text-green-200 border border-green-600 uppercase">
+                              <CheckCircle className="h-3 w-3" />
+                              АКТИВЕН
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-bold bg-gray-800 text-gray-200 border border-gray-600 uppercase">
+                              <XCircle className="h-3 w-3" />
+                              НЕАКТИВЕН
+                            </span>
+                          )}
                         </div>
-                        <p className="text-xs text-gray-500">направлений</p>
-                      </div>
 
-                      {/* Статус */}
-                      <div className="col-span-2">
-                        {institute.isActive ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
-                            <CheckCircle className="h-3 w-3" />
-                            Активен
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full">
-                            <XCircle className="h-3 w-3" />
-                            Неактивен
-                          </span>
-                        )}
-                      </div>
+                        {/* Действия */}
+                        <div className="col-span-2">
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => {
+                                /* TODO: просмотр направлений института */
+                              }}
+                              className="p-1 text-blue-400 border border-blue-600 bg-blue-900"
+                              title="Просмотреть направления"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </button>
 
-                      {/* Действия */}
-                      <div className="col-span-2">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => {
-                              /* TODO: просмотр направлений института */
-                            }}
-                            className="p-1 text-blue-600 hover:text-blue-800 transition-colors"
-                            title="Просмотреть направления"
-                          >
-                            <Eye className="h-4 w-4" />
-                          </button>
+                            <button
+                              onClick={() => handleEditClick(institute)}
+                              className="p-1 text-slate-300 border border-slate-600 bg-slate-700"
+                              title="Редактировать"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </button>
 
-                          <button
-                            onClick={() => handleEditClick(institute)}
-                            className="p-1 text-gray-600 hover:text-gray-800 transition-colors"
-                            title="Редактировать"
-                          >
-                            <Edit className="h-4 w-4" />
-                          </button>
+                            <button
+                              onClick={() => handleToggleStatus(institute)}
+                              disabled={updateInstituteMutation.isPending}
+                              className={`p-1 border-2 ${
+                                institute.isActive
+                                  ? "text-yellow-400 border-yellow-600 bg-yellow-900"
+                                  : "text-green-400 border-green-600 bg-green-900"
+                              }`}
+                              title={
+                                institute.isActive
+                                  ? "Деактивировать"
+                                  : "Активировать"
+                              }
+                            >
+                              {institute.isActive ? (
+                                <XCircle className="h-4 w-4" />
+                              ) : (
+                                <CheckCircle className="h-4 w-4" />
+                              )}
+                            </button>
 
-                          <button
-                            onClick={() => handleToggleStatus(institute)}
-                            disabled={updateInstituteMutation.isPending}
-                            className={`p-1 transition-colors ${
-                              institute.isActive
-                                ? "text-yellow-600 hover:text-yellow-800"
-                                : "text-green-600 hover:text-green-800"
-                            }`}
-                            title={
-                              institute.isActive
-                                ? "Деактивировать"
-                                : "Активировать"
-                            }
-                          >
-                            {institute.isActive ? (
-                              <XCircle className="h-4 w-4" />
-                            ) : (
-                              <CheckCircle className="h-4 w-4" />
-                            )}
-                          </button>
-
-                          <button
-                            onClick={() => handleDeleteInstitute(institute)}
-                            disabled={
-                              deleteInstituteMutation.isPending ||
-                              directionsCount > 0
-                            }
-                            className="p-1 text-red-600 hover:text-red-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                            title={
-                              directionsCount > 0
-                                ? "Нельзя удалить институт с направлениями"
-                                : "Удалить"
-                            }
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
+                            <button
+                              onClick={() => handleDeleteInstitute(institute)}
+                              disabled={
+                                deleteInstituteMutation.isPending ||
+                                directionsCount > 0
+                              }
+                              className="p-1 text-red-400 border border-red-600 bg-red-900 disabled:opacity-50"
+                              title={
+                                directionsCount > 0
+                                  ? "Нельзя удалить институт с направлениями"
+                                  : "Удалить"
+                              }
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Модальное окно создания/редактирования */}
+        {(showCreateForm || editingInstitute) && (
+          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+            <div className="bg-slate-800 border-2 border-slate-600 p-6 max-w-md w-full mx-4">
+              <div className="flex items-center justify-between mb-4 border-b border-slate-600 pb-4">
+                <h3 className="text-lg font-mono font-bold text-white uppercase">
+                  {editingInstitute
+                    ? "РЕДАКТИРОВАТЬ ИНСТИТУТ"
+                    : "СОЗДАТЬ ИНСТИТУТ"}
+                </h3>
+                <button
+                  onClick={resetForm}
+                  className="text-slate-400 border border-slate-600 p-1"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <form
+                onSubmit={
+                  editingInstitute ? handleUpdateInstitute : handleCreateInstitute
+                }
+                className="space-y-4"
+              >
+                <div>
+                  <label
+                    htmlFor="instituteName"
+                    className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
+                  >
+                    НАЗВАНИЕ ИНСТИТУТА *
+                  </label>
+                  <input
+                    id="instituteName"
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, name: e.target.value }))
+                    }
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 focus:border-blue-500"
+                    placeholder="ВВЕДИТЕ НАЗВАНИЕ ИНСТИТУТА"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="instituteCode"
+                    className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
+                  >
+                    КОД ИНСТИТУТА *
+                  </label>
+                  <input
+                    id="instituteCode"
+                    type="text"
+                    value={formData.code}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        code: e.target.value.toUpperCase(),
+                      }))
+                    }
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 focus:border-blue-500"
+                    placeholder="НАПРИМЕР: INST001"
+                    required
+                  />
+                  <p className="mt-1 text-xs text-slate-400 font-mono uppercase">
+                    УНИКАЛЬНЫЙ КОД ДЛЯ ИДЕНТИФИКАЦИИ ИНСТИТУТА
+                  </p>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="instituteDescription"
+                    className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
+                  >
+                    ОПИСАНИЕ
+                  </label>
+                  <textarea
+                    id="instituteDescription"
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        description: e.target.value,
+                      }))
+                    }
+                    rows={3}
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 focus:border-blue-500"
+                    placeholder="КРАТКОЕ ОПИСАНИЕ ИНСТИТУТА"
+                  />
+                </div>
+
+                <div className="flex gap-3 pt-4 border-t border-slate-600">
+                  <button
+                    type="button"
+                    onClick={resetForm}
+                    className="flex-1 px-4 py-2 text-slate-300 bg-slate-700 border border-slate-600 font-mono font-bold uppercase"
+                  >
+                    ОТМЕНА
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={
+                      createInstituteMutation.isPending ||
+                      updateInstituteMutation.isPending
+                    }
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-white bg-blue-700 border-2 border-blue-500 font-mono font-bold uppercase disabled:opacity-50"
+                  >
+                    <Save className="h-4 w-4" />
+                    {editingInstitute ? "СОХРАНИТЬ" : "СОЗДАТЬ"}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}
-      </div>
 
-      {/* Модальное окно создания/редактирования */}
-      {(showCreateForm || editingInstitute) && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {editingInstitute
-                  ? "Редактировать институт"
-                  : "Создать институт"}
+        {/* Информационная панель */}
+        <div className="mt-6 bg-slate-800 border-2 border-slate-600 p-6">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="h-5 w-5 text-blue-400 mt-0.5" />
+            <div>
+              <h3 className="text-sm font-mono font-bold text-white mb-2 uppercase">
+                УПРАВЛЕНИЕ ИНСТИТУТАМИ
               </h3>
-              <button
-                onClick={resetForm}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <X className="h-5 w-5" />
-              </button>
+              <ul className="text-sm text-slate-300 font-mono space-y-1">
+                <li>
+                  • ИНСТИТУТЫ ЯВЛЯЮТСЯ ОСНОВНОЙ СТРУКТУРНОЙ ЕДИНИЦЕЙ СИСТЕМЫ
+                </li>
+                <li>• К ИНСТИТУТАМ ПРИВЯЗЫВАЮТСЯ НАПРАВЛЕНИЯ ПОДГОТОВКИ</li>
+                <li>
+                  • КУРАТОРЫ НАЗНАЧАЮТСЯ НА ИНСТИТУТЫ ДЛЯ УПРАВЛЕНИЯ ТЕСТАМИ
+                </li>
+                <li>• КОД ИНСТИТУТА ДОЛЖЕН БЫТЬ УНИКАЛЬНЫМ В СИСТЕМЕ</li>
+                <li>
+                  • НЕЛЬЗЯ УДАЛИТЬ ИНСТИТУТ, ЕСЛИ К НЕМУ ПРИВЯЗАНЫ НАПРАВЛЕНИЯ
+                </li>
+                <li>
+                  • НЕАКТИВНЫЕ ИНСТИТУТЫ СКРЫТЫ ПРИ РЕГИСТРАЦИИ АБИТУРИЕНТОВ
+                </li>
+              </ul>
             </div>
-
-            <form
-              onSubmit={
-                editingInstitute ? handleUpdateInstitute : handleCreateInstitute
-              }
-              className="space-y-4"
-            >
-              <div>
-                <label
-                  htmlFor="instituteName"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Название института *
-                </label>
-                <input
-                  id="instituteName"
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, name: e.target.value }))
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Введите название института"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="instituteCode"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Код института *
-                </label>
-                <input
-                  id="instituteCode"
-                  type="text"
-                  value={formData.code}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      code: e.target.value.toUpperCase(),
-                    }))
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono"
-                  placeholder="Например: INST001"
-                  required
-                />
-                <p className="mt-1 text-xs text-gray-500">
-                  Уникальный код для идентификации института
-                </p>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="instituteDescription"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Описание
-                </label>
-                <textarea
-                  id="instituteDescription"
-                  value={formData.description}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      description: e.target.value,
-                    }))
-                  }
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Краткое описание института"
-                />
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={resetForm}
-                  className="flex-1 px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
-                >
-                  Отмена
-                </button>
-                <button
-                  type="submit"
-                  disabled={
-                    createInstituteMutation.isPending ||
-                    updateInstituteMutation.isPending
-                  }
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
-                >
-                  <Save className="h-4 w-4" />
-                  {editingInstitute ? "Сохранить" : "Создать"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Информационная панель */}
-      <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6">
-        <div className="flex items-start gap-3">
-          <AlertTriangle className="h-5 w-5 text-blue-600 mt-0.5" />
-          <div>
-            <h3 className="text-sm font-medium text-blue-900 mb-2">
-              Управление институтами
-            </h3>
-            <ul className="text-sm text-blue-800 space-y-1">
-              <li>
-                • Институты являются основной структурной единицей системы
-              </li>
-              <li>• К институтам привязываются направления подготовки</li>
-              <li>
-                • Кураторы назначаются на институты для управления тестами
-              </li>
-              <li>• Код института должен быть уникальным в системе</li>
-              <li>
-                • Нельзя удалить институт, если к нему привязаны направления
-              </li>
-              <li>
-                • Неактивные институты скрыты при регистрации абитуриентов
-              </li>
-            </ul>
           </div>
         </div>
       </div>

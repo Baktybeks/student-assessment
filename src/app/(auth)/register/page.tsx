@@ -128,35 +128,35 @@ export default function RegisterPage() {
   if (registrationSuccess) {
     return (
       <Layout title="Регистрация завершена">
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-          <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-xl border border-gray-100 text-center">
+        <div className="min-h-screen flex items-center justify-center bg-slate-900">
+          <div className="w-full max-w-md p-8 space-y-6 bg-slate-800 border-2 border-slate-600 text-center">
             {isFirstUser || registeredRole === UserRole.ADMIN ? (
               // Сообщение для администратора (автоактивация)
               <>
                 <div className="flex justify-center">
-                  <div className="p-3 bg-green-500 rounded-full">
-                    <CheckCircle className="h-8 w-8 text-white" />
+                  <div className="p-3 bg-green-800 border-2 border-green-600">
+                    <CheckCircle className="h-8 w-8 text-green-400" />
                   </div>
                 </div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  Добро пожаловать!
+                <h1 className="text-2xl font-mono font-bold text-white uppercase tracking-wide">
+                  ДОБРО ПОЖАЛОВАТЬ!
                 </h1>
                 <div className="space-y-3">
-                  <p className="text-gray-600">
+                  <p className="text-slate-300 font-mono">
                     Ваш аккаунт администратора успешно создан и автоматически
                     активирован.
                   </p>
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <p className="text-sm text-green-800">
-                      <strong>Имя:</strong> {name}
+                  <div className="bg-green-900 border-2 border-green-600 p-4">
+                    <p className="text-sm text-green-200 font-mono text-left">
+                      <strong>ИМЯ:</strong> {name}
                       <br />
-                      <strong>Email:</strong> {email}
+                      <strong>EMAIL:</strong> {email}
                       <br />
-                      <strong>Роль:</strong> Администратор
+                      <strong>РОЛЬ:</strong> АДМИНИСТРАТОР
                     </p>
                   </div>
-                  <p className="text-sm text-gray-500">
-                    Перенаправление на страницу входа...
+                  <p className="text-xs text-slate-400 font-mono uppercase">
+                    ПЕРЕНАПРАВЛЕНИЕ НА СТРАНИЦУ ВХОДА...
                   </p>
                 </div>
               </>
@@ -164,64 +164,64 @@ export default function RegisterPage() {
               // Сообщение для обычных пользователей (нужна активация)
               <>
                 <div className="flex justify-center">
-                  <div className="p-3 bg-amber-500 rounded-full">
-                    <Clock className="h-8 w-8 text-white" />
+                  <div className="p-3 bg-yellow-800 border-2 border-yellow-600">
+                    <Clock className="h-8 w-8 text-yellow-400" />
                   </div>
                 </div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  Регистрация завершена!
+                <h1 className="text-2xl font-mono font-bold text-white uppercase tracking-wide">
+                  РЕГИСТРАЦИЯ ЗАВЕРШЕНА!
                 </h1>
                 <div className="space-y-3">
-                  <p className="text-gray-600">
+                  <p className="text-slate-300 font-mono">
                     Ваш аккаунт успешно создан, но требует активации
                     {role === UserRole.CURATOR
                       ? " администратором"
                       : " куратором или администратором"}
                     .
                   </p>
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                  <div className="bg-yellow-900 border-2 border-yellow-600 p-4">
                     <div className="flex items-center gap-2 mb-2">
-                      <AlertCircle className="h-4 w-4 text-amber-600" />
-                      <span className="text-sm font-medium text-amber-800">
-                        Что дальше?
+                      <AlertCircle className="h-4 w-4 text-yellow-400" />
+                      <span className="text-sm font-mono font-bold text-yellow-200 uppercase">
+                        ЧТО ДАЛЬШЕ?
                       </span>
                     </div>
-                    <ul className="text-sm text-amber-700 space-y-1 text-left">
+                    <ul className="text-sm text-yellow-300 font-mono space-y-1 text-left">
                       <li>
-                        • Администратор получит уведомление о вашей регистрации
+                        • АДМИНИСТРАТОР ПОЛУЧИТ УВЕДОМЛЕНИЕ О ВАШЕЙ РЕГИСТРАЦИИ
                       </li>
-                      <li>• После активации вы получите доступ к системе</li>
-                      <li>• Попробуйте войти через несколько минут</li>
+                      <li>• ПОСЛЕ АКТИВАЦИИ ВЫ ПОЛУЧИТЕ ДОСТУП К СИСТЕМЕ</li>
+                      <li>• ПОПРОБУЙТЕ ВОЙТИ ЧЕРЕЗ НЕСКОЛЬКО МИНУТ</li>
                       {role === UserRole.APPLICANT && (
                         <li>
-                          • После активации заполните анкету для доступа к
-                          тестам
+                          • ПОСЛЕ АКТИВАЦИИ ЗАПОЛНИТЕ АНКЕТУ ДЛЯ ДОСТУПА К
+                          ТЕСТАМ
                         </li>
                       )}
                     </ul>
                   </div>
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <p className="text-sm text-gray-600">
-                      <strong>Имя:</strong> {name}
+                  <div className="bg-slate-700 border-2 border-slate-600 p-4">
+                    <p className="text-sm text-slate-300 font-mono text-left">
+                      <strong>ИМЯ:</strong> {name}
                       <br />
-                      <strong>Email:</strong> {email}
+                      <strong>EMAIL:</strong> {email}
                       <br />
-                      <strong>Роль:</strong>{" "}
+                      <strong>РОЛЬ:</strong>{" "}
                       {registeredRole === UserRole.CURATOR
-                        ? "Куратор"
-                        : "Абитуриент"}
+                        ? "КУРАТОР"
+                        : "АБИТУРИЕНТ"}
                       {registeredRole === UserRole.APPLICANT && directionId && (
                         <>
                           <br />
-                          <strong>Направление:</strong>{" "}
+                          <strong>НАПРАВЛЕНИЕ:</strong>{" "}
                           {directions.find((d) => d.$id === directionId)
-                            ?.name || "Выбранное направление"}
+                            ?.name || "ВЫБРАННОЕ НАПРАВЛЕНИЕ"}
                         </>
                       )}
                     </p>
                   </div>
-                  <p className="text-sm text-gray-500">
-                    Перенаправление на страницу входа...
+                  <p className="text-xs text-slate-400 font-mono uppercase">
+                    ПЕРЕНАПРАВЛЕНИЕ НА СТРАНИЦУ ВХОДА...
                   </p>
                 </div>
               </>
@@ -230,9 +230,9 @@ export default function RegisterPage() {
             <div className="pt-4">
               <Link
                 href="/login"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-800 border-2 border-blue-600 text-blue-200 font-mono font-bold uppercase"
               >
-                Перейти ко входу
+                ПЕРЕЙТИ КО ВХОДУ
               </Link>
             </div>
           </div>
@@ -243,33 +243,33 @@ export default function RegisterPage() {
 
   return (
     <Layout title="Регистрация в системе тестирования">
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-2xl shadow-xl border border-gray-100">
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <div className="w-full max-w-md p-8 space-y-8 bg-slate-800 border-2 border-slate-600">
           <div className="text-center">
             <div className="flex justify-center mb-4">
-              <div className="p-3 bg-indigo-600 rounded-full">
-                <UserPlus className="h-8 w-8 text-white" />
+              <div className="p-3 bg-blue-800 border-2 border-blue-600">
+                <UserPlus className="h-8 w-8 text-blue-400" />
               </div>
             </div>
-            <h1 className="text-3xl font-extrabold text-gray-900">
-              Регистрация
+            <h1 className="text-3xl font-mono font-bold text-white uppercase tracking-wide">
+              РЕГИСТРАЦИЯ
             </h1>
-            <p className="mt-2 text-sm text-gray-600">
-              Создайте аккаунт для доступа к системе тестирования
+            <p className="mt-2 text-sm text-slate-300 font-mono">
+              СОЗДАЙТЕ АККАУНТ ДЛЯ ДОСТУПА К СИСТЕМЕ ТЕСТИРОВАНИЯ
             </p>
           </div>
 
           {!isFirstUser && role !== UserRole.ADMIN && (
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <div className="bg-yellow-900 border-2 border-yellow-600 p-4">
               <div className="flex items-center gap-2">
-                <AlertCircle className="h-4 w-4 text-amber-600 flex-shrink-0" />
-                <p className="text-sm text-amber-800">
-                  <strong>Важно:</strong> После регистрации ваш аккаунт должен
-                  быть активирован{" "}
+                <AlertCircle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
+                <p className="text-sm text-yellow-200 font-mono">
+                  <strong>ВАЖНО:</strong> ПОСЛЕ РЕГИСТРАЦИИ ВАШ АККАУНТ ДОЛЖЕН
+                  БЫТЬ АКТИВИРОВАН{" "}
                   {role === UserRole.CURATOR
-                    ? "администратором"
-                    : "куратором или администратором"}{" "}
-                  перед первым входом в систему.
+                    ? "АДМИНИСТРАТОРОМ"
+                    : "КУРАТОРОМ ИЛИ АДМИНИСТРАТОРОМ"}{" "}
+                  ПЕРЕД ПЕРВЫМ ВХОДОМ В СИСТЕМУ.
                 </p>
               </div>
             </div>
@@ -281,10 +281,10 @@ export default function RegisterPage() {
             autoComplete="off"
           >
             {(error || errorMessage) && (
-              <div className="p-4 text-red-700 bg-red-50 border border-red-200 rounded-lg">
+              <div className="p-4 text-red-200 bg-red-900 border-2 border-red-600">
                 <div className="flex items-center gap-2">
                   <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                  <span className="text-sm">{errorMessage || error}</span>
+                  <span className="text-sm font-mono">{errorMessage || error}</span>
                 </div>
               </div>
             )}
@@ -292,9 +292,9 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
               >
-                Полное имя
+                ПОЛНОЕ ИМЯ
               </label>
               <input
                 id="name"
@@ -302,17 +302,17 @@ export default function RegisterPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                placeholder="Введите ваше полное имя"
+                className="w-full px-3 py-3 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:outline-none focus:border-blue-500"
+                placeholder="ВВЕДИТЕ ВАШЕ ПОЛНОЕ ИМЯ"
               />
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
               >
-                Email адрес
+                EMAIL АДРЕС
               </label>
               <input
                 id="email"
@@ -321,17 +321,17 @@ export default function RegisterPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="off"
-                className="w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                placeholder="Введите ваш email"
+                className="w-full px-3 py-3 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:outline-none focus:border-blue-500"
+                placeholder="ВВЕДИТЕ ВАШ EMAIL"
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
               >
-                Пароль
+                ПАРОЛЬ
               </label>
               <div className="relative">
                 <input
@@ -341,13 +341,13 @@ export default function RegisterPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="off"
-                  className="w-full px-3 py-3 pr-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                  placeholder="Минимум 8 символов"
+                  className="w-full px-3 py-3 pr-10 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:outline-none focus:border-blue-500"
+                  placeholder="МИНИМУМ 8 СИМВОЛОВ"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400"
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5" />
@@ -361,9 +361,9 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
               >
-                Подтверждение пароля
+                ПОДТВЕРЖДЕНИЕ ПАРОЛЯ
               </label>
               <div className="relative">
                 <input
@@ -372,13 +372,13 @@ export default function RegisterPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  className="w-full px-3 py-3 pr-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                  placeholder="Повторите пароль"
+                  className="w-full px-3 py-3 pr-10 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:outline-none focus:border-blue-500"
+                  placeholder="ПОВТОРИТЕ ПАРОЛЬ"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400"
                 >
                   {showConfirmPassword ? (
                     <EyeOff className="h-5 w-5" />
@@ -393,33 +393,33 @@ export default function RegisterPage() {
               <div>
                 <label
                   htmlFor="role"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
                 >
-                  Роль в системе
+                  РОЛЬ В СИСТЕМЕ
                 </label>
                 <select
                   id="role"
                   value={role}
                   onChange={(e) => setRole(e.target.value as UserRole)}
-                  className="w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  className="w-full px-3 py-3 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:outline-none focus:border-blue-500"
                 >
-                  <option value={UserRole.APPLICANT}>Абитуриент</option>
-                  <option value={UserRole.CURATOR}>Куратор</option>
+                  <option value={UserRole.APPLICANT}>АБИТУРИЕНТ</option>
+                  <option value={UserRole.CURATOR}>КУРАТОР</option>
                 </select>
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-slate-400 font-mono">
                   {role === UserRole.APPLICANT
-                    ? "Вы сможете проходить тесты после активации аккаунта"
-                    : "Вы сможете создавать тесты после активации администратором"}
+                    ? "ВЫ СМОЖЕТЕ ПРОХОДИТЬ ТЕСТЫ ПОСЛЕ АКТИВАЦИИ АККАУНТА"
+                    : "ВЫ СМОЖЕТЕ СОЗДАВАТЬ ТЕСТЫ ПОСЛЕ АКТИВАЦИИ АДМИНИСТРАТОРОМ"}
                 </p>
               </div>
             ) : (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="bg-blue-900 border-2 border-blue-600 p-4">
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-blue-600" />
-                  <p className="text-sm text-blue-800">
-                    Вы будете зарегистрированы как{" "}
-                    <strong>администратор</strong> и автоматически активированы
-                    (первый пользователь системы).
+                  <CheckCircle className="h-4 w-4 text-blue-400" />
+                  <p className="text-sm text-blue-200 font-mono">
+                    ВЫ БУДЕТЕ ЗАРЕГИСТРИРОВАНЫ КАК{" "}
+                    <strong>АДМИНИСТРАТОР</strong> И АВТОМАТИЧЕСКИ АКТИВИРОВАНЫ
+                    (ПЕРВЫЙ ПОЛЬЗОВАТЕЛЬ СИСТЕМЫ).
                   </p>
                 </div>
               </div>
@@ -429,15 +429,15 @@ export default function RegisterPage() {
               <div>
                 <label
                   htmlFor="direction"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
                 >
-                  Направление подготовки
+                  НАПРАВЛЕНИЕ ПОДГОТОВКИ
                 </label>
                 {directionsLoading ? (
-                  <div className="w-full px-3 py-3 border border-gray-300 rounded-lg bg-gray-50 flex items-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-600"></div>
-                    <span className="text-gray-500">
-                      Загрузка направлений...
+                  <div className="w-full px-3 py-3 border-2 border-slate-600 bg-slate-700 flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent"></div>
+                    <span className="text-slate-400 font-mono">
+                      ЗАГРУЗКА НАПРАВЛЕНИЙ...
                     </span>
                   </div>
                 ) : directions.length > 0 ? (
@@ -446,9 +446,9 @@ export default function RegisterPage() {
                     value={directionId}
                     onChange={(e) => setDirectionId(e.target.value)}
                     required
-                    className="w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                    className="w-full px-3 py-3 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:outline-none focus:border-blue-500"
                   >
-                    <option value="">Выберите направление</option>
+                    <option value="">ВЫБЕРИТЕ НАПРАВЛЕНИЕ</option>
                     {directions.map((direction) => (
                       <option key={direction.$id} value={direction.$id}>
                         {direction.name} ({direction.institute?.name})
@@ -456,15 +456,15 @@ export default function RegisterPage() {
                     ))}
                   </select>
                 ) : (
-                  <div className="w-full px-3 py-3 border border-gray-300 rounded-lg bg-gray-50">
-                    <div className="flex items-center gap-2 text-gray-500">
+                  <div className="w-full px-3 py-3 border-2 border-slate-600 bg-slate-700">
+                    <div className="flex items-center gap-2 text-slate-400">
                       <Building className="h-4 w-4" />
-                      <span>Направления пока не созданы</span>
+                      <span className="font-mono">НАПРАВЛЕНИЯ ПОКА НЕ СОЗДАНЫ</span>
                     </div>
                   </div>
                 )}
-                <p className="mt-1 text-xs text-gray-500">
-                  Выберите направление, по которому планируете поступать
+                <p className="mt-1 text-xs text-slate-400 font-mono">
+                  ВЫБЕРИТЕ НАПРАВЛЕНИЕ, ПО КОТОРОМУ ПЛАНИРУЕТЕ ПОСТУПАТЬ
                 </p>
               </div>
             )}
@@ -476,36 +476,36 @@ export default function RegisterPage() {
                   loading ||
                   (role === UserRole.APPLICANT && directions.length === 0)
                 }
-                className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed transition-all duration-200"
+                className="w-full flex justify-center items-center gap-2 py-3 px-4 border-2 border-blue-600 text-sm font-mono font-bold text-blue-200 bg-blue-800 disabled:bg-slate-700 disabled:border-slate-600 disabled:text-slate-500 disabled:cursor-not-allowed uppercase"
               >
                 {loading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    Регистрация...
+                    <div className="w-4 h-4 border-2 border-blue-200 border-t-transparent"></div>
+                    РЕГИСТРАЦИЯ...
                   </>
                 ) : (
                   <>
                     <UserPlus className="h-4 w-4" />
-                    Зарегистрироваться
+                    ЗАРЕГИСТРИРОВАТЬСЯ
                   </>
                 )}
               </button>
 
               {role === UserRole.APPLICANT && directions.length === 0 && (
-                <p className="mt-2 text-xs text-red-600 text-center">
-                  Регистрация недоступна: не созданы направления подготовки
+                <p className="mt-2 text-xs text-red-400 text-center font-mono">
+                  РЕГИСТРАЦИЯ НЕДОСТУПНА: НЕ СОЗДАНЫ НАПРАВЛЕНИЯ ПОДГОТОВКИ
                 </p>
               )}
             </div>
 
             <div className="text-center text-sm">
-              <p>
-                Уже есть аккаунт?{" "}
+              <p className="text-slate-300 font-mono">
+                УЖЕ ЕСТЬ АККАУНТ?{" "}
                 <Link
                   href="/login"
-                  className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+                  className="font-mono font-bold text-blue-400 border-b border-blue-400"
                 >
-                  Войти
+                  ВОЙТИ
                 </Link>
               </p>
             </div>
@@ -514,24 +514,24 @@ export default function RegisterPage() {
           {/* Информационные блоки для разных ролей */}
           <div className="mt-6 space-y-3">
             {role === UserRole.APPLICANT && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+              <div className="bg-green-900 border-2 border-green-600 p-3">
                 <div className="flex items-start gap-2">
-                  <GraduationCap className="h-4 w-4 text-green-600 mt-0.5" />
-                  <div className="text-xs text-green-800">
-                    <strong>Для абитуриентов:</strong> После активации заполните
-                    анкету с паспортными данными для получения доступа к тестам.
+                  <GraduationCap className="h-4 w-4 text-green-400 mt-0.5" />
+                  <div className="text-xs text-green-200 font-mono">
+                    <strong>ДЛЯ АБИТУРИЕНТОВ:</strong> ПОСЛЕ АКТИВАЦИИ ЗАПОЛНИТЕ
+                    АНКЕТУ С ПАСПОРТНЫМИ ДАННЫМИ ДЛЯ ПОЛУЧЕНИЯ ДОСТУПА К ТЕСТАМ.
                   </div>
                 </div>
               </div>
             )}
 
             {role === UserRole.CURATOR && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              <div className="bg-blue-900 border-2 border-blue-600 p-3">
                 <div className="flex items-start gap-2">
-                  <Users className="h-4 w-4 text-blue-600 mt-0.5" />
-                  <div className="text-xs text-blue-800">
-                    <strong>Для кураторов:</strong> После активации вы сможете
-                    создавать и редактировать тесты, управлять абитуриентами.
+                  <Users className="h-4 w-4 text-blue-400 mt-0.5" />
+                  <div className="text-xs text-blue-200 font-mono">
+                    <strong>ДЛЯ КУРАТОРОВ:</strong> ПОСЛЕ АКТИВАЦИИ ВЫ СМОЖЕТЕ
+                    СОЗДАВАТЬ И РЕДАКТИРОВАТЬ ТЕСТЫ, УПРАВЛЯТЬ АБИТУРИЕНТАМИ.
                   </div>
                 </div>
               </div>

@@ -66,89 +66,74 @@ export function Navbar() {
         return [
           {
             href: "/admin/dashboard",
-            label: "Панель управления",
+            label: "ПАНЕЛЬ УПРАВЛЕНИЯ",
             icon: Home,
           },
           {
-            label: "Структура",
+            label: "СТРУКТУРА",
             icon: Building,
             dropdown: [
               {
                 href: "/admin/institutes",
-                label: "Институты",
+                label: "ИНСТИТУТЫ",
                 icon: Building,
-                description: "Управление институтами",
+                description: "УПРАВЛЕНИЕ ИНСТИТУТАМИ",
               },
               {
                 href: "/admin/directions",
-                label: "Направления",
+                label: "НАПРАВЛЕНИЯ",
                 icon: GraduationCap,
-                description: "Управление направлениями подготовки",
+                description: "УПРАВЛЕНИЕ НАПРАВЛЕНИЯМИ ПОДГОТОВКИ",
               },
             ],
           },
           {
-            label: "Пользователи",
+            label: "ПОЛЬЗОВАТЕЛИ",
             icon: Users,
             dropdown: [
               {
                 href: "/admin/curators",
-                label: "Кураторы",
+                label: "КУРАТОРЫ",
                 icon: Users,
-                description: "Управление кураторами",
+                description: "УПРАВЛЕНИЕ КУРАТОРАМИ",
               },
               {
                 href: "/admin/applicants",
-                label: "Абитуриенты",
+                label: "АБИТУРИЕНТЫ",
                 icon: GraduationCap,
-                description: "Управление абитуриентами",
+                description: "УПРАВЛЕНИЕ АБИТУРИЕНТАМИ",
               },
               {
                 href: "/admin/activation",
-                label: "Активация",
+                label: "АКТИВАЦИЯ",
                 icon: UserCheck,
-                description: "Активация пользователей",
+                description: "АКТИВАЦИЯ ПОЛЬЗОВАТЕЛЕЙ",
               },
             ],
           },
           {
             href: "/admin/curator-assignments",
-            label: "Назначения кураторов",
+            label: "НАЗНАЧЕНИЯ КУРАТОРОВ",
             icon: UserCheck,
           },
           {
             href: "/admin/tests",
-            label: "Все тесты",
+            label: "ВСЕ ТЕСТЫ",
             icon: TestTube,
           },
           {
-            label: "Отчеты",
+            label: "ОТЧЕТЫ",
             icon: BarChart3,
             dropdown: [
+              
               {
-                href: "/admin/reports/statistics",
-                label: "Статистика",
-                icon: BarChart3,
-                description: "Общая статистика системы",
-              },
-              {
-                href: "/admin/reports/detailed",
-                label: "Детальные отчеты",
+                href: "/admin/reports",
+                label: "ДЕТАЛЬНЫЕ ОТЧЕТЫ",
                 icon: FileText,
-                description: "Подробные аналитические отчеты",
+                description: "ПОДРОБНЫЕ АНАЛИТИЧЕСКИЕ ОТЧЕТЫ",
               },
-              {
-                href: "/admin/reports/export",
-                label: "Экспорт данных",
-                icon: FileText,
-                description: "Экспорт в PDF, Excel, Word",
-              },
+        
             ],
-          },
-          {
-            href: "/admin/settings",
-            label: "Настройки",
-            icon: Settings,
           },
         ];
 
@@ -156,78 +141,78 @@ export function Navbar() {
         return [
           {
             href: "/curator/dashboard",
-            label: "Главная",
+            label: "ГЛАВНАЯ",
             icon: Home,
           },
           {
-            label: "Тесты",
+            label: "ТЕСТЫ",
             icon: TestTube,
             dropdown: [
               {
                 href: "/curator/tests",
-                label: "Мои тесты",
+                label: "МОИ ТЕСТЫ",
                 icon: TestTube,
-                description: "Управление созданными тестами",
+                description: "УПРАВЛЕНИЕ СОЗДАННЫМИ ТЕСТАМИ",
               },
               {
                 href: "/curator/tests/create",
-                label: "Создать тест",
+                label: "СОЗДАТЬ ТЕСТ",
                 icon: PlusCircle,
-                description: "Создание нового теста",
+                description: "СОЗДАНИЕ НОВОГО ТЕСТА",
               },
               {
                 href: "/curator/tests/import",
-                label: "Импорт тестов",
+                label: "ИМПОРТ ТЕСТОВ",
                 icon: FileText,
-                description: "Импорт из Excel файлов",
+                description: "ИМПОРТ ИЗ EXCEL ФАЙЛОВ",
               },
             ],
           },
           {
-            label: "Абитуриенты",
+            label: "АБИТУРИЕНТЫ",
             icon: GraduationCap,
             dropdown: [
               {
                 href: "/curator/applicants",
-                label: "Все абитуриенты",
+                label: "ВСЕ АБИТУРИЕНТЫ",
                 icon: GraduationCap,
-                description: "Список абитуриентов",
+                description: "СПИСОК АБИТУРИЕНТОВ",
               },
               {
                 href: "/curator/applicants/activation",
-                label: "Активация",
+                label: "АКТИВАЦИЯ",
                 icon: UserCheck,
-                description: "Активация абитуриентов",
+                description: "АКТИВАЦИЯ АБИТУРИЕНТОВ",
               },
             ],
           },
           {
-            label: "Статистика",
+            label: "СТАТИСТИКА",
             icon: BarChart3,
             dropdown: [
               {
                 href: "/curator/statistics/tests",
-                label: "По тестам",
+                label: "ПО ТЕСТАМ",
                 icon: TestTube,
-                description: "Статистика прохождения тестов",
+                description: "СТАТИСТИКА ПРОХОЖДЕНИЯ ТЕСТОВ",
               },
               {
                 href: "/curator/statistics/applicants",
-                label: "По абитуриентам",
+                label: "ПО АБИТУРИЕНТАМ",
                 icon: GraduationCap,
-                description: "Статистика абитуриентов",
+                description: "СТАТИСТИКА АБИТУРИЕНТОВ",
               },
               {
                 href: "/curator/statistics/questions",
-                label: "Анализ вопросов",
+                label: "АНАЛИЗ ВОПРОСОВ",
                 icon: ClipboardList,
-                description: "Анализ сложности вопросов",
+                description: "АНАЛИЗ СЛОЖНОСТИ ВОПРОСОВ",
               },
             ],
           },
           {
             href: "/curator/profile",
-            label: "Профиль",
+            label: "ПРОФИЛЬ",
             icon: User,
           },
         ];
@@ -236,35 +221,35 @@ export function Navbar() {
         return [
           {
             href: "/applicant/dashboard",
-            label: "Главная",
+            label: "ГЛАВНАЯ",
             icon: Home,
           },
           {
             href: "/applicant/profile",
-            label: "Анкета",
+            label: "АНКЕТА",
             icon: User,
           },
           {
-            label: "Тестирование",
+            label: "ТЕСТИРОВАНИЕ",
             icon: TestTube,
             dropdown: [
               {
                 href: "/applicant/tests",
-                label: "Доступные тесты",
+                label: "ДОСТУПНЫЕ ТЕСТЫ",
                 icon: TestTube,
-                description: "Тесты для прохождения",
+                description: "ТЕСТЫ ДЛЯ ПРОХОЖДЕНИЯ",
               },
               {
                 href: "/applicant/tests/history",
-                label: "История",
+                label: "ИСТОРИЯ",
                 icon: Clock,
-                description: "Пройденные тесты",
+                description: "ПРОЙДЕННЫЕ ТЕСТЫ",
               },
               {
                 href: "/applicant/tests/results",
-                label: "Результаты",
+                label: "РЕЗУЛЬТАТЫ",
                 icon: CheckCircle,
-                description: "Результаты тестирования",
+                description: "РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЯ",
               },
             ],
           },
@@ -313,22 +298,48 @@ export function Navbar() {
 
   const navigationItems = getNavigationItems();
 
+  const getRoleColorGov = (role: UserRole) => {
+    switch (role) {
+      case UserRole.ADMIN:
+        return "bg-red-800 text-red-200 border border-red-600";
+      case UserRole.CURATOR:
+        return "bg-blue-800 text-blue-200 border border-blue-600";
+      case UserRole.APPLICANT:
+        return "bg-green-800 text-green-200 border border-green-600";
+      default:
+        return "bg-gray-800 text-gray-200 border border-gray-600";
+    }
+  };
+
+  const getRoleLabelGov = (role: UserRole) => {
+    switch (role) {
+      case UserRole.ADMIN:
+        return "АДМИНИСТРАТОР";
+      case UserRole.CURATOR:
+        return "КУРАТОР";
+      case UserRole.APPLICANT:
+        return "АБИТУРИЕНТ";
+      default:
+        return "ПОЛЬЗОВАТЕЛЬ";
+    }
+  };
+
   return (
-    <nav className="bg-white shadow-lg border-b relative">
+    <nav className="bg-slate-900 border-b-2 border-slate-700 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
-              <TestTube className="h-8 w-8 text-indigo-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">
-                TestSystem
+              <TestTube className="h-8 w-8 text-blue-400" />
+              <span className="ml-2 text-xl font-mono font-bold text-white uppercase tracking-wide">
+                TESTSYSTEM
               </span>
             </Link>
             <div className="hidden lg:ml-8 lg:flex lg:space-x-1">
               {navigationItems.map((item) => (
                 <div
                   key={item.label}
-                  className="relative"
+                  className="relative text-white"
                   ref={(el) => {
                     dropdownRefs.current[item.label] = el;
                   }}
@@ -337,35 +348,40 @@ export function Navbar() {
                     <div>
                       <button
                         onClick={() => handleDropdownToggle(item.label)}
-                        className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                        className="flex items-center gap-1 px-3 py-2 text-sm font-mono font-bold text-white border border-slate-600 bg-slate-800"
                       >
-                        <item.icon className="h-4 w-4" />
+                        <item.icon className="h-4 w-4 " />
                         {item.label}
                         <ChevronDown
-                          className={`h-4 w-4 transition-transform ${
+                          className={`h-4 w-4  ${
                             openDropdown === item.label ? "rotate-180" : ""
                           }`}
                         />
                       </button>
 
                       {openDropdown === item.label && (
-                        <div className="absolute left-0 mt-2 w-72 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-                          <div className="py-1">
+                        <div className="absolute left-0 mt-1 w-80 bg-slate-800 border-2 border-slate-600 z-50">
+                          <div className="border-b border-slate-600 p-2">
+                            <div className="text-xs font-mono font-bold text-slate-300  uppercase tracking-wide">
+                              {item.label}
+                            </div>
+                          </div>
+                          <div>
                             {item.dropdown.map((dropdownItem) => (
                               <Link
                                 key={dropdownItem.href}
                                 href={dropdownItem.href}
                                 onClick={() => setOpenDropdown(null)}
-                                className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                className="block px-4 py-3 text-sm text-white border-b border-slate-700 last:border-b-0"
                               >
                                 <div className="flex items-start gap-3">
-                                  <dropdownItem.icon className="h-5 w-5 text-gray-400 mt-0.5" />
+                                  <dropdownItem.icon className="h-5 w-5 text-blue-400 mt-0.5" />
                                   <div>
-                                    <div className="font-medium">
+                                    <div className="font-mono font-bold uppercase">
                                       {dropdownItem.label}
                                     </div>
                                     {dropdownItem.description && (
-                                      <div className="text-xs text-gray-500 mt-1">
+                                      <div className="text-xs text-slate-300 font-mono mt-1">
                                         {dropdownItem.description}
                                       </div>
                                     )}
@@ -380,7 +396,7 @@ export function Navbar() {
                   ) : (
                     <Link
                       href={item.href!}
-                      className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                      className="flex items-center gap-1 px-3 py-2 text-sm font-mono font-bold text-white border border-slate-600 bg-slate-800"
                     >
                       <item.icon className="h-4 w-4" />
                       {item.label}
@@ -395,66 +411,64 @@ export function Navbar() {
             <div className="hidden lg:block ml-4 relative">
               <button
                 onClick={handleUserMenuToggle}
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-mono font-bold text-white border border-slate-600 bg-slate-800"
               >
                 <User className="h-5 w-5" />
-                <span>{user.name}</span>
+                <span className="uppercase">{user.name}</span>
                 <ChevronDown className="h-4 w-4" />
               </button>
 
               {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-                  <div className="py-1">
-                    <div className="px-4 py-3 border-b border-gray-100">
-                      <p className="text-sm font-medium text-gray-900">
-                        {user.name}
-                      </p>
-                      <p className="text-sm text-gray-500">{user.email}</p>
-                      <span
-                        className={`inline-flex mt-1 px-2 py-1 text-xs font-medium rounded-full ${getRoleColor(
-                          user.role
-                        )}`}
+                <div className="absolute right-0 mt-1 w-64 bg-slate-800 border-2 border-slate-600 z-50">
+                  <div className="border-b border-slate-700 p-4">
+                    <p className="text-sm font-mono font-bold text-white uppercase">
+                      {user.name}
+                    </p>
+                    <p className="text-sm text-slate-300 font-mono">{user.email}</p>
+                    <span
+                      className={`inline-flex mt-2 px-2 py-1 text-xs font-mono font-bold uppercase ${getRoleColorGov(
+                        user.role
+                      )}`}
+                    >
+                      {getRoleLabelGov(user.role)}
+                    </span>
+                  </div>
+
+                  {/* Дополнительные пункты меню для разных ролей */}
+                  {user.role === UserRole.APPLICANT && (
+                    <div className="border-b border-slate-700">
+                      <Link
+                        href="/applicant/profile"
+                        className="block px-4 py-3 text-sm text-white font-mono font-bold flex items-center gap-2 border-b border-slate-700 last:border-b-0 uppercase"
+                        onClick={() => setIsUserMenuOpen(false)}
                       >
-                        {getRoleLabel(user.role)}
-                      </span>
+                        <User className="h-4 w-4" />
+                        РЕДАКТИРОВАТЬ АНКЕТУ
+                      </Link>
                     </div>
+                  )}
 
-                    {/* Дополнительные пункты меню для разных ролей */}
-                    {user.role === UserRole.APPLICANT && (
-                      <div className="py-1 border-b border-gray-100">
-                        <Link
-                          href="/applicant/profile"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                          onClick={() => setIsUserMenuOpen(false)}
-                        >
-                          <User className="h-4 w-4" />
-                          Редактировать анкету
-                        </Link>
-                      </div>
-                    )}
-
-                    {user.role === UserRole.CURATOR && (
-                      <div className="py-1 border-b border-gray-100">
-                        <Link
-                          href="/curator/profile"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                          onClick={() => setIsUserMenuOpen(false)}
-                        >
-                          <User className="h-4 w-4" />
-                          Профиль
-                        </Link>
-                      </div>
-                    )}
-
-                    <div className="py-1">
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  {user.role === UserRole.CURATOR && (
+                    <div className="border-b border-slate-700">
+                      <Link
+                        href="/curator/profile"
+                        className="block px-4 py-3 text-sm text-white font-mono font-bold flex items-center gap-2 border-b border-slate-700 last:border-b-0 uppercase"
+                        onClick={() => setIsUserMenuOpen(false)}
                       >
-                        <LogOut className="h-4 w-4" />
-                        Выйти
-                      </button>
+                        <User className="h-4 w-4" />
+                        ПРОФИЛЬ
+                      </Link>
                     </div>
+                  )}
+
+                  <div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-3 text-sm text-red-300 font-mono font-bold flex items-center gap-2 uppercase"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      ВЫЙТИ
+                    </button>
                   </div>
                 </div>
               )}
@@ -463,7 +477,7 @@ export function Navbar() {
             {/* Кнопка гамбургера */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden ml-4 p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              className="lg:hidden ml-4 p-2 text-white border border-slate-600 bg-slate-800"
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -477,7 +491,7 @@ export function Navbar() {
 
       {/* Мобильное меню */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-16 left-0 right-0 bg-white border-b shadow-lg z-40">
+        <div className="lg:hidden absolute top-16 left-0 right-0 bg-slate-800 border-b-2 border-slate-600 z-40">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {/* Навигационные элементы */}
             {navigationItems.map((item) => (
@@ -486,27 +500,27 @@ export function Navbar() {
                   <div>
                     <button
                       onClick={() => handleDropdownToggle(item.label)}
-                      className="w-full flex items-center justify-between gap-3 px-3 py-3 text-base font-medium text-gray-700 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                      className="w-full flex items-center justify-between gap-3 px-3 py-3 text-base font-mono font-bold text-white border border-slate-600 bg-slate-700"
                     >
                       <div className="flex items-center gap-3">
                         <item.icon className="h-5 w-5" />
                         {item.label}
                       </div>
                       <ChevronDown
-                        className={`h-4 w-4 transition-transform ${
+                        className={`h-4 w-4 ${
                           openDropdown === item.label ? "rotate-180" : ""
                         }`}
                       />
                     </button>
 
                     {openDropdown === item.label && (
-                      <div className="ml-8 mt-2 space-y-1">
+                      <div className="ml-4 mt-1 space-y-1">
                         {item.dropdown.map((dropdownItem) => (
                           <Link
                             key={dropdownItem.href}
                             href={dropdownItem.href}
                             onClick={handleMobileMenuItemClick}
-                            className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                            className="flex items-center gap-3 px-3 py-2 text-sm font-mono font-bold text-white border border-slate-600 bg-slate-600"
                           >
                             <dropdownItem.icon className="h-4 w-4" />
                             {dropdownItem.label}
@@ -519,7 +533,7 @@ export function Navbar() {
                   <Link
                     href={item.href!}
                     onClick={handleMobileMenuItemClick}
-                    className="flex items-center gap-3 px-3 py-3 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                    className="flex items-center gap-3 px-3 py-3 text-base font-mono font-bold text-white border border-slate-600 bg-slate-700"
                   >
                     <item.icon className="h-5 w-5" />
                     {item.label}
@@ -529,24 +543,24 @@ export function Navbar() {
             ))}
 
             {/* Разделитель */}
-            <div className="border-t border-gray-200 my-2"></div>
+            <div className="border-t-2 border-slate-600 my-2"></div>
 
             {/* Информация о пользователе */}
-            <div className="px-3 py-3">
+            <div className="px-3 py-3 bg-slate-700 border-2 border-slate-600">
               <div className="flex items-center gap-3 mb-3">
-                <User className="h-8 w-8 text-gray-500" />
+                <User className="h-8 w-8 text-blue-400" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-mono font-bold text-white uppercase">
                     {user.name}
                   </p>
-                  <p className="text-xs text-gray-500">{user.email}</p>
+                  <p className="text-xs text-slate-300 font-mono">{user.email}</p>
                 </div>
                 <span
-                  className={`px-2 py-1 text-xs font-medium rounded-full ${getRoleColor(
+                  className={`px-2 py-1 text-xs font-mono font-bold uppercase ${getRoleColorGov(
                     user.role
                   )}`}
                 >
-                  {getRoleLabel(user.role)}
+                  {getRoleLabelGov(user.role)}
                 </span>
               </div>
 
@@ -555,10 +569,10 @@ export function Navbar() {
                 <Link
                   href="/applicant/profile"
                   onClick={handleMobileMenuItemClick}
-                  className="w-full flex items-center gap-3 px-3 py-3 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors mb-2"
+                  className="w-full flex items-center gap-3 px-3 py-3 text-base font-mono font-bold text-white border border-slate-600 bg-slate-600 mb-2 uppercase"
                 >
                   <User className="h-5 w-5" />
-                  Редактировать анкету
+                  РЕДАКТИРОВАТЬ АНКЕТУ
                 </Link>
               )}
 
@@ -566,10 +580,10 @@ export function Navbar() {
                 <Link
                   href="/curator/profile"
                   onClick={handleMobileMenuItemClick}
-                  className="w-full flex items-center gap-3 px-3 py-3 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors mb-2"
+                  className="w-full flex items-center gap-3 px-3 py-3 text-base font-mono font-bold text-white border border-slate-600 bg-slate-600 mb-2 uppercase"
                 >
                   <User className="h-5 w-5" />
-                  Профиль
+                  ПРОФИЛЬ
                 </Link>
               )}
 
@@ -579,10 +593,10 @@ export function Navbar() {
                   handleLogout();
                   setIsMobileMenuOpen(false);
                 }}
-                className="w-full flex items-center gap-3 px-3 py-3 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+                className="w-full flex items-center gap-3 px-3 py-3 text-base font-mono font-bold text-red-300 border border-red-600 bg-red-900 uppercase"
               >
                 <LogOut className="h-5 w-5" />
-                Выйти
+                ВЫЙТИ
               </button>
             </div>
           </div>
@@ -603,20 +617,20 @@ export function Navbar() {
 
       {/* Индикатор статуса для абитуриентов */}
       {user.role === UserRole.APPLICANT && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200">
+        <div className="bg-blue-900 border-b-2 border-blue-700">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="py-2 flex items-center justify-between text-sm">
-              <div className="flex items-center gap-2">
-                <AlertCircle className="h-4 w-4 text-blue-600" />
-                <span className="text-blue-800">
-                  Не забудьте заполнить анкету перед началом тестирования
+            <div className="py-3 flex items-center justify-between text-sm border-2 border-blue-700 bg-blue-800">
+              <div className="flex items-center gap-2 px-3">
+                <AlertCircle className="h-4 w-4 text-blue-400" />
+                <span className="text-blue-200 font-mono font-bold uppercase">
+                  НЕ ЗАБУДЬТЕ ЗАПОЛНИТЬ АНКЕТУ ПЕРЕД НАЧАЛОМ ТЕСТИРОВАНИЯ
                 </span>
               </div>
               <Link
                 href="/applicant/profile"
-                className="text-blue-600 hover:text-blue-800 font-medium"
+                className="text-blue-300 font-mono font-bold border border-blue-600 px-3 py-1 bg-blue-700 uppercase"
               >
-                Перейти к анкете →
+                ПЕРЕЙТИ К АНКЕТЕ
               </Link>
             </div>
           </div>

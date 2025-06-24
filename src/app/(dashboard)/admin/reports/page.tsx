@@ -295,7 +295,7 @@ export default function AdminReportsPage() {
           }
           
           body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; 
+            font-family: 'Courier New', monospace; 
             font-size: 12px;
             line-height: 1.4;
             color: #333;
@@ -311,50 +311,58 @@ export default function AdminReportsPage() {
           .header { 
             text-align: center; 
             margin-bottom: 30px; 
-            border-bottom: 3px solid #ec4899; 
-            padding-bottom: 20px;
+            border: 3px solid #1e293b; 
+            padding: 20px;
+            background: #334155;
+            color: white;
           }
           
           .header h1 { 
-            color: #ec4899; 
+            color: white; 
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
           }
           
           .header .subtitle { 
-            color: #666; 
+            color: #e2e8f0; 
             font-size: 14px;
             margin: 5px 0;
+            text-transform: uppercase;
           }
           
           .stats-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-            gap: 15px; 
+            gap: 0; 
             margin: 25px 0; 
+            border: 2px solid #1e293b;
           }
           
           .stat-card { 
-            border: 2px solid #e5e7eb; 
+            border: 1px solid #475569; 
             padding: 20px; 
-            border-radius: 10px; 
             text-align: center;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: #f1f5f9;
           }
           
           .stat-number { 
             font-size: 32px; 
             font-weight: bold; 
-            color: #ec4899; 
+            color: #1e293b; 
             display: block;
             margin-bottom: 5px;
+            font-family: 'Courier New', monospace;
           }
           
           .stat-label {
-            color: #495057;
+            color: #475569;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
           }
           
           table { 
@@ -362,64 +370,74 @@ export default function AdminReportsPage() {
             border-collapse: collapse; 
             margin: 25px 0; 
             font-size: 11px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #1e293b;
+            font-family: 'Courier New', monospace;
           }
           
           th, td { 
-            border: 1px solid #dee2e6; 
+            border: 1px solid #475569; 
             padding: 10px 8px; 
             text-align: left; 
           }
           
           th { 
-            background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); 
+            background: #334155; 
             color: white; 
             font-weight: bold; 
             font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
           }
           
           tr:nth-child(even) {
-            background-color: #f8f9fa;
-          }
-          
-          tr:hover {
-            background-color: #e9ecef;
+            background-color: #f1f5f9;
           }
           
           h2 {
-            color: #212529;
+            color: #1e293b;
             margin: 30px 0 15px 0;
             font-size: 20px;
-            border-left: 4px solid #ec4899;
-            padding-left: 15px;
+            border: 2px solid #334155;
+            background: #e2e8f0;
+            padding: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
           }
           
           .section {
             margin-bottom: 40px;
             page-break-inside: avoid;
+            border: 2px solid #64748b;
+            padding: 20px;
           }
           
           .footer {
             margin-top: 50px;
             text-align: center;
-            color: #6c757d;
+            color: #1e293b;
             font-size: 10px;
-            border-top: 1px solid #dee2e6;
-            padding-top: 20px;
+            border: 2px solid #334155;
+            padding: 20px;
+            background: #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
           }
           
           .summary-info {
-            background: #f1f3f4;
+            background: #e2e8f0;
             padding: 15px;
-            border-radius: 8px;
             margin: 20px 0;
-            border-left: 4px solid #ec4899;
+            border: 2px solid #475569;
           }
           
           .summary-info h3 {
-            color: #ec4899;
+            color: #1e293b;
             font-size: 14px;
             margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
           }
           
           @page {
@@ -439,7 +457,7 @@ export default function AdminReportsPage() {
             }
             .stat-card { 
               break-inside: avoid; 
-              border: 1px solid #000 !important;
+              border: 2px solid #000 !important;
             }
             table { 
               break-inside: avoid; 
@@ -538,11 +556,11 @@ export default function AdminReportsPage() {
                     <td><strong>${applicant.applicantName}</strong></td>
                     <td>${applicant.directionName}</td>
                     <td>${applicant.instituteName}</td>
-                    <td style="color: ${applicant.profileComplete ? '#28a745' : '#dc3545'}">
-                      ${applicant.profileComplete ? '✓ Заполнен' : '✗ Не заполнен'}
+                    <td style="color: ${applicant.profileComplete ? '#059669' : '#dc2626'}">
+                      ${applicant.profileComplete ? 'ЗАПОЛНЕН' : 'НЕ ЗАПОЛНЕН'}
                     </td>
                     <td>${applicant.testsCompleted}/${applicant.testsAvailable}</td>
-                    <td style="font-weight: bold; color: ${applicant.bestScore > 60 ? '#28a745' : applicant.bestScore > 0 ? '#fd7e14' : '#6c757d'}">
+                    <td style="font-weight: bold; color: ${applicant.bestScore > 60 ? '#059669' : applicant.bestScore > 0 ? '#d97706' : '#6b7280'}">
                       ${applicant.bestScore > 0 ? applicant.bestScore + '%' : '—'}
                     </td>
                     <td>${applicant.lastActivity ? new Date(applicant.lastActivity).toLocaleDateString('ru-RU') : '—'}</td>
@@ -603,12 +621,12 @@ export default function AdminReportsPage() {
                   return `
                     <tr>
                       <td><strong>${test.title}</strong></td>
-                      <td>${direction?.name || 'Не найдено'}</td>
-                      <td>${curator?.name || 'Не найден'}</td>
+                      <td>${direction?.name || 'НЕ НАЙДЕНО'}</td>
+                      <td>${curator?.name || 'НЕ НАЙДЕН'}</td>
                       <td style="text-align: center">${test.totalQuestions}</td>
                       <td style="text-align: center">${test.maxScore}</td>
-                      <td style="color: ${test.isPublished ? '#28a745' : '#fd7e14'}; font-weight: bold">
-                        ${test.isPublished ? '✓ Опубликован' : '⏳ Черновик'}
+                      <td style="color: ${test.isPublished ? '#059669' : '#d97706'}; font-weight: bold">
+                        ${test.isPublished ? 'ОПУБЛИКОВАН' : 'ЧЕРНОВИК'}
                       </td>
                       <td>${new Date(test.$createdAt).toLocaleDateString('ru-RU')}</td>
                     </tr>
@@ -669,7 +687,7 @@ export default function AdminReportsPage() {
                       <td style="text-align: center">${institute.totalDirections}</td>
                       <td style="text-align: center">${institute.totalApplicants}</td>
                       <td style="text-align: center">${institute.totalTests}</td>
-                      <td style="text-align: center; color: ${efficiency > 2 ? '#28a745' : efficiency > 1 ? '#fd7e14' : '#dc3545'}">${efficiency} тест/напр.</td>
+                      <td style="text-align: center; color: ${efficiency > 2 ? '#059669' : efficiency > 1 ? '#d97706' : '#dc2626'}">${efficiency} ТЕСТ/НАПР.</td>
                     </tr>
                   `;
                 }).join('')}
@@ -686,15 +704,15 @@ export default function AdminReportsPage() {
       const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
       
       if (exportFormat === "PDF") {
-        toast.info("Открытие диалога печати для сохранения в PDF...");
+        toast.info("ГЕНЕРАЦИЯ PDF ОТЧЕТА...");
         
         await generatePDFFile(type);
         
         setTimeout(() => {
-          toast.success(`PDF отчет "${type}" готов! Используйте Ctrl+P для сохранения в PDF.`);
+          toast.success(`PDF ОТЧЕТ "${type}" ГОТОВ! ИСПОЛЬЗУЙТЕ CTRL+P ДЛЯ СОХРАНЕНИЯ.`);
         }, 1500);
       } else {
-        toast.info("Генерация Excel отчета...");
+        toast.info("ГЕНЕРАЦИЯ EXCEL ОТЧЕТА...");
         
         const csvBlob = generateExcelFile(type);
         const filename = `${type.replace(/\s+/g, '_')}_${timestamp}.csv`;
@@ -702,11 +720,11 @@ export default function AdminReportsPage() {
         downloadFile(csvBlob, filename);
         
         setTimeout(() => {
-          toast.success(`Excel файл "${type}" загружен в папку Загрузки!`);
+          toast.success(`EXCEL ФАЙЛ "${type}" ЗАГРУЖЕН!`);
         }, 500);
       }
     } catch (error) {
-      toast.error(`Ошибка при экспорте: ${(error as Error).message}`);
+      toast.error(`ОШИБКА ЭКСПОРТА: ${(error as Error).message}`);
     }
   };
 
@@ -720,646 +738,645 @@ export default function AdminReportsPage() {
   );
 
   const tabs = [
-    { id: "overview", label: "Обзор", icon: BarChart3 },
-    { id: "applicants", label: "Абитуриенты", icon: GraduationCap },
-    { id: "testing", label: "Тестирование", icon: TestTube },
-    { id: "export", label: "Экспорт", icon: Download },
+    { id: "overview", label: "ОБЗОР", icon: BarChart3 },
+    { id: "applicants", label: "АБИТУРИЕНТЫ", icon: GraduationCap },
+    { id: "testing", label: "ТЕСТИРОВАНИЕ", icon: TestTube },
+    { id: "export", label: "ЭКСПОРТ", icon: Download },
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* Заголовок */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <FileText className="h-8 w-8 text-pink-500" />
-              <h1 className="text-3xl font-bold text-gray-900">
-                Отчеты и аналитика
-              </h1>
+    <div className="min-h-screen bg-slate-900 text-white">
+      <div className="p-6 max-w-7xl mx-auto">
+        {/* Заголовок */}
+        <div className="mb-8 border-b-2 border-slate-700 pb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <FileText className="h-8 w-8 text-blue-400" />
+                <h1 className="text-3xl font-mono font-bold text-white uppercase tracking-wide">
+                  ОТЧЕТЫ И АНАЛИТИКА
+                </h1>
+              </div>
+              <p className="text-slate-300 font-mono uppercase">
+                ДЕТАЛЬНЫЕ ОТЧЕТЫ И СТАТИСТИКА СИСТЕМЫ ТЕСТИРОВАНИЯ
+              </p>
             </div>
-            <p className="text-gray-600">
-              Детальные отчеты и статистика системы тестирования
-            </p>
-          </div>
 
-          <div className="flex gap-3">
-            <button
-              onClick={() => handleExportReport("Общий отчет")}
-              className="flex items-center gap-2 px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
-            >
-              <Download className="h-4 w-4" />
-              Экспорт отчета
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Навигация по вкладкам */}
-      <div className="mb-8">
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8">
-            {tabs.map((tab) => (
+            <div className="flex gap-3">
               <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center gap-2 py-2 px-1 border-b-2 font-medium text-sm transition-colors ${
-                  activeTab === tab.id
-                    ? "border-pink-500 text-pink-600"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                }`}
+                onClick={() => handleExportReport("Общий отчет")}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-800 text-blue-200 border-2 border-blue-600 font-mono font-bold uppercase"
               >
-                <tab.icon className="h-4 w-4" />
-                {tab.label}
+                <Download className="h-4 w-4" />
+                ЭКСПОРТ ОТЧЕТА
               </button>
-            ))}
-          </nav>
-        </div>
-      </div>
-
-      {/* Содержимое вкладок */}
-      {activeTab === "overview" && (
-        <div className="space-y-8">
-          {/* Общая статистика */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow border">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Users className="h-8 w-8 text-blue-500" />
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    Всего пользователей
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {overallStats.totalUsers}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow border">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <GraduationCap className="h-8 w-8 text-green-500" />
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    Активных абитуриентов
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {overallStats.activeApplicants}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    из {overallStats.totalApplicants} всего
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow border">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <TestTube className="h-8 w-8 text-indigo-500" />
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    Опубликованных тестов
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {overallStats.publishedTests}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    из {overallStats.totalTests} созданных
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow border">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Building className="h-8 w-8 text-purple-500" />
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    Институтов и направлений
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {overallStats.totalInstitutes}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {overallStats.totalDirections} направлений
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
+        </div>
 
-          {/* Статистика по институтам */}
-          <div className="bg-white rounded-lg shadow border">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                <Building className="h-5 w-5 text-purple-500" />
-                Статистика по институтам
-              </h3>
+        {/* Навигация по вкладкам */}
+        <div className="mb-8">
+          <div className="border-b-2 border-slate-700">
+            <nav className="flex space-x-0">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`flex items-center gap-2 py-3 px-6 border-2 font-mono font-bold text-sm uppercase tracking-wide ${
+                    activeTab === tab.id
+                      ? "border-blue-500 bg-blue-800 text-blue-200"
+                      : "border-slate-600 bg-slate-800 text-slate-300"
+                  }`}
+                >
+                  <tab.icon className="h-4 w-4" />
+                  {tab.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+
+        {/* Содержимое вкладок */}
+        {activeTab === "overview" && (
+          <div className="space-y-8">
+            {/* Общая статистика */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="bg-slate-800 border-2 border-slate-600 p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <Users className="h-8 w-8 text-blue-400" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                      ВСЕГО ПОЛЬЗОВАТЕЛЕЙ
+                    </p>
+                    <p className="text-2xl font-mono font-bold text-white">
+                      {overallStats.totalUsers}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800 border-2 border-slate-600 p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <GraduationCap className="h-8 w-8 text-green-400" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                      АКТИВНЫХ АБИТУРИЕНТОВ
+                    </p>
+                    <p className="text-2xl font-mono font-bold text-white">
+                      {overallStats.activeApplicants}
+                    </p>
+                    <p className="text-xs text-slate-400 font-mono">
+                      ИЗ {overallStats.totalApplicants} ВСЕГО
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800 border-2 border-slate-600 p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <TestTube className="h-8 w-8 text-indigo-400" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                      ОПУБЛИКОВАННЫХ ТЕСТОВ
+                    </p>
+                    <p className="text-2xl font-mono font-bold text-white">
+                      {overallStats.publishedTests}
+                    </p>
+                    <p className="text-xs text-slate-400 font-mono">
+                      ИЗ {overallStats.totalTests} СОЗДАННЫХ
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800 border-2 border-slate-600 p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <Building className="h-8 w-8 text-purple-400" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                      ИНСТИТУТОВ И НАПРАВЛЕНИЙ
+                    </p>
+                    <p className="text-2xl font-mono font-bold text-white">
+                      {overallStats.totalInstitutes}
+                    </p>
+                    <p className="text-xs text-slate-400 font-mono">
+                      {overallStats.totalDirections} НАПРАВЛЕНИЙ
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {instituteStats.map((institute) => (
-                  <div
-                    key={institute.instituteId}
-                    className="bg-gray-50 rounded-lg p-4"
-                  >
-                    <h4 className="font-medium text-gray-900 mb-2">
-                      {institute.instituteName}
-                    </h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Направления:</span>
-                        <span className="font-medium">
-                          {institute.totalDirections}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Абитуриенты:</span>
-                        <span className="font-medium">
-                          {institute.totalApplicants}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Тесты:</span>
-                        <span className="font-medium">
-                          {institute.totalTests}
-                        </span>
+
+            {/* Статистика по институтам */}
+            <div className="bg-slate-800 border-2 border-slate-600">
+              <div className="px-6 py-4 border-b-2 border-slate-600 bg-slate-700">
+                <h3 className="text-lg font-mono font-bold text-white flex items-center gap-2 uppercase">
+                  <Building className="h-5 w-5 text-purple-400" />
+                  СТАТИСТИКА ПО ИНСТИТУТАМ
+                </h3>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {instituteStats.map((institute) => (
+                    <div
+                      key={institute.instituteId}
+                      className="bg-slate-700 border border-slate-600 p-4"
+                    >
+                      <h4 className="font-mono font-bold text-white mb-2">
+                        {institute.instituteName}
+                      </h4>
+                      <div className="space-y-2 text-sm font-mono">
+                        <div className="flex justify-between border-b border-slate-600 pb-1">
+                          <span className="text-slate-300">НАПРАВЛЕНИЯ:</span>
+                          <span className="font-bold text-white">
+                            {institute.totalDirections}
+                          </span>
+                        </div>
+                        <div className="flex justify-between border-b border-slate-600 pb-1">
+                          <span className="text-slate-300">АБИТУРИЕНТЫ:</span>
+                          <span className="font-bold text-white">
+                            {institute.totalApplicants}
+                          </span>
+                        </div>
+                        <div className="flex justify-between border-b border-slate-600 pb-1">
+                          <span className="text-slate-300">ТЕСТЫ:</span>
+                          <span className="font-bold text-white">
+                            {institute.totalTests}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {activeTab === "applicants" && (
-        <div className="space-y-6">
-          {/* Поиск и фильтры */}
-          <div className="bg-white rounded-lg shadow border p-6">
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-              <div className="relative flex-1 max-w-md">
-                <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Поиск абитуриентов..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
-                />
-              </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => handleExportReport("Отчет по абитуриентам")}
-                  className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                >
-                  <FileText className="h-4 w-4" />
-                  Экспорт PDF
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Таблица абитуриентов */}
-          <div className="bg-white rounded-lg shadow border">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                <GraduationCap className="h-5 w-5 text-green-500" />
-                Прогресс абитуриентов ({filteredApplicants.length})
-              </h3>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Абитуриент
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Направление
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Профиль
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Тесты
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Лучший балл
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Последняя активность
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredApplicants.map((applicant) => (
-                    <tr key={applicant.applicantId} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
-                          {applicant.applicantName}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {applicant.directionName}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {applicant.instituteName}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {applicant.profileComplete ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
-                            <CheckCircle className="h-3 w-3" />
-                            Заполнен
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
-                            <AlertTriangle className="h-3 w-3" />
-                            Не заполнен
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {applicant.testsCompleted} / {applicant.testsAvailable}
-                        </div>
-                        <div className="text-xs text-gray-500">завершено</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
-                          {applicant.bestScore > 0 ? `${applicant.bestScore}%` : "—"}
-                        </div>
-                        {applicant.averageScore > 0 && (
-                          <div className="text-xs text-gray-500">
-                            средний: {applicant.averageScore}%
-                          </div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {applicant.lastActivity
-                          ? new Date(applicant.lastActivity).toLocaleDateString("ru-RU")
-                          : "—"}
-                      </td>
-                    </tr>
                   ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {activeTab === "testing" && (
-        <div className="space-y-6">
-          {/* Статистика тестирования */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow border">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Target className="h-8 w-8 text-blue-500" />
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    Всего вопросов
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {overallStats.totalQuestions}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow border">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Clock className="h-8 w-8 text-orange-500" />
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    Среднее время теста
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">—</p>
-                  <p className="text-xs text-gray-500">будет рассчитано</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow border">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Award className="h-8 w-8 text-yellow-500" />
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    Средний балл
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">—</p>
-                  <p className="text-xs text-gray-500">будет рассчитан</p>
                 </div>
               </div>
             </div>
           </div>
+        )}
 
-          {/* Статистика по тестам */}
-          <div className="bg-white rounded-lg shadow border">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                <TestTube className="h-5 w-5 text-indigo-500" />
-                Статистика по тестам
-              </h3>
+        {activeTab === "applicants" && (
+          <div className="space-y-6">
+            {/* Поиск и фильтры */}
+            <div className="bg-slate-800 border-2 border-slate-600 p-6">
+              <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div className="relative flex-1 max-w-md">
+                  <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="ПОИСК АБИТУРИЕНТОВ..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 pr-4 py-2 w-full border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase"
+                  />
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => handleExportReport("Отчет по абитуриентам")}
+                    className="flex items-center gap-2 px-4 py-2 bg-red-800 text-red-200 border-2 border-red-600 font-mono font-bold uppercase"
+                  >
+                    <FileText className="h-4 w-4" />
+                    ЭКСПОРТ PDF
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Тест
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Направление
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Куратор
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Вопросы
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Макс. балл
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Статус
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {tests.map((test) => {
-                    const direction = directions.find((d) => d.$id === test.directionId);
-                    const curator = curators.find((c) => c.$id === test.curatorId);
 
-                    return (
-                      <tr key={test.$id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4">
-                          <div className="text-sm font-medium text-gray-900">
-                            {test.title}
+            {/* Таблица абитуриентов */}
+            <div className="bg-slate-800 border-2 border-slate-600">
+              <div className="px-6 py-4 border-b-2 border-slate-600 bg-slate-700">
+                <h3 className="text-lg font-mono font-bold text-white flex items-center gap-2 uppercase">
+                  <GraduationCap className="h-5 w-5 text-green-400" />
+                  ПРОГРЕСС АБИТУРИЕНТОВ ({filteredApplicants.length})
+                </h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full">
+                  <thead className="bg-slate-700">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        АБИТУРИЕНТ
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        НАПРАВЛЕНИЕ
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        ПРОФИЛЬ
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        ТЕСТЫ
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        ЛУЧШИЙ БАЛЛ
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider">
+                        ПОСЛЕДНЯЯ АКТИВНОСТЬ
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y-2 divide-slate-700">
+                    {filteredApplicants.map((applicant) => (
+                      <tr key={applicant.applicantId} className="bg-slate-800">
+                        <td className="px-6 py-4 border-r border-slate-700">
+                          <div className="text-sm font-mono font-bold text-white">
+                            {applicant.applicantName}
                           </div>
-                          {test.description && (
-                            <div className="text-xs text-gray-500 line-clamp-2">
-                              {test.description}
+                        </td>
+                        <td className="px-6 py-4 border-r border-slate-700">
+                          <div className="text-sm font-mono text-white">
+                            {applicant.directionName}
+                          </div>
+                          <div className="text-xs font-mono text-slate-400">
+                            {applicant.instituteName}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 border-r border-slate-700">
+                          {applicant.profileComplete ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-bold bg-green-800 text-green-200 border border-green-600 uppercase">
+                              <CheckCircle className="h-3 w-3" />
+                              ЗАПОЛНЕН
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-bold bg-yellow-800 text-yellow-200 border border-yellow-600 uppercase">
+                              <AlertTriangle className="h-3 w-3" />
+                              НЕ ЗАПОЛНЕН
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 border-r border-slate-700">
+                          <div className="text-sm font-mono text-white">
+                            {applicant.testsCompleted} / {applicant.testsAvailable}
+                          </div>
+                          <div className="text-xs font-mono text-slate-400 uppercase">ЗАВЕРШЕНО</div>
+                        </td>
+                        <td className="px-6 py-4 border-r border-slate-700">
+                          <div className="text-sm font-mono font-bold text-white">
+                            {applicant.bestScore > 0 ? `${applicant.bestScore}%` : "—"}
+                          </div>
+                          {applicant.averageScore > 0 && (
+                            <div className="text-xs font-mono text-slate-400 uppercase">
+                              СРЕДНИЙ: {applicant.averageScore}%
                             </div>
                           )}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {direction?.name || "Не найдено"}
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {direction?.code}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {curator?.name || "Не найден"}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {test.totalQuestions}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">
-                            {test.maxScore}
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            проходной: {test.passingScore}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {test.isPublished ? (
-                            <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
-                              <CheckCircle className="h-3 w-3 mr-1" />
-                              Опубликован
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
-                              <Clock className="h-3 w-3 mr-1" />
-                              Черновик
-                            </span>
-                          )}
+                        <td className="px-6 py-4 text-sm font-mono text-slate-300">
+                          {applicant.lastActivity
+                            ? new Date(applicant.lastActivity).toLocaleDateString("ru-RU")
+                            : "—"}
                         </td>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+        )}
 
-          {/* Статистика по кураторам */}
-          <div className="bg-white rounded-lg shadow border">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                <Users className="h-5 w-5 text-purple-500" />
-                Активность кураторов
-              </h3>
+        {activeTab === "testing" && (
+          <div className="space-y-6">
+            {/* Статистика тестирования */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-slate-800 border-2 border-slate-600 p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <Target className="h-8 w-8 text-blue-400" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                      ВСЕГО ВОПРОСОВ
+                    </p>
+                    <p className="text-2xl font-mono font-bold text-white">
+                      {overallStats.totalQuestions}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800 border-2 border-slate-600 p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <Clock className="h-8 w-8 text-orange-400" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                      СРЕДНЕЕ ВРЕМЯ ТЕСТА
+                    </p>
+                    <p className="text-2xl font-mono font-bold text-white">—</p>
+                    <p className="text-xs text-slate-400 font-mono uppercase">БУДЕТ РАССЧИТАНО</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800 border-2 border-slate-600 p-6">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <Award className="h-8 w-8 text-yellow-400" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                      СРЕДНИЙ БАЛЛ
+                    </p>
+                    <p className="text-2xl font-mono font-bold text-white">—</p>
+                    <p className="text-xs text-slate-400 font-mono uppercase">БУДЕТ РАССЧИТАН</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {curatorStats.map((curator) => (
-                  <div
-                    key={curator.curatorId}
-                    className="bg-gray-50 rounded-lg p-4"
-                  >
-                    <h4 className="font-medium text-gray-900 mb-2">
-                      {curator.curatorName}
-                    </h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Всего тестов:</span>
-                        <span className="font-medium">{curator.totalTests}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Опубликовано:</span>
-                        <span className="font-medium text-green-600">
-                          {curator.publishedTests}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Вопросов:</span>
-                        <span className="font-medium">
-                          {curator.totalQuestions}
-                        </span>
+
+            {/* Статистика по тестам */}
+            <div className="bg-slate-800 border-2 border-slate-600">
+              <div className="px-6 py-4 border-b-2 border-slate-600 bg-slate-700">
+                <h3 className="text-lg font-mono font-bold text-white flex items-center gap-2 uppercase">
+                  <TestTube className="h-5 w-5 text-indigo-400" />
+                  СТАТИСТИКА ПО ТЕСТАМ
+                </h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full">
+                  <thead className="bg-slate-700">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        ТЕСТ
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        НАПРАВЛЕНИЕ
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        КУРАТОР
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        ВОПРОСЫ
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider border-r border-slate-600">
+                        МАКС. БАЛЛ
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-mono font-bold text-white uppercase tracking-wider">
+                        СТАТУС
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y-2 divide-slate-700">
+                    {tests.map((test) => {
+                      const direction = directions.find((d) => d.$id === test.directionId);
+                      const curator = curators.find((c) => c.$id === test.curatorId);
+
+                      return (
+                        <tr key={test.$id} className="bg-slate-800">
+                          <td className="px-6 py-4 border-r border-slate-700">
+                            <div className="text-sm font-mono font-bold text-white">
+                              {test.title}
+                            </div>
+                            {test.description && (
+                              <div className="text-xs font-mono text-slate-400 line-clamp-2">
+                                {test.description}
+                              </div>
+                            )}
+                          </td>
+                          <td className="px-6 py-4 border-r border-slate-700">
+                            <div className="text-sm font-mono text-white">
+                              {direction?.name || "НЕ НАЙДЕНО"}
+                            </div>
+                            <div className="text-xs font-mono text-slate-400">
+                              {direction?.code}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 border-r border-slate-700">
+                            <div className="text-sm font-mono text-white">
+                              {curator?.name || "НЕ НАЙДЕН"}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 border-r border-slate-700">
+                            <div className="text-sm font-mono text-white text-center">
+                              {test.totalQuestions}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 border-r border-slate-700">
+                            <div className="text-sm font-mono text-white text-center">
+                              {test.maxScore}
+                            </div>
+                            <div className="text-xs font-mono text-slate-400 text-center uppercase">
+                              ПРОХОДНОЙ: {test.passingScore}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            {test.isPublished ? (
+                              <span className="inline-flex items-center px-2 py-1 text-xs font-mono font-bold bg-green-800 text-green-200 border border-green-600 uppercase">
+                                <CheckCircle className="h-3 w-3 mr-1" />
+                                ОПУБЛИКОВАН
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center px-2 py-1 text-xs font-mono font-bold bg-yellow-800 text-yellow-200 border border-yellow-600 uppercase">
+                                <Clock className="h-3 w-3 mr-1" />
+                                ЧЕРНОВИК
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Статистика по кураторам */}
+            <div className="bg-slate-800 border-2 border-slate-600">
+              <div className="px-6 py-4 border-b-2 border-slate-600 bg-slate-700">
+                <h3 className="text-lg font-mono font-bold text-white flex items-center gap-2 uppercase">
+                  <Users className="h-5 w-5 text-purple-400" />
+                  АКТИВНОСТЬ КУРАТОРОВ
+                </h3>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {curatorStats.map((curator) => (
+                    <div
+                      key={curator.curatorId}
+                      className="bg-slate-700 border border-slate-600 p-4"
+                    >
+                      <h4 className="font-mono font-bold text-white mb-2">
+                        {curator.curatorName}
+                      </h4>
+                      <div className="space-y-2 text-sm font-mono">
+                        <div className="flex justify-between border-b border-slate-600 pb-1">
+                          <span className="text-slate-300">ВСЕГО ТЕСТОВ:</span>
+                          <span className="font-bold text-white">{curator.totalTests}</span>
+                        </div>
+                        <div className="flex justify-between border-b border-slate-600 pb-1">
+                          <span className="text-slate-300">ОПУБЛИКОВАНО:</span>
+                          <span className="font-bold text-green-400">
+                            {curator.publishedTests}
+                          </span>
+                        </div>
+                        <div className="flex justify-between border-b border-slate-600 pb-1">
+                          <span className="text-slate-300">ВОПРОСОВ:</span>
+                          <span className="font-bold text-white">
+                            {curator.totalQuestions}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {activeTab === "export" && (
-        <div className="space-y-6">
-          {/* Настройки экспорта */}
-          <div className="bg-white rounded-lg shadow border p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Download className="h-5 w-5 text-pink-500" />
-              Настройки экспорта
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Формат экспорта
-                </label>
-                <div className="space-y-2">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="exportFormat"
-                      value="PDF"
-                      checked={exportFormat === "PDF"}
-                      onChange={(e) => setExportFormat(e.target.value as "PDF")}
-                      className="mr-2"
-                    />
-                    <FileText className="h-4 w-4 text-red-500 mr-2" />
-                    PDF документ
+        {activeTab === "export" && (
+          <div className="space-y-6">
+            {/* Настройки экспорта */}
+            <div className="bg-slate-800 border-2 border-slate-600 p-6">
+              <h3 className="text-lg font-mono font-bold text-white mb-4 flex items-center gap-2 uppercase">
+                <Download className="h-5 w-5 text-blue-400" />
+                НАСТРОЙКИ ЭКСПОРТА
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-mono font-bold text-white mb-2 uppercase">
+                    ФОРМАТ ЭКСПОРТА
                   </label>
-                 
+                  <div className="space-y-2">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="exportFormat"
+                        value="PDF"
+                        checked={exportFormat === "PDF"}
+                        onChange={(e) => setExportFormat(e.target.value as "PDF")}
+                        className="mr-2 bg-slate-700 border-2 border-slate-600"
+                      />
+                      <FileText className="h-4 w-4 text-red-400 mr-2" />
+                      <span className="font-mono text-white uppercase">PDF ДОКУМЕНТ</span>
+                    </label>
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Период отчета
-                </label>
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="date"
-                    value={reportFilters.startDate}
-                    onChange={(e) =>
-                      setReportFilters((prev) => ({
-                        ...prev,
-                        startDate: e.target.value,
-                      }))
-                    }
-                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
-                  />
-                  <input
-                    type="date"
-                    value={reportFilters.endDate}
-                    onChange={(e) =>
-                      setReportFilters((prev) => ({
-                        ...prev,
-                        endDate: e.target.value,
-                      }))
-                    }
-                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
-                  />
+                <div>
+                  <label className="block text-sm font-mono font-bold text-white mb-2 uppercase">
+                    ПЕРИОД ОТЧЕТА
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <input
+                      type="date"
+                      value={reportFilters.startDate}
+                      onChange={(e) =>
+                        setReportFilters((prev) => ({
+                          ...prev,
+                          startDate: e.target.value,
+                        }))
+                      }
+                      className="px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
+                    />
+                    <input
+                      type="date"
+                      value={reportFilters.endDate}
+                      onChange={(e) =>
+                        setReportFilters((prev) => ({
+                          ...prev,
+                          endDate: e.target.value,
+                        }))
+                      }
+                      className="px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Доступные отчеты */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Общий отчет",
-                description: "Полная статистика системы",
-                icon: BarChart3,
-                color: "bg-blue-500",
-              },
-              {
-                title: "Отчет по абитуриентам",
-                description: "Прогресс и результаты абитуриентов",
-                icon: GraduationCap,
-                color: "bg-green-500",
-              },
-              {
-                title: "Статистика тестирования",
-                description: "Анализ результатов тестов",
-                icon: TestTube,
-                color: "bg-indigo-500",
-              },
-              {
-                title: "Отчет по институтам",
-                description: "Статистика по институтам",
-                icon: Building,
-                color: "bg-purple-500",
-              },
-              {
-                title: "Активность кураторов",
-                description: "Статистика работы кураторов",
-                icon: Users,
-                color: "bg-orange-500",
-              },
-              {
-                title: "Анализ времени",
-                description: "Время прохождения тестов",
-                icon: Clock,
-                color: "bg-yellow-500",
-              },
-            ].map((report) => (
-              <div
-                key={report.title}
-                className="bg-white rounded-lg shadow border p-6"
-              >
-                <div className="flex items-center mb-4">
-                  <div
-                    className={`${report.color} p-3 rounded-lg text-white mr-4`}
-                  >
-                    <report.icon className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">
-                      {report.title}
-                    </h4>
-                    <p className="text-sm text-gray-500">{report.description}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => handleExportReport(report.title)}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            {/* Доступные отчеты */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                {
+                  title: "Общий отчет",
+                  description: "ПОЛНАЯ СТАТИСТИКА СИСТЕМЫ",
+                  icon: BarChart3,
+                  color: "bg-blue-800 border-blue-600",
+                },
+                {
+                  title: "Отчет по абитуриентам",
+                  description: "ПРОГРЕСС И РЕЗУЛЬТАТЫ АБИТУРИЕНТОВ",
+                  icon: GraduationCap,
+                  color: "bg-green-800 border-green-600",
+                },
+                {
+                  title: "Статистика тестирования",
+                  description: "АНАЛИЗ РЕЗУЛЬТАТОВ ТЕСТОВ",
+                  icon: TestTube,
+                  color: "bg-indigo-800 border-indigo-600",
+                },
+                {
+                  title: "Отчет по институтам",
+                  description: "СТАТИСТИКА ПО ИНСТИТУТАМ",
+                  icon: Building,
+                  color: "bg-purple-800 border-purple-600",
+                },
+                {
+                  title: "Активность кураторов",
+                  description: "СТАТИСТИКА РАБОТЫ КУРАТОРОВ",
+                  icon: Users,
+                  color: "bg-orange-800 border-orange-600",
+                },
+                {
+                  title: "Анализ времени",
+                  description: "ВРЕМЯ ПРОХОЖДЕНИЯ ТЕСТОВ",
+                  icon: Clock,
+                  color: "bg-yellow-800 border-yellow-600",
+                },
+              ].map((report) => (
+                <div
+                  key={report.title}
+                  className="bg-slate-800 border-2 border-slate-600 p-6"
                 >
-                  <Download className="h-4 w-4" />
-                  Экспортировать
-                </button>
-              </div>
-            ))}
+                  <div className="flex items-center mb-4">
+                    <div className={`${report.color} border-2 p-3 text-white mr-4`}>
+                      <report.icon className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-mono font-bold text-white">
+                        {report.title}
+                      </h4>
+                      <p className="text-sm font-mono text-slate-400">{report.description}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => handleExportReport(report.title)}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2 text-slate-300 bg-slate-700 border-2 border-slate-600 font-mono font-bold uppercase"
+                  >
+                    <Download className="h-4 w-4" />
+                    ЭКСПОРТИРОВАТЬ
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Информационная панель */}
-      <div className="mt-8 bg-pink-50 border border-pink-200 rounded-lg p-6">
-        <div className="flex items-start gap-3">
-          <TrendingUp className="h-5 w-5 text-pink-600 mt-0.5" />
-          <div>
-            <h3 className="text-sm font-medium text-pink-900 mb-2">
-              Возможности отчетов
-            </h3>
-            <ul className="text-sm text-pink-800 space-y-1">
-              <li>• Подробная аналитика по всем аспектам системы тестирования</li>
-              <li>• Экспорт данных в формате PDF</li>
-              <li>• Фильтрация отчетов по датам, институтам и направлениям</li>
-              <li>• Мониторинг прогресса абитуриентов и активности кураторов</li>
-              <li>• Статистика результатов тестирования и анализ времени</li>
-              <li>• Автоматическое обновление данных в режиме реального времени</li>
-            </ul>
+        {/* Информационная панель */}
+        <div className="mt-8 bg-blue-900 border-2 border-blue-600 p-6">
+          <div className="flex items-start gap-3">
+            <TrendingUp className="h-5 w-5 text-blue-400 mt-0.5" />
+            <div>
+              <h3 className="text-sm font-mono font-bold text-blue-200 mb-2 uppercase">
+                ВОЗМОЖНОСТИ ОТЧЕТОВ
+              </h3>
+              <ul className="text-sm font-mono text-blue-300 space-y-1">
+                <li>• ПОДРОБНАЯ АНАЛИТИКА ПО ВСЕМ АСПЕКТАМ СИСТЕМЫ ТЕСТИРОВАНИЯ</li>
+                <li>• ЭКСПОРТ ДАННЫХ В ФОРМАТЕ PDF</li>
+                <li>• ФИЛЬТРАЦИЯ ОТЧЕТОВ ПО ДАТАМ, ИНСТИТУТАМ И НАПРАВЛЕНИЯМ</li>
+                <li>• МОНИТОРИНГ ПРОГРЕССА АБИТУРИЕНТОВ И АКТИВНОСТИ КУРАТОРОВ</li>
+                <li>• СТАТИСТИКА РЕЗУЛЬТАТОВ ТЕСТИРОВАНИЯ И АНАЛИЗ ВРЕМЕНИ</li>
+                <li>• АВТОМАТИЧЕСКОЕ ОБНОВЛЕНИЕ ДАННЫХ В РЕЖИМЕ РЕАЛЬНОГО ВРЕМЕНИ</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

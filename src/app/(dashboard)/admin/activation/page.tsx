@@ -156,294 +156,422 @@ export default function ActivationPage() {
     const diffTime = now.getTime() - date.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-    if (diffDays === 0) return "Сегодня";
-    if (diffDays === 1) return "Вчера";
-    if (diffDays < 7) return `${diffDays} дней назад`;
+    if (diffDays === 0) return "СЕГОДНЯ";
+    if (diffDays === 1) return "ВЧЕРА";
+    if (diffDays < 7) return `${diffDays} ДНЕЙ НАЗАД`;
     return date.toLocaleDateString("ru-RU");
+  };
+
+  const getGovRoleBadge = (role: UserRole) => {
+    if (role === UserRole.CURATOR) {
+      return (
+        <span className="px-2 py-1 text-xs font-mono font-bold bg-purple-800 text-purple-200 border border-purple-600 uppercase">
+          КУРАТОР
+        </span>
+      );
+    }
+    if (role === UserRole.APPLICANT) {
+      return (
+        <span className="px-2 py-1 text-xs font-mono font-bold bg-green-800 text-green-200 border border-green-600 uppercase">
+          АБИТУРИЕНТ
+        </span>
+      );
+    }
+    return (
+      <span className="px-2 py-1 text-xs font-mono font-bold bg-gray-800 text-gray-200 border border-gray-600 uppercase">
+        НЕИЗВЕСТНО
+      </span>
+    );
   };
 
   if (isLoading) {
     return (
-      <div className="p-6 max-w-7xl mx-auto">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-          <span className="ml-3 text-gray-600">Загрузка пользователей...</span>
+      <div className="min-h-screen bg-slate-900 text-white">
+        <div className="p-6 max-w-7xl mx-auto">
+          <div className="flex justify-center items-center h-64">
+            <div className="w-8 h-8 border-2 border-orange-400 border-t-transparent"></div>
+            <span className="ml-3 text-slate-300 font-mono">ЗАГРУЗКА ПОЛЬЗОВАТЕЛЕЙ...</span>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* Заголовок */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <UserCheck className="h-8 w-8 text-orange-500" />
-          <h1 className="text-3xl font-bold text-gray-900">
-            Активация пользователей
-          </h1>
-        </div>
-        <p className="text-gray-600">
-          Управление активацией новых пользователей в системе
-        </p>
-      </div>
-
-      {/* Статистика */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Clock className="h-8 w-8 text-orange-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">
-                Ожидают активации
-              </p>
-              <p className="text-2xl font-bold text-gray-900">
-                {pendingUsers.length}
-              </p>
-            </div>
+    <div className="min-h-screen bg-slate-900 text-white">
+      <div className="p-6 max-w-7xl mx-auto">
+        {/* Заголовок */}
+        <div className="mb-8 border-b border-slate-700 pb-6">
+          <div className="flex items-center gap-3 mb-2">
+            <UserCheck className="h-8 w-8 text-orange-400" />
+            <h1 className="text-3xl font-mono font-bold text-white uppercase tracking-wide">
+              АКТИВАЦИЯ ПОЛЬЗОВАТЕЛЕЙ
+            </h1>
           </div>
+          <p className="text-slate-300 font-mono">
+            УПРАВЛЕНИЕ АКТИВАЦИЕЙ НОВЫХ ПОЛЬЗОВАТЕЛЕЙ В СИСТЕМЕ
+          </p>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Users className="h-8 w-8 text-purple-500" />
+        {/* Статистика */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Clock className="h-8 w-8 text-orange-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  ОЖИДАЮТ АКТИВАЦИИ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {pendingUsers.length}
+                </p>
+              </div>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Кураторы</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {pendingUsers.filter((u) => u.role === UserRole.CURATOR).length}
-              </p>
+          </div>
+
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Users className="h-8 w-8 text-purple-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  КУРАТОРЫ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {pendingUsers.filter((u) => u.role === UserRole.CURATOR).length}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <GraduationCap className="h-8 w-8 text-green-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  АБИТУРИЕНТЫ
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {
+                    pendingUsers.filter((u) => u.role === UserRole.APPLICANT)
+                      .length
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <CheckCircle className="h-8 w-8 text-blue-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
+                  ВЫБРАНО
+                </p>
+                <p className="text-2xl font-mono font-bold text-white">
+                  {selectedUsers.size}
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <GraduationCap className="h-8 w-8 text-green-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Абитуриенты</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {
-                  pendingUsers.filter((u) => u.role === UserRole.APPLICANT)
-                    .length
-                }
-              </p>
-            </div>
-          </div>
-        </div>
+        {/* Фильтры и поиск */}
+        <div className="bg-slate-800 border-2 border-slate-600 p-6 mb-6">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex flex-col md:flex-row gap-4 items-center">
+              {/* Поиск */}
+              <div className="relative">
+                <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="ПОИСК ПО ИМЕНИ ИЛИ EMAIL..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 py-2 w-80 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase"
+                />
+              </div>
 
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <CheckCircle className="h-8 w-8 text-blue-500" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Выбрано</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {selectedUsers.size}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Фильтры и поиск */}
-      <div className="bg-white rounded-lg shadow border p-6 mb-6">
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="flex flex-col md:flex-row gap-4 items-center">
-            {/* Поиск */}
-            <div className="relative">
-              <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Поиск по имени или email..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              />
-            </div>
-
-            {/* Фильтр по роли */}
-            <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-gray-500" />
-              <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value as UserRole | "ALL")}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              >
-                <option value="ALL">Все роли</option>
-                <option value={UserRole.CURATOR}>Кураторы</option>
-                <option value={UserRole.APPLICANT}>Абитуриенты</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <button
-              onClick={() => refetch()}
-              className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <RefreshCw className="h-4 w-4" />
-              Обновить
-            </button>
-
-            {selectedUsers.size > 0 && (
-              <button
-                onClick={handleBulkActivate}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-              >
-                <UserCheck className="h-4 w-4" />
-                Активировать выбранных ({selectedUsers.size})
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Список пользователей */}
-      <div className="bg-white rounded-lg shadow border">
-        {filteredUsers.length === 0 ? (
-          <div className="text-center py-12">
-            <UserCheck className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              {pendingUsers.length === 0
-                ? "Нет пользователей, ожидающих активации"
-                : "Пользователи не найдены"}
-            </h3>
-            <p className="text-gray-500">
-              {pendingUsers.length === 0
-                ? "Все пользователи уже активированы"
-                : "Попробуйте изменить параметры поиска"}
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-hidden">
-            {/* Заголовок таблицы */}
-            <div className="bg-gray-50 px-6 py-3 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={
-                      selectedUsers.size === filteredUsers.length &&
-                      filteredUsers.length > 0
-                    }
-                    onChange={toggleSelectAll}
-                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  />
-                  <span className="ml-3 text-sm font-medium text-gray-900">
-                    Пользователи ({filteredUsers.length})
-                  </span>
-                </div>
-                <span className="text-sm text-gray-500">Дата регистрации</span>
+              {/* Фильтр по роли */}
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-slate-400" />
+                <select
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value as UserRole | "ALL")}
+                  className="px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
+                >
+                  <option value="ALL">ВСЕ РОЛИ</option>
+                  <option value={UserRole.CURATOR}>КУРАТОРЫ</option>
+                  <option value={UserRole.APPLICANT}>АБИТУРИЕНТЫ</option>
+                </select>
               </div>
             </div>
 
-            {/* Список пользователей */}
-            <div className="divide-y divide-gray-200">
-              {filteredUsers.map((user) => (
-                <div
-                  key={user.$id}
-                  className="px-6 py-4 hover:bg-gray-50 transition-colors"
+            <div className="flex gap-3">
+              <button
+                onClick={() => refetch()}
+                className="flex items-center gap-2 px-3 py-2 text-slate-300 font-mono font-bold border border-slate-600 uppercase"
+              >
+                <RefreshCw className="h-4 w-4" />
+                ОБНОВИТЬ
+              </button>
+
+              {selectedUsers.size > 0 && (
+                <button
+                  onClick={handleBulkActivate}
+                  className="flex items-center gap-2 px-4 py-2 bg-green-800 text-green-200 border-2 border-green-600 font-mono font-bold uppercase"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={selectedUsers.has(user.$id)}
-                        onChange={() => toggleUserSelection(user.$id)}
-                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                      />
-
-                      <div className="ml-4 flex-1">
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <h3 className="text-sm font-medium text-gray-900">
-                              {user.name}
-                            </h3>
-                            <div className="flex items-center gap-2 mt-1">
-                              <Mail className="h-3 w-3 text-gray-400" />
-                              <span className="text-sm text-gray-500">
-                                {user.email}
-                              </span>
-                            </div>
-                          </div>
-
-                          <span
-                            className={`px-2 py-1 text-xs font-medium rounded-full ${getRoleColor(
-                              user.role
-                            )}`}
-                          >
-                            {getRoleLabel(user.role)}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
-                          <Calendar className="h-3 w-3" />
-                          <span>
-                            Зарегистрирован {formatCreatedDate(user.$createdAt)}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => handleActivateUser(user.$id, user.name)}
-                        disabled={activateUserMutation.isPending}
-                        className="flex items-center gap-1 px-3 py-1.5 text-sm bg-green-100 text-green-700 rounded-md hover:bg-green-200 disabled:opacity-50 transition-colors"
-                      >
-                        <UserCheck className="h-3 w-3" />
-                        Активировать
-                      </button>
-
-                      <button
-                        onClick={() => handleBlockUser(user.$id, user.name)}
-                        disabled={blockUserMutation.isPending}
-                        className="flex items-center gap-1 px-3 py-1.5 text-sm bg-red-100 text-red-700 rounded-md hover:bg-red-200 disabled:opacity-50 transition-colors"
-                      >
-                        <UserX className="h-3 w-3" />
-                        Заблокировать
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Информационная панель */}
-      {pendingUsers.length > 0 && (
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-blue-600 mt-0.5" />
-            <div>
-              <h3 className="text-sm font-medium text-blue-900 mb-2">
-                Рекомендации по активации
-              </h3>
-              <ul className="text-sm text-blue-800 space-y-1">
-                <li>
-                  • Проверьте корректность данных пользователя перед активацией
-                </li>
-                <li>
-                  • Кураторы получат доступ к созданию тестов и управлению
-                  абитуриентами
-                </li>
-                <li>• Абитуриенты смогут заполнить анкету и проходить тесты</li>
-                <li>• При блокировке пользователь теряет доступ к системе</li>
-                <li>• Массовая активация доступна через чекбоксы</li>
-              </ul>
+                  <UserCheck className="h-4 w-4" />
+                  АКТИВИРОВАТЬ ВЫБРАННЫХ ({selectedUsers.size})
+                </button>
+              )}
             </div>
           </div>
         </div>
-      )}
+
+        {/* Список пользователей */}
+        <div className="bg-slate-800 border-2 border-slate-600">
+          {filteredUsers.length === 0 ? (
+            <div className="text-center py-12">
+              <UserCheck className="h-16 w-16 text-slate-500 mx-auto mb-4" />
+              <h3 className="text-lg font-mono font-bold text-white mb-2 uppercase">
+                {pendingUsers.length === 0
+                  ? "НЕТ ПОЛЬЗОВАТЕЛЕЙ, ОЖИДАЮЩИХ АКТИВАЦИИ"
+                  : "ПОЛЬЗОВАТЕЛИ НЕ НАЙДЕНЫ"}
+              </h3>
+              <p className="text-slate-400 font-mono">
+                {pendingUsers.length === 0
+                  ? "ВСЕ ПОЛЬЗОВАТЕЛИ УЖЕ АКТИВИРОВАНЫ"
+                  : "ПОПРОБУЙТЕ ИЗМЕНИТЬ ПАРАМЕТРЫ ПОИСКА"}
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-hidden">
+              {/* Заголовок таблицы */}
+              <div className="bg-slate-700 px-6 py-3 border-b-2 border-slate-600">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={
+                        selectedUsers.size === filteredUsers.length &&
+                        filteredUsers.length > 0
+                      }
+                      onChange={toggleSelectAll}
+                      className="h-4 w-4 text-orange-600 bg-slate-700 border-2 border-slate-500"
+                    />
+                    <span className="ml-3 text-sm font-mono font-bold text-white uppercase">
+                      ПОЛЬЗОВАТЕЛИ ({filteredUsers.length})
+                    </span>
+                  </div>
+                  <span className="text-sm text-slate-300 font-mono font-bold uppercase">
+                    ДАТА РЕГИСТРАЦИИ
+                  </span>
+                </div>
+              </div>
+
+              {/* Список пользователей */}
+              <div className="divide-y-2 divide-slate-700">
+                {filteredUsers.map((user) => (
+                  <div
+                    key={user.$id}
+                    className="px-6 py-4 bg-slate-800"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={selectedUsers.has(user.$id)}
+                          onChange={() => toggleUserSelection(user.$id)}
+                          className="h-4 w-4 text-orange-600 bg-slate-700 border-2 border-slate-500"
+                        />
+
+                        <div className="ml-4 flex-1">
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <h3 className="text-sm font-mono font-bold text-white">
+                                {user.name}
+                              </h3>
+                              <div className="flex items-center gap-2 mt-1">
+                                <Mail className="h-3 w-3 text-slate-400" />
+                                <span className="text-sm text-slate-300 font-mono">
+                                  {user.email}
+                                </span>
+                              </div>
+                            </div>
+
+                            {getGovRoleBadge(user.role)}
+                          </div>
+
+                          <div className="flex items-center gap-2 mt-2 text-xs text-slate-400 font-mono">
+                            <Calendar className="h-3 w-3" />
+                            <span>
+                              ЗАРЕГИСТРИРОВАН {formatCreatedDate(user.$createdAt)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => handleActivateUser(user.$id, user.name)}
+                          disabled={activateUserMutation.isPending}
+                          className="flex items-center gap-1 px-3 py-1.5 text-sm bg-green-800 text-green-200 border border-green-600 disabled:opacity-50 font-mono font-bold uppercase"
+                        >
+                          <UserCheck className="h-3 w-3" />
+                          АКТИВИРОВАТЬ
+                        </button>
+
+                        <button
+                          onClick={() => handleBlockUser(user.$id, user.name)}
+                          disabled={blockUserMutation.isPending}
+                          className="flex items-center gap-1 px-3 py-1.5 text-sm bg-red-800 text-red-200 border border-red-600 disabled:opacity-50 font-mono font-bold uppercase"
+                        >
+                          <UserX className="h-3 w-3" />
+                          ЗАБЛОКИРОВАТЬ
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Информационная панель */}
+        {pendingUsers.length > 0 && (
+          <div className="mt-6 bg-blue-900 border-2 border-blue-600 p-6">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 text-blue-400 mt-0.5" />
+              <div>
+                <h3 className="text-sm font-mono font-bold text-blue-200 mb-2 uppercase">
+                  РЕКОМЕНДАЦИИ ПО АКТИВАЦИИ
+                </h3>
+                <ul className="text-sm text-blue-300 font-mono space-y-1">
+                  <li>
+                    • ПРОВЕРЬТЕ КОРРЕКТНОСТЬ ДАННЫХ ПОЛЬЗОВАТЕЛЯ ПЕРЕД АКТИВАЦИЕЙ
+                  </li>
+                  <li>
+                    • КУРАТОРЫ ПОЛУЧАТ ДОСТУП К СОЗДАНИЮ ТЕСТОВ И УПРАВЛЕНИЮ АБИТУРИЕНТАМИ
+                  </li>
+                  <li>• АБИТУРИЕНТЫ СМОГУТ ЗАПОЛНИТЬ АНКЕТУ И ПРОХОДИТЬ ТЕСТЫ</li>
+                  <li>• ПРИ БЛОКИРОВКЕ ПОЛЬЗОВАТЕЛЬ ТЕРЯЕТ ДОСТУП К СИСТЕМЕ</li>
+                  <li>• МАССОВАЯ АКТИВАЦИЯ ДОСТУПНА ЧЕРЕЗ ЧЕКБОКСЫ</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Статистика активации */}
+        <div className="mt-6 bg-slate-800 border-2 border-slate-600 p-6">
+          <h3 className="text-lg font-mono font-bold text-white mb-4 uppercase tracking-wide border-b border-slate-600 pb-2">
+            СТАТИСТИКА АКТИВАЦИИ
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-3">
+              <h4 className="font-mono font-bold text-white uppercase border-b border-slate-600 pb-2">
+                ПО РОЛЯМ:
+              </h4>
+              <div className="space-y-2 text-sm text-slate-300 font-mono">
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span>КУРАТОРЫ:</span>
+                  <span className="font-bold text-purple-400">
+                    {pendingUsers.filter((u) => u.role === UserRole.CURATOR).length}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span>АБИТУРИЕНТЫ:</span>
+                  <span className="font-bold text-green-400">
+                    {pendingUsers.filter((u) => u.role === UserRole.APPLICANT).length}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span>ВСЕГО:</span>
+                  <span className="font-bold text-white">
+                    {pendingUsers.length}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="font-mono font-bold text-white uppercase border-b border-slate-600 pb-2">
+                ПО ВРЕМЕНИ:
+              </h4>
+              <div className="space-y-2 text-sm text-slate-300 font-mono">
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span>СЕГОДНЯ:</span>
+                  <span className="font-bold text-blue-400">
+                    {pendingUsers.filter(u => {
+                      const today = new Date();
+                      const userDate = new Date(u.$createdAt);
+                      return userDate.toDateString() === today.toDateString();
+                    }).length}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span>НА ЭТОЙ НЕДЕЛЕ:</span>
+                  <span className="font-bold text-yellow-400">
+                    {pendingUsers.filter(u => {
+                      const weekAgo = new Date();
+                      weekAgo.setDate(weekAgo.getDate() - 7);
+                      return new Date(u.$createdAt) > weekAgo;
+                    }).length}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span>БОЛЕЕ НЕДЕЛИ:</span>
+                  <span className="font-bold text-red-400">
+                    {pendingUsers.filter(u => {
+                      const weekAgo = new Date();
+                      weekAgo.setDate(weekAgo.getDate() - 7);
+                      return new Date(u.$createdAt) <= weekAgo;
+                    }).length}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="font-mono font-bold text-white uppercase border-b border-slate-600 pb-2">
+                ДЕЙСТВИЯ:
+              </h4>
+              <div className="space-y-2 text-sm text-slate-300 font-mono">
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span>ВЫБРАНО:</span>
+                  <span className="font-bold text-white">
+                    {selectedUsers.size}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span>ПРОЦЕНТ ВЫБОРА:</span>
+                  <span className="font-bold text-orange-400">
+                    {filteredUsers.length > 0 
+                      ? ((selectedUsers.size / filteredUsers.length) * 100).toFixed(1)
+                      : 0}%
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-700 pb-1">
+                  <span>ОСТАЛОСЬ:</span>
+                  <span className="font-bold text-slate-400">
+                    {filteredUsers.length - selectedUsers.size}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

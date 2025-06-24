@@ -47,11 +47,14 @@ export default function DirectionsPage() {
   const deleteDirectionMutation = useDeleteDirection();
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"ALL" | "ACTIVE" | "INACTIVE">("ALL");
-  const [instituteFilter, setInstituteFilter] = useState("ALL");
+  const [statusFilter, setStatusFilter] = useState<
+    "ALL" | "ACTIVE" | "INACTIVE"
+  >("ALL");
+  const [instituteFilter, setInstituteFilter] = useState<string>("ALL");
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [editingDirection, setEditingDirection] = useState(null);
-  const [formData, setFormData] = useState({
+  const [editingDirection, setEditingDirection] =
+    useState<DirectionWithInstitute | null>(null);
+  const [formData, setFormData] = useState<CreateDirectionDto>({
     name: "",
     code: "",
     instituteId: "",
@@ -63,7 +66,9 @@ export default function DirectionsPage() {
       direction.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       direction.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
       direction.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      direction.institute?.name.toLowerCase().includes(searchTerm.toLowerCase());
+      direction.institute?.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
     const matchesStatus =
       statusFilter === "ALL" ||
@@ -181,6 +186,8 @@ export default function DirectionsPage() {
   };
 
   const handleDeleteDirection = async (direction: DirectionWithInstitute) => {
+    // TODO: Проверить, есть ли тесты или абитуриенты для этого направления
+
     if (
       window.confirm(
         `Удалить направление "${direction.name}"? Это действие нельзя отменить.`
@@ -223,49 +230,56 @@ export default function DirectionsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-blue-900 text-white p-6">
-        <div className="bg-blue-800 border border-blue-700 p-4">
-          <p className="font-mono uppercase">ЗАГРУЗКА НАПРАВЛЕНИЙ...</p>
+      <div className="min-h-screen bg-slate-900 text-white">
+        <div className="p-6 max-w-7xl mx-auto">
+          <div className="flex justify-center items-center h-64">
+            <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent"></div>
+            <span className="ml-3 text-slate-300 font-mono">ЗАГРУЗКА НАПРАВЛЕНИЙ...</span>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-blue-900 text-white">
+    <div className="min-h-screen bg-slate-900 text-white">
       <div className="p-6 max-w-7xl mx-auto">
         {/* Заголовок */}
-        <div className="mb-8 border-b border-blue-700 pb-6">
-          <h1 className="text-3xl font-bold text-white mb-2 font-mono uppercase tracking-wide">
-            УПРАВЛЕНИЕ НАПРАВЛЕНИЯМИ
-          </h1>
-          <p className="text-blue-300 font-mono">
-            СОЗДАНИЕ И УПРАВЛЕНИЕ НАПРАВЛЕНИЯМИ ПОДГОТОВКИ
-          </p>
-        </div>
+        <div className="mb-8 border-b border-slate-700 pb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <GraduationCap className="h-8 w-8 text-purple-400" />
+                <h1 className="text-3xl font-mono font-bold text-white uppercase tracking-wide">
+                  УПРАВЛЕНИЕ НАПРАВЛЕНИЯМИ
+                </h1>
+              </div>
+              <p className="text-slate-300 font-mono">
+                СОЗДАНИЕ И УПРАВЛЕНИЕ НАПРАВЛЕНИЯМИ ПОДГОТОВКИ
+              </p>
+            </div>
 
-        {/* Кнопка создания */}
-        <div className="mb-6">
-          <button
-            onClick={() => setShowCreateForm(true)}
-            disabled={institutes.length === 0}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white border border-blue-500 font-mono uppercase hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Plus className="h-4 w-4" />
-            СОЗДАТЬ НАПРАВЛЕНИЕ
-          </button>
+            <button
+              onClick={() => setShowCreateForm(true)}
+              disabled={institutes.length === 0}
+              className="flex items-center gap-2 px-4 py-2 bg-purple-800 text-purple-200 border-2 border-purple-600 disabled:opacity-50 disabled:cursor-not-allowed font-mono font-bold uppercase"
+            >
+              <Plus className="h-4 w-4" />
+              СОЗДАТЬ НАПРАВЛЕНИЕ
+            </button>
+          </div>
         </div>
 
         {/* Предупреждение если нет институтов */}
         {institutes.length === 0 && (
-          <div className="bg-red-900 border-2 border-red-600 p-4 mb-6">
-            <div className="flex items-center">
-              <AlertTriangle className="h-5 w-5 text-red-400 mr-3" />
+          <div className="mb-6 bg-yellow-900 border-2 border-yellow-600 p-4">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 text-yellow-400 mt-0.5" />
               <div>
-                <h3 className="text-sm font-mono font-bold text-red-200 uppercase">
+                <h3 className="text-sm font-mono font-bold text-yellow-200 mb-1 uppercase">
                   НЕТ ДОСТУПНЫХ ИНСТИТУТОВ
                 </h3>
-                <p className="text-sm text-red-300 font-mono">
+                <p className="text-sm text-yellow-300 font-mono">
                   ДЛЯ СОЗДАНИЯ НАПРАВЛЕНИЙ СНАЧАЛА НЕОБХОДИМО СОЗДАТЬ ИНСТИТУТЫ.
                 </p>
               </div>
@@ -275,11 +289,13 @@ export default function DirectionsPage() {
 
         {/* Статистика */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-blue-800 border-2 border-blue-600 p-4">
-            <div className="flex items-center gap-3">
-              <GraduationCap className="h-6 w-6 text-blue-400" />
-              <div>
-                <p className="text-sm font-mono font-bold text-blue-300 uppercase">
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <GraduationCap className="h-8 w-8 text-purple-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
                   ВСЕГО НАПРАВЛЕНИЙ
                 </p>
                 <p className="text-2xl font-mono font-bold text-white">
@@ -289,11 +305,13 @@ export default function DirectionsPage() {
             </div>
           </div>
 
-          <div className="bg-blue-800 border-2 border-blue-600 p-4">
-            <div className="flex items-center gap-3">
-              <CheckCircle className="h-6 w-6 text-green-400" />
-              <div>
-                <p className="text-sm font-mono font-bold text-blue-300 uppercase">
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <CheckCircle className="h-8 w-8 text-green-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
                   АКТИВНЫЕ
                 </p>
                 <p className="text-2xl font-mono font-bold text-white">
@@ -303,11 +321,13 @@ export default function DirectionsPage() {
             </div>
           </div>
 
-          <div className="bg-blue-800 border-2 border-blue-600 p-4">
-            <div className="flex items-center gap-3">
-              <Building className="h-6 w-6 text-blue-400" />
-              <div>
-                <p className="text-sm font-mono font-bold text-blue-300 uppercase">
+          <div className="bg-slate-800 border-2 border-slate-600 p-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Building className="h-8 w-8 text-blue-400" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-mono font-bold text-slate-300 uppercase">
                   ПОКРЫТЫХ ИНСТИТУТОВ
                 </p>
                 <p className="text-2xl font-mono font-bold text-white">
@@ -320,37 +340,37 @@ export default function DirectionsPage() {
 
         {/* Статистика по институтам */}
         {directionsByInstitute.length > 0 && (
-          <div className="bg-blue-800 border-2 border-blue-600 p-6 mb-8">
-            <h2 className="text-xl font-mono font-bold text-white mb-4 uppercase tracking-wide border-b border-blue-700 pb-2">
+          <div className="mb-6 bg-slate-800 border-2 border-slate-600 p-6">
+            <h3 className="text-lg font-mono font-bold text-white mb-4 flex items-center gap-2 uppercase">
+              <Building className="h-5 w-5 text-blue-400" />
               РАСПРЕДЕЛЕНИЕ ПО ИНСТИТУТАМ
-            </h2>
+            </h3>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {directionsByInstitute.map(
                 ({ institute, directions: instDirections, activeDirections }) => (
-                  <div key={institute.$id} className="border-b border-blue-700 pb-4 last:border-0">
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="font-mono font-bold text-white">
+                  <div key={institute.$id} className="bg-slate-700 border border-slate-600 p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-mono font-bold text-white text-sm">
                         {institute.name}
-                      </h3>
-                      <span className="font-mono text-blue-300">
+                      </h4>
+                      <span className="text-sm text-slate-300 font-mono">
                         {activeDirections}/{instDirections.length}
                       </span>
                     </div>
-                    <p className="text-xs text-blue-400 font-mono mb-2">
+                    <p className="text-xs text-slate-400 font-mono mb-2">
                       КОД: {institute.code}
                     </p>
-                    <div className="w-full bg-blue-700 h-2 border border-blue-600">
+                    <div className="w-full bg-slate-600 h-2 border border-slate-500">
                       <div
-                        className="bg-blue-500 h-full"
+                        className="bg-purple-500 h-full"
                         style={{
-                          width: `${
+                          width:
                             instDirections.length > 0
                               ? `${
                                   (activeDirections / instDirections.length) * 100
                                 }%`
-                              : "0%"
-                          }`,
+                              : "0%",
                         }}
                       ></div>
                     </div>
@@ -362,82 +382,84 @@ export default function DirectionsPage() {
         )}
 
         {/* Фильтры и поиск */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          {/* Поиск */}
-          <div className="bg-blue-800 border-2 border-blue-600 p-4">
-            <label className="block text-sm font-mono font-bold text-blue-300 uppercase mb-2">
-              ПОИСК
-            </label>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-400" />
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full bg-blue-900 border-2 border-blue-600 text-white font-mono focus:outline-none focus:border-blue-400"
-                placeholder="Введите запрос"
-              />
+        <div className="bg-slate-800 border-2 border-slate-600 p-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+            {/* Поиск */}
+            <div>
+              <label className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase">
+                ПОИСК
+              </label>
+              <div className="relative">
+                <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="НАЗВАНИЕ, КОД, ИНСТИТУТ..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 py-2 w-full border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Фильтр по статусу */}
-          <div className="bg-blue-800 border-2 border-blue-600 p-4">
-            <label className="block text-sm font-mono font-bold text-blue-300 uppercase mb-2">
-              СТАТУС
-            </label>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="w-full px-3 py-2 bg-blue-900 border-2 border-blue-600 text-white font-mono focus:outline-none focus:border-blue-400"
-            >
-              <option value="ALL">ВСЕ СТАТУСЫ</option>
-              <option value="ACTIVE">АКТИВНЫЕ</option>
-              <option value="INACTIVE">НЕАКТИВНЫЕ</option>
-            </select>
-          </div>
+            {/* Фильтр по статусу */}
+            <div>
+              <label className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase">
+                СТАТУС
+              </label>
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value as any)}
+                className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
+              >
+                <option value="ALL">ВСЕ СТАТУСЫ</option>
+                <option value="ACTIVE">АКТИВНЫЕ</option>
+                <option value="INACTIVE">НЕАКТИВНЫЕ</option>
+              </select>
+            </div>
 
-          {/* Фильтр по институту */}
-          <div className="bg-blue-800 border-2 border-blue-600 p-4">
-            <label className="block text-sm font-mono font-bold text-blue-300 uppercase mb-2">
-              ИНСТИТУТ
-            </label>
-            <select
-              value={instituteFilter}
-              onChange={(e) => setInstituteFilter(e.target.value)}
-              className="w-full px-3 py-2 bg-blue-900 border-2 border-blue-600 text-white font-mono focus:outline-none focus:border-blue-400"
-            >
-              <option value="ALL">ВСЕ ИНСТИТУТЫ</option>
-              {institutes.map((institute) => (
-                <option key={institute.$id} value={institute.$id}>
-                  {institute.name}
-                </option>
-              ))}
-            </select>
-          </div>
+            {/* Фильтр по институту */}
+            <div>
+              <label className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase">
+                ИНСТИТУТ
+              </label>
+              <select
+                value={instituteFilter}
+                onChange={(e) => setInstituteFilter(e.target.value)}
+                className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
+              >
+                <option value="ALL">ВСЕ ИНСТИТУТЫ</option>
+                {institutes.map((institute) => (
+                  <option key={institute.$id} value={institute.$id}>
+                    {institute.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* Кнопка обновления */}
-          <div className="bg-blue-800 border-2 border-blue-600 p-4 flex items-end">
-            <button
-              onClick={() => refetch()}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-blue-700 border-2 border-blue-600 text-white font-mono uppercase hover:bg-blue-600"
-            >
-              <RefreshCw className="h-4 w-4" />
-              ОБНОВИТЬ
-            </button>
+            {/* Кнопка обновления */}
+            <div>
+              <button
+                onClick={() => refetch()}
+                className="w-full flex items-center justify-center gap-2 px-3 py-2 text-slate-300 font-mono font-bold border border-slate-600 uppercase"
+              >
+                <RefreshCw className="h-4 w-4" />
+                ОБНОВИТЬ
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Список направлений */}
-        <div className="bg-blue-800 border-2 border-blue-600 mb-8">
+        <div className="bg-slate-800 border-2 border-slate-600">
           {filteredDirections.length === 0 ? (
-            <div className="p-8 text-center">
-              <GraduationCap className="h-12 w-12 text-blue-500 mx-auto mb-4" />
-              <p className="text-blue-300 text-lg font-mono font-bold uppercase">
+            <div className="text-center py-12">
+              <GraduationCap className="h-16 w-16 text-slate-500 mx-auto mb-4" />
+              <h3 className="text-lg font-mono font-bold text-white mb-2 uppercase">
                 {directions.length === 0
                   ? "НЕТ НАПРАВЛЕНИЙ"
                   : "НАПРАВЛЕНИЯ НЕ НАЙДЕНЫ"}
-              </p>
-              <p className="text-blue-400 text-sm font-mono">
+              </h3>
+              <p className="text-slate-400 font-mono mb-4">
                 {directions.length === 0
                   ? "СОЗДАЙТЕ ПЕРВОЕ НАПРАВЛЕНИЕ ПОДГОТОВКИ"
                   : "ПОПРОБУЙТЕ ИЗМЕНИТЬ ПАРАМЕТРЫ ПОИСКА"}
@@ -445,7 +467,7 @@ export default function DirectionsPage() {
               {directions.length === 0 && institutes.length > 0 && (
                 <button
                   onClick={() => setShowCreateForm(true)}
-                  className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-blue-700 border-2 border-blue-600 text-white font-mono uppercase hover:bg-blue-600"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-purple-800 text-purple-200 border-2 border-purple-600 font-mono font-bold uppercase"
                 >
                   <Plus className="h-4 w-4" />
                   СОЗДАТЬ НАПРАВЛЕНИЕ
@@ -453,179 +475,209 @@ export default function DirectionsPage() {
               )}
             </div>
           ) : (
-            <>
+            <div className="overflow-hidden">
               {/* Заголовок таблицы */}
-              <div className="grid grid-cols-12 gap-4 p-4 bg-blue-900 border-b-2 border-blue-600 font-mono uppercase text-sm text-blue-300">
-                <div className="col-span-4">НАПРАВЛЕНИЕ</div>
-                <div className="col-span-2">КОД</div>
-                <div className="col-span-3">ИНСТИТУТ</div>
-                <div className="col-span-1">СТАТУС</div>
-                <div className="col-span-2">ДЕЙСТВИЯ</div>
+              <div className="bg-slate-700 px-6 py-3 border-b-2 border-slate-600">
+                <div className="grid grid-cols-12 gap-4 items-center text-sm font-mono font-bold text-white uppercase">
+                  <div className="col-span-4">НАПРАВЛЕНИЕ</div>
+                  <div className="col-span-2">КОД</div>
+                  <div className="col-span-3">ИНСТИТУТ</div>
+                  <div className="col-span-1">СТАТУС</div>
+                  <div className="col-span-2">ДЕЙСТВИЯ</div>
+                </div>
               </div>
 
               {/* Список направлений */}
-              <div className="divide-y divide-blue-700">
+              <div className="divide-y-2 divide-slate-700">
                 {filteredDirections.map((direction) => (
-                  <div key={direction.$id} className="grid grid-cols-12 gap-4 p-4 hover:bg-blue-700">
-                    {/* Название и описание */}
-                    <div className="col-span-4">
-                      <div className="font-mono font-bold text-white mb-1">
-                        {direction.name}
-                      </div>
-                      {direction.description && (
-                        <div className="text-xs text-blue-300 font-mono">
-                          {direction.description}
+                  <div
+                    key={direction.$id}
+                    className="px-6 py-4 bg-slate-800"
+                  >
+                    <div className="grid grid-cols-12 gap-4 items-center">
+                      {/* Название и описание */}
+                      <div className="col-span-4">
+                        <div>
+                          <h3 className="text-sm font-mono font-bold text-white mb-1">
+                            {direction.name}
+                          </h3>
+                          {direction.description && (
+                            <p className="text-xs text-slate-400 font-mono line-clamp-2">
+                              {direction.description}
+                            </p>
+                          )}
+                          <div className="flex items-center gap-2 mt-2 text-xs text-slate-500 font-mono">
+                            <Calendar className="h-3 w-3" />
+                            <span>
+                              СОЗДАНО {formatDate(direction.$createdAt)}
+                            </span>
+                          </div>
                         </div>
-                      )}
-                      <div className="text-xs text-blue-400 font-mono mt-1">
-                        СОЗДАНО {formatDate(direction.$createdAt)}
                       </div>
-                    </div>
 
-                    {/* Код */}
-                    <div className="col-span-2">
-                      <div className="font-mono text-white">
-                        {direction.code}
-                      </div>
-                    </div>
-
-                    {/* Институт */}
-                    <div className="col-span-3">
-                      <div className="font-mono text-white">
-                        {direction.institute?.name || "НЕ НАЙДЕН"}
-                      </div>
-                      {direction.institute?.code && (
-                        <div className="text-xs text-blue-400 font-mono">
-                          КОД: {direction.institute.code}
+                      {/* Код */}
+                      <div className="col-span-2">
+                        <div className="flex items-center gap-1">
+                          <Code className="h-3 w-3 text-slate-400" />
+                          <span className="text-sm font-mono font-bold text-white">
+                            {direction.code}
+                          </span>
                         </div>
-                      )}
-                    </div>
+                      </div>
 
-                    {/* Статус */}
-                    <div className="col-span-1">
-                      {direction.isActive ? (
-                        <span className="inline-flex items-center gap-1 text-green-400 font-mono text-sm">
-                          <CheckCircle className="h-3 w-3" />
-                          АКТИВНО
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 text-red-400 font-mono text-sm">
-                          <XCircle className="h-3 w-3" />
-                          НЕАКТИВНО
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Действия */}
-                    <div className="col-span-2 flex items-center gap-2">
-                      <button
-                        onClick={() => {
-                          /* TODO: просмотр тестов направления */
-                        }}
-                        className="p-1 text-blue-400 hover:text-blue-200"
-                        title="Просмотреть тесты"
-                      >
-                        <TestTube className="h-4 w-4" />
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          /* TODO: просмотр абитуриентов */
-                        }}
-                        className="p-1 text-blue-400 hover:text-blue-200"
-                        title="Просмотреть абитуриентов"
-                      >
-                        <Users className="h-4 w-4" />
-                      </button>
-
-                      <button
-                        onClick={() => handleEditClick(direction)}
-                        className="p-1 text-blue-400 hover:text-blue-200"
-                        title="Редактировать"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </button>
-
-                      <button
-                        onClick={() => handleToggleStatus(direction)}
-                        disabled={updateDirectionMutation.isPending}
-                        className={`p-1 ${
-                          direction.isActive
-                            ? "text-yellow-400 hover:text-yellow-200"
-                            : "text-green-400 hover:text-green-200"
-                        }`}
-                        title={
-                          direction.isActive
-                            ? "Деактивировать"
-                            : "Активировать"
-                        }
-                      >
-                        {direction.isActive ? (
-                          <XCircle className="h-4 w-4" />
-                        ) : (
-                          <CheckCircle className="h-4 w-4" />
+                      {/* Институт */}
+                      <div className="col-span-3">
+                        <div className="flex items-center gap-1">
+                          <Building className="h-3 w-3 text-blue-400" />
+                          <span className="text-sm font-mono text-white">
+                            {direction.institute?.name || "НЕ НАЙДЕН"}
+                          </span>
+                        </div>
+                        {direction.institute?.code && (
+                          <p className="text-xs text-slate-400 font-mono mt-1">
+                            КОД: {direction.institute.code}
+                          </p>
                         )}
-                      </button>
+                      </div>
 
-                      <button
-                        onClick={() => handleDeleteDirection(direction)}
-                        disabled={deleteDirectionMutation.isPending}
-                        className="p-1 text-red-400 hover:text-red-200 disabled:opacity-50"
-                        title="Удалить"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      {/* Статус */}
+                      <div className="col-span-1">
+                        {direction.isActive ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-bold bg-green-800 text-green-200 border border-green-600 uppercase">
+                            <CheckCircle className="h-3 w-3" />
+                            АКТИВНО
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-mono font-bold bg-gray-800 text-gray-200 border border-gray-600 uppercase">
+                            <XCircle className="h-3 w-3" />
+                            НЕАКТИВНО
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Действия */}
+                      <div className="col-span-2">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              /* TODO: просмотр тестов направления */
+                            }}
+                            className="p-1 text-indigo-400 border border-indigo-600 bg-indigo-900"
+                            title="ПРОСМОТРЕТЬ ТЕСТЫ"
+                          >
+                            <TestTube className="h-4 w-4" />
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              /* TODO: просмотр абитуриентов */
+                            }}
+                            className="p-1 text-green-400 border border-green-600 bg-green-900"
+                            title="ПРОСМОТРЕТЬ АБИТУРИЕНТОВ"
+                          >
+                            <Users className="h-4 w-4" />
+                          </button>
+
+                          <button
+                            onClick={() => handleEditClick(direction)}
+                            className="p-1 text-gray-400 border border-gray-600 bg-gray-900"
+                            title="РЕДАКТИРОВАТЬ"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </button>
+
+                          <button
+                            onClick={() => handleToggleStatus(direction)}
+                            disabled={updateDirectionMutation.isPending}
+                            className={`p-1 border disabled:opacity-50 ${
+                              direction.isActive
+                                ? "text-yellow-400 border-yellow-600 bg-yellow-900"
+                                : "text-green-400 border-green-600 bg-green-900"
+                            }`}
+                            title={
+                              direction.isActive
+                                ? "ДЕАКТИВИРОВАТЬ"
+                                : "АКТИВИРОВАТЬ"
+                            }
+                          >
+                            {direction.isActive ? (
+                              <XCircle className="h-4 w-4" />
+                            ) : (
+                              <CheckCircle className="h-4 w-4" />
+                            )}
+                          </button>
+
+                          <button
+                            onClick={() => handleDeleteDirection(direction)}
+                            disabled={deleteDirectionMutation.isPending}
+                            className="p-1 text-red-400 border border-red-600 bg-red-900 disabled:opacity-50"
+                            title="УДАЛИТЬ"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           )}
         </div>
 
         {/* Модальное окно создания/редактирования */}
         {(showCreateForm || editingDirection) && (
-          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
-            <div className="bg-blue-800 border-2 border-blue-600 w-full max-w-2xl">
-              <div className="flex justify-between items-center p-4 border-b-2 border-blue-600">
-                <h2 className="text-xl font-mono font-bold text-white uppercase">
+          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+            <div className="bg-slate-800 border-2 border-slate-600 p-6 max-w-md w-full mx-4">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-mono font-bold text-white uppercase">
                   {editingDirection
                     ? "РЕДАКТИРОВАТЬ НАПРАВЛЕНИЕ"
                     : "СОЗДАТЬ НАПРАВЛЕНИЕ"}
-                </h2>
+                </h3>
                 <button
                   onClick={resetForm}
-                  className="text-blue-300 hover:text-white"
+                  className="text-slate-400 border border-slate-600 p-1"
                 >
-                  <X className="h-6 w-6" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
 
               <form
-                onSubmit={editingDirection ? handleUpdateDirection : handleCreateDirection}
-                className="p-6"
+                onSubmit={
+                  editingDirection ? handleUpdateDirection : handleCreateDirection
+                }
+                className="space-y-4"
               >
-                <div className="mb-4">
-                  <label className="block text-sm font-mono font-bold text-blue-300 uppercase mb-2">
+                <div>
+                  <label
+                    htmlFor="directionName"
+                    className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
+                  >
                     НАЗВАНИЕ НАПРАВЛЕНИЯ *
                   </label>
                   <input
+                    id="directionName"
                     type="text"
                     value={formData.name}
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, name: e.target.value }))
                     }
-                    className="w-full px-3 py-2 bg-blue-900 border-2 border-blue-600 text-white font-mono focus:outline-none focus:border-blue-400"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400"
                     placeholder="ВВЕДИТЕ НАЗВАНИЕ НАПРАВЛЕНИЯ"
                     required
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-mono font-bold text-blue-300 uppercase mb-2">
+                <div>
+                  <label
+                    htmlFor="directionCode"
+                    className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
+                  >
                     КОД НАПРАВЛЕНИЯ *
                   </label>
                   <input
+                    id="directionCode"
                     type="text"
                     value={formData.code}
                     onChange={(e) =>
@@ -634,21 +686,25 @@ export default function DirectionsPage() {
                         code: e.target.value.toUpperCase(),
                       }))
                     }
-                    className="w-full px-3 py-2 bg-blue-900 border-2 border-blue-600 text-white font-mono focus:outline-none focus:border-blue-400"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400"
                     placeholder="НАПРИМЕР: 09.03.01"
                     required
                   />
-                  <p className="text-xs text-blue-400 font-mono mt-1">
+                  <p className="mt-1 text-xs text-slate-400 font-mono">
                     КОД ФГОС ИЛИ ВНУТРЕННИЙ КОД НАПРАВЛЕНИЯ
                   </p>
                 </div>
 
                 {!editingDirection && (
-                  <div className="mb-4">
-                    <label className="block text-sm font-mono font-bold text-blue-300 uppercase mb-2">
+                  <div>
+                    <label
+                      htmlFor="instituteSelect"
+                      className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
+                    >
                       ИНСТИТУТ *
                     </label>
                     <select
+                      id="instituteSelect"
                       value={formData.instituteId}
                       onChange={(e) =>
                         setFormData((prev) => ({
@@ -656,7 +712,7 @@ export default function DirectionsPage() {
                           instituteId: e.target.value,
                         }))
                       }
-                      className="w-full px-3 py-2 bg-blue-900 border-2 border-blue-600 text-white font-mono focus:outline-none focus:border-blue-400"
+                      className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
                       required
                     >
                       <option value="">ВЫБЕРИТЕ ИНСТИТУТ</option>
@@ -669,11 +725,15 @@ export default function DirectionsPage() {
                   </div>
                 )}
 
-                <div className="mb-4">
-                  <label className="block text-sm font-mono font-bold text-blue-300 uppercase mb-2">
+                <div>
+                  <label
+                    htmlFor="directionDescription"
+                    className="block text-sm font-mono font-bold text-slate-300 mb-1 uppercase"
+                  >
                     ОПИСАНИЕ
                   </label>
                   <textarea
+                    id="directionDescription"
                     value={formData.description}
                     onChange={(e) =>
                       setFormData((prev) => ({
@@ -682,7 +742,7 @@ export default function DirectionsPage() {
                       }))
                     }
                     rows={3}
-                    className="w-full px-3 py-2 bg-blue-900 border-2 border-blue-600 text-white font-mono focus:outline-none focus:border-blue-400"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400"
                     placeholder="КРАТКОЕ ОПИСАНИЕ НАПРАВЛЕНИЯ ПОДГОТОВКИ"
                   />
                 </div>
@@ -691,7 +751,7 @@ export default function DirectionsPage() {
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="flex-1 px-4 py-2 bg-blue-700 border-2 border-blue-600 text-white font-mono uppercase hover:bg-blue-600"
+                    className="flex-1 px-4 py-2 text-slate-300 bg-slate-700 border-2 border-slate-600 font-mono font-bold uppercase"
                   >
                     ОТМЕНА
                   </button>
@@ -701,7 +761,7 @@ export default function DirectionsPage() {
                       createDirectionMutation.isPending ||
                       updateDirectionMutation.isPending
                     }
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 border-2 border-blue-500 text-white font-mono uppercase hover:bg-blue-500 disabled:opacity-50"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-purple-200 bg-purple-800 border-2 border-purple-600 disabled:opacity-50 font-mono font-bold uppercase"
                   >
                     <Save className="h-4 w-4" />
                     {editingDirection ? "СОХРАНИТЬ" : "СОЗДАТЬ"}
@@ -713,19 +773,25 @@ export default function DirectionsPage() {
         )}
 
         {/* Информационная панель */}
-        <div className="bg-blue-800 border-2 border-blue-600 p-6">
+        <div className="mt-6 bg-purple-900 border-2 border-purple-600 p-6">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-yellow-400 mt-0.5" />
+            <AlertTriangle className="h-5 w-5 text-purple-400 mt-0.5" />
             <div>
-              <h3 className="text-sm font-mono font-bold text-white uppercase mb-2">
+              <h3 className="text-sm font-mono font-bold text-purple-200 mb-2 uppercase">
                 УПРАВЛЕНИЕ НАПРАВЛЕНИЯМИ ПОДГОТОВКИ
               </h3>
-              <ul className="text-sm text-blue-300 font-mono space-y-1">
-                <li>• НАПРАВЛЕНИЯ ПРИВЯЗЫВАЮТСЯ К ИНСТИТУТАМ И ОПРЕДЕЛЯЮТ СПЕЦИАЛИЗАЦИЮ</li>
+              <ul className="text-sm text-purple-300 font-mono space-y-1">
+                <li>
+                  • НАПРАВЛЕНИЯ ПРИВЯЗЫВАЮТСЯ К ИНСТИТУТАМ И ОПРЕДЕЛЯЮТ СПЕЦИАЛИЗАЦИЮ
+                </li>
                 <li>• АБИТУРИЕНТЫ РЕГИСТРИРУЮТСЯ НА КОНКРЕТНЫЕ НАПРАВЛЕНИЯ</li>
                 <li>• ТЕСТЫ СОЗДАЮТСЯ КУРАТОРАМИ ДЛЯ ОПРЕДЕЛЕННЫХ НАПРАВЛЕНИЙ</li>
-                <li>• КОД НАПРАВЛЕНИЯ МОЖЕТ БЫТЬ КОДОМ ФГОС ИЛИ ВНУТРЕННИМ КОДОМ</li>
-                <li>• НЕАКТИВНЫЕ НАПРАВЛЕНИЯ СКРЫТЫ ПРИ РЕГИСТРАЦИИ АБИТУРИЕНТОВ</li>
+                <li>
+                  • КОД НАПРАВЛЕНИЯ МОЖЕТ БЫТЬ КОДОМ ФГОС ИЛИ ВНУТРЕННИМ КОДОМ
+                </li>
+                <li>
+                  • НЕАКТИВНЫЕ НАПРАВЛЕНИЯ СКРЫТЫ ПРИ РЕГИСТРАЦИИ АБИТУРИЕНТОВ
+                </li>
                 <li>• НЕЛЬЗЯ ИЗМЕНИТЬ ИНСТИТУТ У СУЩЕСТВУЮЩЕГО НАПРАВЛЕНИЯ</li>
               </ul>
             </div>

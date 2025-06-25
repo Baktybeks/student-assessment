@@ -1,10 +1,15 @@
+// src/app/layout.tsx
+
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import type { Metadata } from "next";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "BAMORA",
-  description: "Платформа для управления академической деятельностью",
+  title: "тест",
+  description: "тест тест",
 };
 
 export default function RootLayout({
@@ -13,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru">
-      <body>
+    <html lang="ru" suppressHydrationWarning={true}>
+      <body className={inter.className} suppressHydrationWarning={true}>
         <Providers>{children}</Providers>
       </body>
     </html>

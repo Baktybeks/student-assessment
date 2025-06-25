@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { useActiveDirections } from "@/services/instituteService";
 import { usePublishedTests } from "@/services/testService";
+import { useProfileByUserId } from "@/services/profileService";
 import {
   getTestGrade,
   getGradeColor,
@@ -39,32 +40,47 @@ import {
   Edit,
   Trophy,
   PieChart,
+  RefreshCw,
 } from "lucide-react";
 
 export default function ApplicantDashboard() {
   const { user } = useAuth();
   const { data: directions = [] } = useActiveDirections();
   const { data: publishedTests = [] } = usePublishedTests();
+  
+  // РЕАЛЬНЫЕ данные профиля вместо моковых
+  const { 
+    data: profile, 
+    isLoading: profileLoading, 
+    refetch: refetchProfile 
+  } = useProfileByUserId(user?.$id || "");
 
   // TODO: Заменить на реальные сервисы когда будут готовы
-  // const { data: applicantProfile } = useApplicantProfile(user?.$id);
   // const { data: testSessions } = useTestSessions(user?.$id);
   // const { data: testResults } = useTestResults(user?.$id);
 
-  // Моковые данные профиля абитуриента
-  const applicantProfile = {
-    isProfileComplete: Math.random() > 0.3,
-    firstName: "Иван",
-    lastName: "Иванов",
-    middleName: "Иванович",
-    birthDate: "2005-06-15",
-    phone: "+7 (999) 123-45-67",
-    directionId: directions[0]?.$id,
-    direction: directions[0],
-    institute: directions[0]?.institute,
+  // Получаем направление и институт для профиля
+  const getProfileDirection = () => {
+    if (!profile?.directionId) return null;
+    return directions.find(d => d.$id === profile.directionId);
   };
 
-  // Моковые данные результатов тестирования
+  const profileDirection = getProfileDirection();
+
+  // Данные профиля абитуриента - теперь РЕАЛЬНЫЕ
+  const applicantProfile = {
+    isProfileComplete: profile?.isProfileComplete || false,
+    firstName: profile?.firstName || "",
+    lastName: profile?.lastName || "",
+    middleName: profile?.middleName || "",
+    birthDate: profile?.birthDate || "",
+    phone: profile?.phone || "",
+    directionId: profile?.directionId || "",
+    direction: profileDirection,
+    institute: profileDirection?.institute,
+  };
+
+  // Моковые данные результатов тестирования (пока нет реального API)
   const testingStats = {
     testsAvailable: publishedTests.filter(t => t.directionId === applicantProfile.directionId).length,
     testsCompleted: Math.floor(Math.random() * 8) + 2,
@@ -152,8 +168,15 @@ export default function ApplicantDashboard() {
   };
 
   const getProgressPercentage = () => {
-    if (testingStats.testsAvailable === 0) return 0;
-    return Math.round((testingStats.testsCompleted / testingStats.testsAvailable) * 100);
+  if (testingStats.testsAvailable === 0) return 0;
+  const percentage = (testingStats.testsCompleted / testingStats.testsAvailable) * 100;
+  return Math.min(100, Math.round(percentage)); // Не больше 100%
+};
+
+  // Функция обновления всех данных
+  const refreshAllData = async () => {
+    await refetchProfile();
+    // Здесь можно добавить обновление других данных когда будут готовы API
   };
 
   if (!user) {
@@ -166,6 +189,20 @@ export default function ApplicantDashboard() {
               ОШИБКА ДОСТУПА
             </h2>
             <p className="text-slate-300 font-mono">ПОЛЬЗОВАТЕЛЬ НЕ АВТОРИЗОВАН</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Показываем загрузку только если профиль загружается в первый раз
+  if (profileLoading && !profile) {
+    return (
+      <div className="min-h-screen bg-slate-900 text-white">
+        <div className="p-6 max-w-7xl mx-auto">
+          <div className="flex justify-center items-center h-64">
+            <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent animate-spin rounded-full"></div>
+            <span className="ml-3 text-slate-300 font-mono">ЗАГРУЗКА ПРОФИЛЯ...</span>
           </div>
         </div>
       </div>
@@ -196,6 +233,15 @@ export default function ApplicantDashboard() {
             </div>
 
             <div className="flex gap-3">
+              <button
+                onClick={refreshAllData}
+                disabled={profileLoading}
+                className="flex items-center gap-2 px-4 py-2 text-slate-300 bg-slate-800 border-2 border-slate-600 font-mono font-bold uppercase disabled:opacity-50"
+              >
+                <RefreshCw className={`h-4 w-4 ${profileLoading ? 'animate-spin' : ''}`} />
+                ОБНОВИТЬ
+              </button>
+
               {!applicantProfile.isProfileComplete && (
                 <Link
                   href="/applicant/profile"
@@ -217,8 +263,32 @@ export default function ApplicantDashboard() {
           </div>
         </div>
 
+        {/* Уведомление об отсутствии профиля */}
+        {!profile && (
+          <div className="mb-8 bg-red-900 border-2 border-red-600 p-6">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5" />
+              <div>
+                <h3 className="text-sm font-mono font-bold text-red-200 mb-2 uppercase">
+                  ПРОФИЛЬ НЕ СОЗДАН
+                </h3>
+                <p className="text-sm text-red-300 font-mono mb-3">
+                  ДЛЯ РАБОТЫ С СИСТЕМОЙ НЕОБХОДИМО СОЗДАТЬ И ЗАПОЛНИТЬ ПРОФИЛЬ АБИТУРИЕНТА.
+                </p>
+                <Link
+                  href="/applicant/profile"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-red-800 text-red-200 border border-red-600 font-mono font-bold uppercase"
+                >
+                  <FileText className="h-4 w-4" />
+                  СОЗДАТЬ ПРОФИЛЬ
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Предупреждение о незаполненном профиле */}
-        {!applicantProfile.isProfileComplete && (
+        {profile && !applicantProfile.isProfileComplete && (
           <div className="mb-8 bg-orange-900 border-2 border-orange-600 p-6">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5" />
@@ -229,6 +299,14 @@ export default function ApplicantDashboard() {
                 <p className="text-sm text-orange-300 font-mono mb-3">
                   ДЛЯ ПРОХОЖДЕНИЯ ТЕСТОВ НЕОБХОДИМО ЗАПОЛНИТЬ ПЕРСОНАЛЬНУЮ АНКЕТУ С ПАСПОРТНЫМИ ДАННЫМИ.
                 </p>
+                <div className="text-xs text-orange-400 font-mono mb-3">
+                  СТАТУС ПРОФИЛЯ: {profile.isProfileComplete ? 'ЗАПОЛНЕН' : 'ТРЕБУЕТ ЗАПОЛНЕНИЯ'}
+                  {profile.updatedAt && (
+                    <span className="ml-2">
+                      • ОБНОВЛЕН: {formatDate(profile.updatedAt)}
+                    </span>
+                  )}
+                </div>
                 <Link
                   href="/applicant/profile"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-orange-800 text-orange-200 border border-orange-600 font-mono font-bold uppercase"
@@ -236,6 +314,32 @@ export default function ApplicantDashboard() {
                   <FileText className="h-4 w-4" />
                   ЗАПОЛНИТЬ АНКЕТУ
                 </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Уведомление о полном профиле */}
+        {profile && applicantProfile.isProfileComplete && (
+          <div className="mb-8 bg-green-900 border-2 border-green-600 p-6">
+            <div className="flex items-start gap-3">
+              <CheckCircle className="h-5 w-5 text-green-400 mt-0.5" />
+              <div>
+                <h3 className="text-sm font-mono font-bold text-green-200 mb-2 uppercase">
+                  ПРОФИЛЬ ЗАПОЛНЕН
+                </h3>
+                <p className="text-sm text-green-300 font-mono mb-2">
+                  ВАША АНКЕТА ПОЛНОСТЬЮ ЗАПОЛНЕНА. ВЫ МОЖЕТЕ ПРОХОДИТЬ ТЕСТЫ.
+                </p>
+                <div className="text-xs text-green-400 font-mono">
+                  ИМЯ: {applicantProfile.firstName} {applicantProfile.lastName}
+                  {applicantProfile.middleName && ` ${applicantProfile.middleName}`}
+                  {profile.updatedAt && (
+                    <span className="ml-2">
+                      • ОБНОВЛЕН: {formatDate(profile.updatedAt)}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -315,6 +419,96 @@ export default function ApplicantDashboard() {
                 <p className="text-xs text-slate-400 font-mono">
                   ОБЩЕЕ ВРЕМЯ
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Статус профиля */}
+        <div className="mb-8 bg-slate-800 border-2 border-slate-600 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-mono font-bold text-white flex items-center gap-2 uppercase">
+              <User className="h-5 w-5 text-blue-400" />
+              СТАТУС ПРОФИЛЯ
+            </h3>
+            <div className="flex items-center gap-2">
+              {applicantProfile.isProfileComplete ? (
+                <span className="px-3 py-1 text-sm font-mono font-bold bg-green-800 text-green-200 border-2 border-green-600 uppercase">
+                  <CheckCircle className="inline h-4 w-4 mr-1" />
+                  ЗАПОЛНЕН
+                </span>
+              ) : (
+                <span className="px-3 py-1 text-sm font-mono font-bold bg-yellow-800 text-yellow-200 border-2 border-yellow-600 uppercase">
+                  <AlertTriangle className="inline h-4 w-4 mr-1" />
+                  ТРЕБУЕТ ЗАПОЛНЕНИЯ
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <h4 className="font-mono font-bold text-white uppercase border-b border-slate-600 pb-2 mb-3">
+                ОСНОВНЫЕ ДАННЫЕ:
+              </h4>
+              <div className="space-y-2 text-sm text-slate-300 font-mono">
+                <div className="flex justify-between">
+                  <span>ИМЯ:</span>
+                  <span className="font-bold text-white">
+                    {applicantProfile.firstName || "НЕ УКАЗАНО"}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>ФАМИЛИЯ:</span>
+                  <span className="font-bold text-white">
+                    {applicantProfile.lastName || "НЕ УКАЗАНО"}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>ТЕЛЕФОН:</span>
+                  <span className="font-bold text-white">
+                    {applicantProfile.phone || "НЕ УКАЗАН"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-mono font-bold text-white uppercase border-b border-slate-600 pb-2 mb-3">
+                НАПРАВЛЕНИЕ:
+              </h4>
+              <div className="space-y-2 text-sm text-slate-300 font-mono">
+                <div className="flex flex-col">
+                  <span>СПЕЦИАЛЬНОСТЬ:</span>
+                  <span className="font-bold text-white">
+                    {applicantProfile.direction?.name || "НЕ ВЫБРАНО"}
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <span>ИНСТИТУТ:</span>
+                  <span className="font-bold text-white">
+                    {applicantProfile.institute?.name || "НЕ УКАЗАН"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-mono font-bold text-white uppercase border-b border-slate-600 pb-2 mb-3">
+                ДЕЙСТВИЯ:
+              </h4>
+              <div className="space-y-2">
+                <Link
+                  href="/applicant/profile"
+                  className="block w-full text-center px-3 py-2 bg-blue-800 text-blue-200 border border-blue-600 font-mono font-bold text-xs uppercase"
+                >
+                  {applicantProfile.isProfileComplete ? "РЕДАКТИРОВАТЬ" : "ЗАПОЛНИТЬ"} ПРОФИЛЬ
+                </Link>
+                {profile && (
+                  <div className="text-xs text-slate-400 font-mono text-center">
+                    ID: {profile.$id.substring(0, 8)}...
+                  </div>
+                )}
               </div>
             </div>
           </div>

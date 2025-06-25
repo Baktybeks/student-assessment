@@ -545,3 +545,4 @@ export interface RecentAction {
   icon: React.ComponentType<{ className?: string }>; // Компонент иконки
   color: string; // CSS классы для цвета
 }
+

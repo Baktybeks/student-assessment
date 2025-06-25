@@ -40,7 +40,13 @@ import {
   Award,
   Settings,
   Database,
+  Download,
+  Upload,
+  Trash2,
 } from "lucide-react";
+
+// Ключ для localStorage
+const PROFILE_FORM_STORAGE_KEY = "applicant_profile_form_data";
 
 export default function ApplicantProfilePage() {
   const { user } = useAuth();
@@ -59,15 +65,38 @@ export default function ApplicantProfilePage() {
     passportNumber: "",
     passportIssueDate: "",
     passportIssuedBy: "",
-    citizenship: "Российская Федерация",
+    citizenship: "Кыргызская Республика",
     phone: "",
     directionId: "",
   });
 
+  // Загрузка из localStorage при инициализации
+  useEffect(() => {
+    const savedFormData = localStorage.getItem(PROFILE_FORM_STORAGE_KEY);
+    if (savedFormData && !profile) {
+      try {
+        const parsedData = JSON.parse(savedFormData);
+        setFormData(parsedData);
+        console.log("Загружены данные из localStorage:", parsedData);
+      } catch (error) {
+        console.error("Ошибка при загрузке данных из localStorage:", error);
+        localStorage.removeItem(PROFILE_FORM_STORAGE_KEY);
+      }
+    }
+  }, [profile]);
+
+  // Сохранение в localStorage при изменении формы
+  useEffect(() => {
+    if (isEditing) {
+      localStorage.setItem(PROFILE_FORM_STORAGE_KEY, JSON.stringify(formData));
+      console.log("Данные сохранены в localStorage");
+    }
+  }, [formData, isEditing]);
+
   // Инициализация формы при загрузке профиля
   useEffect(() => {
     if (profile) {
-      setFormData({
+      const initialData = {
         firstName: profile.firstName || "",
         lastName: profile.lastName || "",
         middleName: profile.middleName || "",
@@ -75,10 +104,13 @@ export default function ApplicantProfilePage() {
         passportNumber: profile.passportNumber || "",
         passportIssueDate: profile.passportIssueDate ? new Date(profile.passportIssueDate).toISOString().split('T')[0] : "",
         passportIssuedBy: profile.passportIssuedBy || "",
-        citizenship: profile.citizenship || "Российская Федерация",
+        citizenship: profile.citizenship || "Кыргызская Республика",
         phone: profile.phone || "",
         directionId: profile.directionId || "",
-      });
+      };
+      setFormData(initialData);
+      // Очищаем localStorage если профиль загружен
+      localStorage.removeItem(PROFILE_FORM_STORAGE_KEY);
     } else if (!isLoading && user && !profile) {
       // Если профиля нет, включаем режим редактирования
       setIsEditing(true);
@@ -92,18 +124,62 @@ export default function ApplicantProfilePage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Загрузка сохраненных данных из localStorage
+  const loadSavedData = () => {
+    const savedFormData = localStorage.getItem(PROFILE_FORM_STORAGE_KEY);
+    if (savedFormData) {
+      try {
+        const parsedData = JSON.parse(savedFormData);
+        setFormData(parsedData);
+        toast.success("✅ ДАННЫЕ ЗАГРУЖЕНЫ ИЗ ЛОКАЛЬНОГО ХРАНИЛИЩА");
+      } catch (error) {
+        toast.error("❌ ОШИБКА ПРИ ЗАГРУЗКЕ СОХРАНЕННЫХ ДАННЫХ");
+        localStorage.removeItem(PROFILE_FORM_STORAGE_KEY);
+      }
+    } else {
+      toast.info("ℹ️ НЕТ СОХРАНЕННЫХ ДАННЫХ");
+    }
+  };
+
+  // Очистка сохраненных данных
+  const clearSavedData = () => {
+    localStorage.removeItem(PROFILE_FORM_STORAGE_KEY);
+    toast.info("🗑️ СОХРАНЕННЫЕ ДАННЫЕ ОЧИЩЕНЫ");
+  };
+
+  // Экспорт данных профиля
+  const exportProfileData = () => {
+    const exportData = {
+      profile: profile,
+      formData: formData,
+      exportDate: new Date().toISOString(),
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = `profile_${user?.name || 'user'}_${new Date().toISOString().split('T')[0]}.json`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+    
+    toast.success("📄 ДАННЫЕ ПРОФИЛЯ ЭКСПОРТИРОВАНЫ");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!user) {
-      toast.error("ОШИБКА АУТЕНТИФИКАЦИИ");
+      toast.error("❌ ОШИБКА АУТЕНТИФИКАЦИИ");
       return;
     }
 
     // Валидация
     const errors = profileApi.validateProfileData(formData);
     if (errors.length > 0) {
-      errors.forEach(error => toast.error(error));
+      errors.forEach(error => toast.error(`❌ ${error}`));
       return;
     }
 
@@ -115,27 +191,70 @@ export default function ApplicantProfilePage() {
           data: formData,
         });
         toast.success("✅ ПРОФИЛЬ УСПЕШНО ОБНОВЛЕН");
+        
+        // Очищаем localStorage после успешного сохранения
+        localStorage.removeItem(PROFILE_FORM_STORAGE_KEY);
       } else {
         // Создание нового профиля
         if (!formData.directionId) {
-          toast.error("ВЫБЕРИТЕ НАПРАВЛЕНИЕ ПОДГОТОВКИ");
+          toast.error("❌ ВЫБЕРИТЕ НАПРАВЛЕНИЕ ПОДГОТОВКИ");
           return;
         }
-        await createProfileMutation.mutateAsync({
+        
+        // Сначала создаем профиль
+        const newProfile = await createProfileMutation.mutateAsync({
           userId: user.$id,
           directionId: formData.directionId,
         });
-        // После создания обновляем данные
+        
+        // Затем обновляем его данными
         await updateProfileMutation.mutateAsync({
-          profileId: profile?.$id || "",
+          profileId: newProfile.$id,
           data: formData,
         });
+        
         toast.success("✅ ПРОФИЛЬ УСПЕШНО СОЗДАН И ЗАПОЛНЕН");
+        
+        // Очищаем localStorage после успешного создания
+        localStorage.removeItem(PROFILE_FORM_STORAGE_KEY);
+        
+        // Обновляем данные
+        await refetch();
       }
 
       setIsEditing(false);
-    } catch (error) {
-      toast.error(`❌ ОШИБКА ПРИ СОХРАНЕНИИ: ${(error as Error).message}`);
+    } catch (error: any) {
+      console.error("Ошибка при сохранении профиля:", error);
+      
+      // Детальная обработка ошибок
+      let errorMessage = "НЕИЗВЕСТНАЯ ОШИБКА";
+      
+      if (error?.message) {
+        errorMessage = error.message;
+      } else if (error?.code) {
+        switch(error.code) {
+          case 401:
+            errorMessage = "НЕ АВТОРИЗОВАН - ВОЙДИТЕ В СИСТЕМУ";
+            break;
+          case 403:
+            errorMessage = "НЕТ ДОСТУПА К ОПЕРАЦИИ";
+            break;
+          case 404:
+            errorMessage = "РЕСУРС НЕ НАЙДЕН";
+            break;
+          case 409:
+            errorMessage = "КОНФЛИКТ ДАННЫХ";
+            break;
+          case 500:
+            errorMessage = "ОШИБКА СЕРВЕРА";
+            break;
+          default:
+            errorMessage = `ОШИБКА ${error.code}`;
+        }
+      }
+      
+      toast.error(`❌ ОШИБКА ПРИ СОХРАНЕНИИ: ${errorMessage}`);
+      toast.info("💾 ДАННЫЕ СОХРАНЕНЫ ЛОКАЛЬНО ДЛЯ ВОССТАНОВЛЕНИЯ");
     }
   };
 
@@ -147,14 +266,14 @@ export default function ApplicantProfilePage() {
     const totalFields = 9; // количество обязательных полей
     let filledFields = 0;
 
-    if (formData.firstName) filledFields++;
-    if (formData.lastName) filledFields++;
+    if (formData.firstName?.trim()) filledFields++;
+    if (formData.lastName?.trim()) filledFields++;
     if (formData.birthDate) filledFields++;
-    if (formData.passportNumber) filledFields++;
+    if (formData.passportNumber?.trim()) filledFields++;
     if (formData.passportIssueDate) filledFields++;
-    if (formData.passportIssuedBy) filledFields++;
-    if (formData.citizenship) filledFields++;
-    if (formData.phone) filledFields++;
+    if (formData.passportIssuedBy?.trim()) filledFields++;
+    if (formData.citizenship?.trim()) filledFields++;
+    if (formData.phone?.trim()) filledFields++;
     if (formData.directionId) filledFields++;
 
     return Math.round((filledFields / totalFields) * 100);
@@ -170,6 +289,11 @@ export default function ApplicantProfilePage() {
       return passportNumber.replace(/./g, "●");
     }
     return passportNumber;
+  };
+
+  // Проверка наличия сохраненных данных в localStorage
+  const hasSavedData = () => {
+    return localStorage.getItem(PROFILE_FORM_STORAGE_KEY) !== null;
   };
 
   if (!user || user.role !== UserRole.APPLICANT) {
@@ -193,7 +317,7 @@ export default function ApplicantProfilePage() {
       <div className="min-h-screen bg-slate-900 text-white">
         <div className="p-6 max-w-7xl mx-auto">
           <div className="flex justify-center items-center h-64">
-            <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent"></div>
+            <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent animate-spin rounded-full"></div>
             <span className="ml-3 text-slate-300 font-mono">ЗАГРУЗКА ПРОФИЛЯ...</span>
           </div>
         </div>
@@ -226,10 +350,28 @@ export default function ApplicantProfilePage() {
               <button
                 onClick={() => refetch()}
                 disabled={isLoading}
-                className="flex items-center gap-2 px-4 py-2 text-slate-300 bg-slate-800 border-2 border-slate-600 font-mono font-bold uppercase"
+                className="flex items-center gap-2 px-4 py-2 text-slate-300 bg-slate-800 border-2 border-slate-600 font-mono font-bold uppercase disabled:opacity-50"
               >
                 <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
                 ОБНОВИТЬ
+              </button>
+
+              {hasSavedData() && !isEditing && (
+                <button
+                  onClick={loadSavedData}
+                  className="flex items-center gap-2 px-4 py-2 bg-orange-800 text-orange-200 border-2 border-orange-600 font-mono font-bold uppercase"
+                >
+                  <Upload className="h-4 w-4" />
+                  ЗАГРУЗИТЬ СОХРАНЕННОЕ
+                </button>
+              )}
+
+              <button
+                onClick={exportProfileData}
+                className="flex items-center gap-2 px-4 py-2 bg-purple-800 text-purple-200 border-2 border-purple-600 font-mono font-bold uppercase"
+              >
+                <Download className="h-4 w-4" />
+                ЭКСПОРТ
               </button>
 
               {!isEditing && profile && (
@@ -244,6 +386,42 @@ export default function ApplicantProfilePage() {
             </div>
           </div>
         </div>
+
+        {/* Уведомление о сохраненных данных */}
+        {hasSavedData() && (
+          <div className="mb-8 bg-blue-900 border-2 border-blue-600 p-6">
+            <div className="flex items-start justify-between">
+              <div className="flex items-start gap-3">
+                <Download className="h-5 w-5 text-blue-400 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-mono font-bold text-blue-200 mb-2 uppercase">
+                    НАЙДЕНЫ СОХРАНЕННЫЕ ДАННЫЕ
+                  </h3>
+                  <p className="text-sm text-blue-300 font-mono mb-3">
+                    В ЛОКАЛЬНОМ ХРАНИЛИЩЕ ЕСТЬ НЕСОХРАНЕННЫЕ ИЗМЕНЕНИЯ ФОРМЫ.
+                    ЗАГРУЗИТЬ ИХ ИЛИ ОЧИСТИТЬ?
+                  </p>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={loadSavedData}
+                      className="flex items-center gap-2 px-3 py-2 bg-blue-800 text-blue-200 border border-blue-600 font-mono font-bold text-xs uppercase"
+                    >
+                      <Upload className="h-3 w-3" />
+                      ЗАГРУЗИТЬ
+                    </button>
+                    <button
+                      onClick={clearSavedData}
+                      className="flex items-center gap-2 px-3 py-2 bg-red-800 text-red-200 border border-red-600 font-mono font-bold text-xs uppercase"
+                    >
+                      <Trash2 className="h-3 w-3" />
+                      ОЧИСТИТЬ
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Статус профиля */}
         <div className="mb-8">
@@ -280,7 +458,7 @@ export default function ApplicantProfilePage() {
                 </div>
                 <div className="w-full bg-slate-700 h-3 border-2 border-slate-600">
                   <div
-                    className={`h-full ${
+                    className={`h-full transition-all duration-300 ${
                       completionPercentage === 100 ? 'bg-green-500' : 
                       completionPercentage >= 70 ? 'bg-blue-500' : 
                       completionPercentage >= 40 ? 'bg-yellow-500' : 'bg-red-500'
@@ -330,7 +508,7 @@ export default function ApplicantProfilePage() {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase focus:border-blue-500 focus:outline-none"
                     placeholder="ВВЕДИТЕ ФАМИЛИЮ"
                     required
                   />
@@ -351,7 +529,7 @@ export default function ApplicantProfilePage() {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase focus:border-blue-500 focus:outline-none"
                     placeholder="ВВЕДИТЕ ИМЯ"
                     required
                   />
@@ -372,7 +550,7 @@ export default function ApplicantProfilePage() {
                     name="middleName"
                     value={formData.middleName}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase focus:border-blue-500 focus:outline-none"
                     placeholder="ВВЕДИТЕ ОТЧЕСТВО (ЕСЛИ ЕСТЬ)"
                   />
                 ) : (
@@ -392,7 +570,7 @@ export default function ApplicantProfilePage() {
                     name="birthDate"
                     value={formData.birthDate}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:border-blue-500 focus:outline-none"
                     required
                   />
                 ) : (
@@ -412,10 +590,11 @@ export default function ApplicantProfilePage() {
                     name="citizenship"
                     value={formData.citizenship}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:border-blue-500 focus:outline-none"
                     required
                   >
-                    <option value="Российская Федерация">КЫРГЫЗСКАЯ РЕСПУБЛИКА</option>
+                    <option value="Кыргызская Республика">КЫРГЫЗСКАЯ РЕСПУБЛИКА</option>
+                    <option value="Российская Федерация">РОССИЙСКАЯ ФЕДЕРАЦИЯ</option>
                     <option value="Иностранное">ИНОСТРАННОЕ ГРАЖДАНСТВО</option>
                   </select>
                 ) : (
@@ -439,7 +618,7 @@ export default function ApplicantProfilePage() {
                 <button
                   type="button"
                   onClick={() => setShowPassport(!showPassport)}
-                  className="flex items-center gap-2 px-3 py-1 text-xs text-slate-300 border border-slate-600 font-mono uppercase"
+                  className="flex items-center gap-2 px-3 py-1 text-xs text-slate-300 border border-slate-600 font-mono uppercase hover:bg-slate-700"
                 >
                   {showPassport ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
                   {showPassport ? "СКРЫТЬ" : "ПОКАЗАТЬ"}
@@ -458,8 +637,8 @@ export default function ApplicantProfilePage() {
                     name="passportNumber"
                     value={formData.passportNumber}
                     onChange={handleInputChange}
-                    placeholder="1234 567890"
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400"
+                    placeholder="AN1234567"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 focus:border-blue-500 focus:outline-none"
                     required
                   />
                 ) : (
@@ -468,7 +647,7 @@ export default function ApplicantProfilePage() {
                   </div>
                 )}
                 <p className="mt-1 text-xs text-slate-400 font-mono">
-                  ФОРМАТ: 4 ЦИФРЫ ПРОБЕЛ 6 ЦИФР
+                  ФОРМАТ КЫРГЫЗСКОГО ПАСПОРТА: AN1234567
                 </p>
               </div>
 
@@ -482,7 +661,7 @@ export default function ApplicantProfilePage() {
                     name="passportIssueDate"
                     value={formData.passportIssueDate}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:border-blue-500 focus:outline-none"
                     required
                   />
                 ) : (
@@ -502,7 +681,7 @@ export default function ApplicantProfilePage() {
                     value={formData.passportIssuedBy}
                     onChange={handleInputChange}
                     rows={2}
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 uppercase focus:border-blue-500 focus:outline-none"
                     placeholder="УКАЖИТЕ ОРГАН, ВЫДАВШИЙ ПАСПОРТ"
                     required
                   />
@@ -533,8 +712,8 @@ export default function ApplicantProfilePage() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="+7 (999) 123-45-67"
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400"
+                    placeholder="+996 (999) 123-45-67"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono placeholder-slate-400 focus:border-blue-500 focus:outline-none"
                     required
                   />
                 ) : (
@@ -543,6 +722,9 @@ export default function ApplicantProfilePage() {
                     {formData.phone || "НЕ УКАЗАНО"}
                   </div>
                 )}
+                <p className="mt-1 text-xs text-slate-400 font-mono">
+                  ФОРМАТ: +996 (999) 123-45-67
+                </p>
               </div>
 
               <div>
@@ -578,7 +760,7 @@ export default function ApplicantProfilePage() {
                     name="directionId"
                     value={formData.directionId}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono"
+                    className="w-full px-3 py-2 border-2 border-slate-600 bg-slate-700 text-white font-mono focus:border-blue-500 focus:outline-none"
                     required
                   >
                     <option value="">ВЫБЕРИТЕ НАПРАВЛЕНИЕ ПОДГОТОВКИ</option>
@@ -633,20 +815,20 @@ export default function ApplicantProfilePage() {
                       passportNumber: profile.passportNumber || "",
                       passportIssueDate: profile.passportIssueDate ? new Date(profile.passportIssueDate).toISOString().split('T')[0] : "",
                       passportIssuedBy: profile.passportIssuedBy || "",
-                      citizenship: profile.citizenship || "Российская Федерация",
+                      citizenship: profile.citizenship || "Кыргызская Республика",
                       phone: profile.phone || "",
                       directionId: profile.directionId || "",
                     });
                   }
                 }}
-                className="flex-1 px-6 py-3 text-slate-300 bg-slate-700 border-2 border-slate-600 font-mono font-bold uppercase"
+                className="flex-1 px-6 py-3 text-slate-300 bg-slate-700 border-2 border-slate-600 font-mono font-bold uppercase hover:bg-slate-600"
               >
                 ОТМЕНА
               </button>
               <button
                 type="submit"
                 disabled={updateProfileMutation.isPending || createProfileMutation.isPending}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 text-green-200 bg-green-800 border-2 border-green-600 disabled:opacity-50 font-mono font-bold uppercase"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 text-green-200 bg-green-800 border-2 border-green-600 disabled:opacity-50 font-mono font-bold uppercase hover:bg-green-700 disabled:hover:bg-green-800"
               >
                 <Save className="h-4 w-4" />
                 {updateProfileMutation.isPending || createProfileMutation.isPending ? "СОХРАНЕНИЕ..." : "СОХРАНИТЬ ПРОФИЛЬ"}
@@ -668,6 +850,7 @@ export default function ApplicantProfilePage() {
                 <li>• ПАСПОРТНЫЕ ДАННЫЕ СКРЫТЫ ПО УМОЛЧАНИЮ И ДОСТУПНЫ ТОЛЬКО ВАМ</li>
                 <li>• ПРОФИЛЬ МОЖНО РЕДАКТИРОВАТЬ В ЛЮБОЕ ВРЕМЯ</li>
                 <li>• ЗАПОЛНЕННЫЙ ПРОФИЛЬ НЕОБХОДИМ ДЛЯ ДОСТУПА К ТЕСТАМ</li>
+                <li>• ДАННЫЕ ФОРМЫ АВТОМАТИЧЕСКИ СОХРАНЯЮТСЯ ЛОКАЛЬНО ПРИ РЕДАКТИРОВАНИИ</li>
                 <li>• ПРИ ВОЗНИКНОВЕНИИ ПРОБЛЕМ ОБРАТИТЕСЬ К КУРАТОРУ</li>
               </ul>
             </div>
@@ -752,6 +935,7 @@ export default function ApplicantProfilePage() {
                   )}
                   <div className="text-blue-400">• РЕГУЛЯРНО ПРОВЕРЯЙТЕ АКТУАЛЬНОСТЬ</div>
                   <div className="text-blue-400">• ОБРАЩАЙТЕСЬ К КУРАТОРАМ ПРИ ВОПРОСАХ</div>
+                  <div className="text-purple-400">• ИСПОЛЬЗУЙТЕ ЭКСПОРТ ДЛЯ РЕЗЕРВНОГО КОПИРОВАНИЯ</div>
                 </div>
               </div>
             </div>

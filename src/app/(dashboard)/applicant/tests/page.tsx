@@ -154,10 +154,10 @@ export default function ApplicantTestsPage() {
               <p className="text-slate-300 font-mono uppercase">
                 ВЫБЕРИТЕ ТЕСТ ДЛЯ ПРОХОЖДЕНИЯ И ОЦЕНКИ ЗНАНИЙ
               </p>
-              {profile?.direction && (
+              {profile?.directionId && (
                 <div className="mt-2 flex items-center gap-2 text-sm font-mono text-slate-400">
                   <Target className="h-4 w-4" />
-                  <span>ВАШЕ НАПРАВЛЕНИЕ: {profile.direction.name}</span>
+                  <span>ВАШЕ НАПРАВЛЕНИЕ: {profile.firstName}</span>
                 </div>
               )}
             </div>

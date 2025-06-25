@@ -1,12 +1,13 @@
 // src/hooks/useAuth.ts
 
-import { useAuthStore } from "@/store/authStore";
+
 import {
   useCurrentUser,
   useLogin,
   useLogout,
   useRegister,
 } from "@/services/authService";
+import { useAuthStore } from "@/store/authStore";
 import { UserRole } from "@/types";
 import { useEffect } from "react";
 import { toast } from "react-toastify";

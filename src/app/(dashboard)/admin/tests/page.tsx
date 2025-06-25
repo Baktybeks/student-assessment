@@ -609,7 +609,7 @@ export default function AdminTestsPage() {
                           <span className="text-xs font-mono text-white font-bold">{detailedStats.complexity.medium}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-xs font-mono text-slate-300">СЛОЖНЫЕ (>25 ВОПРОСОВ):</span>
+                          <span className="text-xs font-mono text-slate-300">СЛОЖНЫЕ (25 ВОПРОСОВ):</span>
                           <span className="text-xs font-mono text-white font-bold">{detailedStats.complexity.hard}</span>
                         </div>
                       </div>
@@ -628,7 +628,7 @@ export default function AdminTestsPage() {
                           <span className="text-xs font-mono text-white font-bold">{detailedStats.complexity.mediumTime}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-xs font-mono text-slate-300">ДЛИННЫЕ (>60 МИН):</span>
+                          <span className="text-xs font-mono text-slate-300">ДЛИННЫЕ (60 МИН):</span>
                           <span className="text-xs font-mono text-white font-bold">{detailedStats.complexity.longTime}</span>
                         </div>
                         <div className="flex justify-between">

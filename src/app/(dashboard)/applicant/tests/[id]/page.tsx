@@ -85,13 +85,13 @@ export default function TestTakingPage() {
       setTestStartTime(new Date(activeSession.startedAt));
       
       // Загружаем существующие ответы если есть
-      if (activeSession.answers) {
-        const answersMap: Record<string, string> = {};
-        activeSession.answers.forEach(answer => {
-          answersMap[answer.questionId] = answer.selectedOption;
-        });
-        setAnswers(answersMap);
-      }
+      if (activeSession.answers && Array.isArray(activeSession.answers)) {
+  const answersMap: Record<string, string> = {};
+  activeSession.answers.forEach((answer: { questionId: string; selectedOption: string }) => {
+    answersMap[answer.questionId] = answer.selectedOption;
+  });
+  setAnswers(answersMap);
+}
     }
   }, [activeSession]);
 
@@ -102,8 +102,8 @@ export default function TestTakingPage() {
     const interval = setInterval(() => {
       const now = new Date();
       const elapsed = Math.floor((now.getTime() - testStartTime.getTime()) / 1000);
-      const totalTimeInSeconds = test.timeLimit * 60;
-      const remaining = Math.max(0, totalTimeInSeconds - elapsed);
+      const totalTimeInSeconds = test.timeLimit && test.timeLimit * 60;
+      const remaining = totalTimeInSeconds &&  Math.max(0, totalTimeInSeconds - elapsed);
 
       if (remaining === 0) {
         setIsTimeUp(true);
@@ -112,12 +112,15 @@ export default function TestTakingPage() {
         return;
       }
 
-      setTimeRemaining({
-        hours: Math.floor(remaining / 3600),
-        minutes: Math.floor((remaining % 3600) / 60),
-        seconds: remaining % 60,
-        total: remaining,
-      });
+      if(remaining  ) {
+        setTimeRemaining({
+          hours: Math.floor(remaining / 3600),
+          minutes: Math.floor((remaining % 3600) / 60),
+          seconds: remaining % 60,
+          total: remaining,
+        });
+      }
+
     }, 1000);
 
     return () => clearInterval(interval);

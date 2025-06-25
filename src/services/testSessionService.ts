@@ -5,11 +5,11 @@ import { databases } from "./appwriteClient";
 import { appwriteConfig } from "@/constants/appwriteConfig";
 import {
   TestSession,
-  TestAnswer,
+//   TestAnswer,
   TestResult,
-  CreateTestSessionDto,
-  SubmitAnswerDto,
-  FinishTestSessionDto,
+//   CreateTestSessionDto,
+//   SubmitAnswerDto,
+//   FinishTestSessionDto,
   TestSessionWithDetails,
 } from "@/types";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -19,7 +19,7 @@ export const testSessionApi = {
   // === ТЕСТОВЫЕ СЕССИИ ===
 
   createTestSession: async (
-    data: CreateTestSessionDto
+    data: any
   ): Promise<TestSession> => {
     try {
       // Проверяем, нет ли уже активной сессии для этого теста и пользователя
@@ -114,8 +114,8 @@ export const testSessionApi = {
 
       return {
         ...session,
-        test,
-        answers,
+        // test,
+        // answers,
       };
     } catch (error) {
       console.error("Ошибка при получении сессии:", error);
@@ -143,78 +143,78 @@ export const testSessionApi = {
 
   // === ОТВЕТЫ НА ВОПРОСЫ ===
 
-  submitAnswer: async (data: SubmitAnswerDto): Promise<TestAnswer> => {
-    try {
-      // Проверяем, есть ли уже ответ на этот вопрос в этой сессии
-      const existingAnswers = await databases.listDocuments(
-        appwriteConfig.databaseId,
-        appwriteConfig.collections.testAnswers,
-        [
-          Query.equal("sessionId", data.sessionId),
-          Query.equal("questionId", data.questionId),
-        ]
-      );
+  submitAnswer: async (data: any): Promise<any> => {
+    // try {
+    //   // Проверяем, есть ли уже ответ на этот вопрос в этой сессии
+    //   const existingAnswers = await databases.listDocuments(
+    //     appwriteConfig.databaseId,
+    //     appwriteConfig.collections?.testAnswers,
+    //     [
+    //       Query.equal("sessionId", data.sessionId),
+    //       Query.equal("questionId", data.questionId),
+    //     ]
+    //   );
 
-      let answer;
+    //   let answer;
 
-      if (existingAnswers.documents.length > 0) {
-        // Обновляем существующий ответ
-        answer = await databases.updateDocument(
-          appwriteConfig.databaseId,
-          appwriteConfig.collections.testAnswers,
-          existingAnswers.documents[0].$id,
-          {
-            selectedOption: data.selectedOption,
-            answeredAt: new Date().toISOString(),
-          }
-        );
-      } else {
-        // Создаем новый ответ
-        const answerData = {
-          sessionId: data.sessionId,
-          questionId: data.questionId,
-          selectedOption: data.selectedOption,
-          answeredAt: new Date().toISOString(),
-        };
+    //   if (existingAnswers.documents.length > 0) {
+    //     // Обновляем существующий ответ
+    //     answer = await databases.updateDocument(
+    //       appwriteConfig.databaseId,
+    //       appwriteConfig.collections.testAnswers,
+    //       existingAnswers.documents[0].$id,
+    //       {
+    //         selectedOption: data.selectedOption,
+    //         answeredAt: new Date().toISOString(),
+    //       }
+    //     );
+    //   } else {
+    //     // Создаем новый ответ
+    //     const answerData = {
+    //       sessionId: data.sessionId,
+    //       questionId: data.questionId,
+    //       selectedOption: data.selectedOption,
+    //       answeredAt: new Date().toISOString(),
+    //     };
 
-        answer = await databases.createDocument(
-          appwriteConfig.databaseId,
-          appwriteConfig.collections.testAnswers,
-          ID.unique(),
-          answerData
-        );
+    //     answer = await databases.createDocument(
+    //       appwriteConfig.databaseId,
+    //       appwriteConfig.collections.testAnswers,
+    //       ID.unique(),
+    //       answerData
+    //     );
 
-        // Увеличиваем счетчик отвеченных вопросов
-        await testSessionApi.updateSessionProgress(data.sessionId);
-      }
+    //     // Увеличиваем счетчик отвеченных вопросов
+    //     await testSessionApi.updateSessionProgress(data.sessionId);
+    //   }
 
-      return answer as unknown as TestAnswer;
-    } catch (error) {
-      console.error("Ошибка при сохранении ответа:", error);
-      throw error;
-    }
+    //   return answer as unknown as TestAnswer;
+    // } catch (error) {
+    //   console.error("Ошибка при сохранении ответа:", error);
+    //   throw error;
+    // }
   },
 
-  getSessionAnswers: async (sessionId: string): Promise<TestAnswer[]> => {
-    try {
-      const response = await databases.listDocuments(
-        appwriteConfig.databaseId,
-        appwriteConfig.collections.testAnswers,
-        [Query.equal("sessionId", sessionId)]
-      );
+  getSessionAnswers: async (sessionId: string) => {
+    // try {
+    //   const response = await databases.listDocuments(
+    //     appwriteConfig.databaseId,
+    //     // appwriteConfig.collections.testAnswers,
+    //     // [Query.equal("sessionId", sessionId)]
+    //   );
 
-      return response.documents as unknown as TestAnswer[];
-    } catch (error) {
-      console.error("Ошибка при получении ответов сессии:", error);
-      return [];
-    }
+    //   return response.documents as unknown as any[];
+    // } catch (error) {
+    //   console.error("Ошибка при получении ответов сессии:", error);
+    //   return [];
+    // }
   },
 
   // === ЗАВЕРШЕНИЕ ТЕСТИРОВАНИЯ ===
 
   finishTestSession: async (
     sessionId: string,
-    data: FinishTestSessionDto
+    data: any
   ): Promise<TestResult> => {
     try {
       // Получаем сессию и ответы
@@ -237,8 +237,9 @@ export const testSessionApi = {
       let maxPossibleScore = 0;
 
       const detailedResults = questions.map((question) => {
-        const userAnswer = answers.find((a) => a.questionId === question.$id);
-        const isCorrect = userAnswer?.selectedOption === question.correctAnswer;
+
+        const userAnswer = answers;
+        const isCorrect = userAnswer
         
         maxPossibleScore += question.points;
         
@@ -249,7 +250,7 @@ export const testSessionApi = {
 
         return {
           questionId: question.$id,
-          userAnswer: userAnswer?.selectedOption || null,
+          userAnswer: userAnswer || null,
           correctAnswer: question.correctAnswer,
           isCorrect,
           points: isCorrect ? question.points : 0,
@@ -314,7 +315,7 @@ export const testSessionApi = {
         appwriteConfig.collections.testSessions,
         sessionId,
         {
-          answeredQuestions: answers.length,
+          answeredQuestions: answers,
           updatedAt: new Date().toISOString(),
         }
       );
@@ -323,41 +324,41 @@ export const testSessionApi = {
     }
   },
 
-  checkTimeLimit: async (sessionId: string): Promise<boolean> => {
-    try {
-      const session = await testSessionApi.getSessionById(sessionId);
-      if (!session || !session.timeLimit) {
-        return true; // Нет лимита времени
-      }
+  checkTimeLimit: async (sessionId: string) => {
+    // try {
+    //   const session = await testSessionApi.getSessionById(sessionId);
+    //   if (!session || !session.timeLimit) {
+    //     return true; // Нет лимита времени
+    //   }
 
-      const startTime = new Date(session.startedAt).getTime();
-      const currentTime = new Date().getTime();
-      const elapsedMinutes = (currentTime - startTime) / (1000 * 60);
+    //   const startTime = new Date(session.startedAt).getTime();
+    //   const currentTime = new Date().getTime();
+    //   const elapsedMinutes = (currentTime - startTime) / (1000 * 60);
 
-      return elapsedMinutes <= session.timeLimit;
-    } catch (error) {
-      console.error("Ошибка при проверке лимита времени:", error);
-      return false;
-    }
+    //   return elapsedMinutes <= session.timeLimit;
+    // } catch (error) {
+    //   console.error("Ошибка при проверке лимита времени:", error);
+    //   return false;
+    // }
   },
 
-  getTimeRemaining: async (sessionId: string): Promise<number | null> => {
-    try {
-      const session = await testSessionApi.getSessionById(sessionId);
-      if (!session || !session.timeLimit) {
-        return null; // Нет лимита времени
-      }
+  getTimeRemaining: async (sessionId: string) => {
+    // try {
+    //   const session = await testSessionApi.getSessionById(sessionId);
+    //   if (!session || !session.timeLimit) {
+    //     return null; // Нет лимита времени
+    //   }
 
-      const startTime = new Date(session.startedAt).getTime();
-      const currentTime = new Date().getTime();
-      const elapsedMinutes = (currentTime - startTime) / (1000 * 60);
-      const remainingMinutes = session.timeLimit - elapsedMinutes;
+    //   const startTime = new Date(session.startedAt).getTime();
+    //   const currentTime = new Date().getTime();
+    //   const elapsedMinutes = (currentTime - startTime) / (1000 * 60);
+    //   const remainingMinutes = session.timeLimit - elapsedMinutes;
 
-      return Math.max(0, remainingMinutes);
-    } catch (error) {
-      console.error("Ошибка при получении оставшегося времени:", error);
-      return null;
-    }
+    //   return Math.max(0, remainingMinutes);
+    // } catch (error) {
+    //   console.error("Ошибка при получении оставшегося времени:", error);
+    //   return null;
+    // }
   },
 
   // === РЕЗУЛЬТАТЫ ===
@@ -418,7 +419,7 @@ export const useCreateTestSession = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: CreateTestSessionDto) => 
+    mutationFn: (data: any) => 
       testSessionApi.createTestSession(data),
     onSuccess: (newSession) => {
       queryClient.invalidateQueries({ 
@@ -459,7 +460,7 @@ export const useSubmitAnswer = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: SubmitAnswerDto) => testSessionApi.submitAnswer(data),
+    mutationFn: (data: any) => testSessionApi.submitAnswer(data),
     onSuccess: (_, { sessionId }) => {
       queryClient.invalidateQueries({ 
         queryKey: testSessionKeys.answers(sessionId) 
@@ -480,7 +481,7 @@ export const useFinishTestSession = () => {
       data 
     }: { 
       sessionId: string; 
-      data: FinishTestSessionDto;
+      data: any;
     }) => testSessionApi.finishTestSession(sessionId, data),
     onSuccess: (result) => {
       queryClient.invalidateQueries({ 

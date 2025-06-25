@@ -155,7 +155,7 @@ export function Navbar() {
                 description: "УПРАВЛЕНИЕ СОЗДАННЫМИ ТЕСТАМИ",
               },
               {
-                href: "/curator/tests/create",
+                href: `/curator/tests/create`,
                 label: "СОЗДАТЬ ТЕСТ",
                 icon: PlusCircle,
                 description: "СОЗДАНИЕ НОВОГО ТЕСТА",
@@ -178,42 +178,7 @@ export function Navbar() {
                 icon: GraduationCap,
                 description: "СПИСОК АБИТУРИЕНТОВ",
               },
-              {
-                href: "/curator/applicants/activation",
-                label: "АКТИВАЦИЯ",
-                icon: UserCheck,
-                description: "АКТИВАЦИЯ АБИТУРИЕНТОВ",
-              },
             ],
-          },
-          {
-            label: "СТАТИСТИКА",
-            icon: BarChart3,
-            dropdown: [
-              {
-                href: "/curator/statistics/tests",
-                label: "ПО ТЕСТАМ",
-                icon: TestTube,
-                description: "СТАТИСТИКА ПРОХОЖДЕНИЯ ТЕСТОВ",
-              },
-              {
-                href: "/curator/statistics/applicants",
-                label: "ПО АБИТУРИЕНТАМ",
-                icon: GraduationCap,
-                description: "СТАТИСТИКА АБИТУРИЕНТОВ",
-              },
-              {
-                href: "/curator/statistics/questions",
-                label: "АНАЛИЗ ВОПРОСОВ",
-                icon: ClipboardList,
-                description: "АНАЛИЗ СЛОЖНОСТИ ВОПРОСОВ",
-              },
-            ],
-          },
-          {
-            href: "/curator/profile",
-            label: "ПРОФИЛЬ",
-            icon: User,
           },
         ];
 
@@ -238,12 +203,6 @@ export function Navbar() {
                 label: "ДОСТУПНЫЕ ТЕСТЫ",
                 icon: TestTube,
                 description: "ТЕСТЫ ДЛЯ ПРОХОЖДЕНИЯ",
-              },
-              {
-                href: "/applicant/tests/history",
-                label: "ИСТОРИЯ",
-                icon: Clock,
-                description: "ПРОЙДЕННЫЕ ТЕСТЫ",
               },
               {
                 href: "/applicant/tests/results",
@@ -444,19 +403,6 @@ export function Navbar() {
                       >
                         <User className="h-4 w-4" />
                         РЕДАКТИРОВАТЬ АНКЕТУ
-                      </Link>
-                    </div>
-                  )}
-
-                  {user.role === UserRole.CURATOR && (
-                    <div className="border-b border-slate-700">
-                      <Link
-                        href="/curator/profile"
-                        className="block px-4 py-3 text-sm text-white font-mono font-bold flex items-center gap-2 border-b border-slate-700 last:border-b-0 uppercase"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
-                        <User className="h-4 w-4" />
-                        ПРОФИЛЬ
                       </Link>
                     </div>
                   )}
